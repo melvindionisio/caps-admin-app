@@ -1,11 +1,7 @@
-import './App.css';
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      Hello World
-    </div>
-  );
-}
+const App = () => {
+  return <div className="App">Admin Panel</div>;
+};
 
 export default App;
