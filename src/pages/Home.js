@@ -44,7 +44,7 @@ const Home = () => {
   return (
     <Container disableGutters maxWidth="xl">
       <Box className={classes.mainContent} p={0}>
-        <HomeNavigation />
+        <HomeNavigation title="Boarding Houses" />
         <Box p={2} style={{ height: "85%" }} className={classes.content}>
           {error && <Typography>{error}</Typography>}
           {isPending && <Typography>Loading</Typography>}

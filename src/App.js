@@ -6,17 +6,21 @@ import {
 } from "react-router-dom";
 import { createTheme, ThemeProvider, Container, Hidden } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { blue, orange } from "@mui/material/colors";
+import { blue, orange, grey } from "@mui/material/colors";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Export from "./pages/Export";
+import Profile from "./pages/Profile";
+
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     overflow: "hidden",
     height: "100vh",
     display: "flex",
+    background: grey[200],
+    position: "relative",
   },
 }));
 
@@ -64,7 +68,7 @@ const App = () => {
           <Hidden smDown>
             <Sidebar />
           </Hidden>
-          <Container disableGutters maxWidth="xl">
+          <Container disableGutters maxWidth="xl" sx={{ overflowY: "auto" }}>
             <Switch>
               <Route exact path="/">
                 <Redirect to="/login" />
@@ -80,6 +84,9 @@ const App = () => {
               </Route>
               <Route path="/admin/export">
                 <Export />
+              </Route>
+              <Route path="/admin/profile">
+                <Profile />
               </Route>
             </Switch>
           </Container>

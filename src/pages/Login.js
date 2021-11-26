@@ -66,7 +66,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push("/admin/boarding-house");
+    history.push("/admin/dashboard");
   };
 
   return (

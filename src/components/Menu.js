@@ -2,16 +2,13 @@ import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@mui/styles";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
+// import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Avatar from "@mui/material/Avatar";
-import AppBar from "@mui/material/AppBar";
 import IconButton from "@mui/material/IconButton";
-// import Button from "@mui/material/Button";
-import CloseIcon from "@mui/icons-material/Close";
-// import { Card, CardHeader, CardContent } from "@mui/material";
+// import Button from "@material-ui/core/Button";
+// import CloseIcon from "@mui/icons-material/Close";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { List, ListItem, Typography } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -20,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "start",
   },
   list: {
-    width: 250,
+    width: 270,
   },
   fullList: {
     width: "auto",
@@ -51,19 +48,17 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
   },
 
-  closeContainer: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    borderBottom: "1px solid lightgrey",
-    marginBottom: "1rem",
-  },
-  icons: {
-    pointerEvents: "none",
+  menulist: {
+    width: "85%",
   },
 }));
 
-export default function Menu({ handleDrawerToggle, menuOpen, anchor }) {
+export default function Menu({
+  children,
+  handleDrawerToggle,
+  menuOpen,
+  anchor,
+}) {
   const classes = useStyles();
 
   const SideContent = (anchor) => (
@@ -74,41 +69,62 @@ export default function Menu({ handleDrawerToggle, menuOpen, anchor }) {
       })}
       role="presentation"
     >
-      <Box
+      {/* <Box
         className={classes.closeContainer}
         onClick={handleDrawerToggle}
         onKeyDown={handleDrawerToggle}
       >
         <IconButton size="medium" className={classes.closeButton}>
-          <CloseIcon className={classes.icons} />
+          <CloseIcon />
         </IconButton>
         <Divider />
       </Box>
-      <AppBar position="static" elevation={0} color="transparent">
-        <Toolbar variant="dense" className={classes.toolbar}>
-          <Typography variant="body1" component="span" color="textSecondary">
-            Admin name
-          </Typography>
-          <Avatar>O</Avatar>
-        </Toolbar>
-      </AppBar>
+      <Box className={classes.menulist}>{children}</Box> */}
+      <Box
+        onClick={handleDrawerToggle}
+        onKeyDown={handleDrawerToggle}
+        sx={{ width: "100%" }}
+      >
+        <List sx={{ paddingTop: "0rem" }}>
+          <ListItem
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+            onClick={handleDrawerToggle}
+            onKeyDown={handleDrawerToggle}
+            divider
+          >
+            <Typography variant="body1" style={{ fontFamily: "Quicksand" }}>
+              SEARCH 'N STAY
+            </Typography>
+            <IconButton
+              onClick={handleDrawerToggle}
+              onKeyDown={handleDrawerToggle}
+            >
+              <CancelIcon />
+            </IconButton>
+          </ListItem>
+          {children}
+        </List>
+      </Box>
+      {/* <Box className={classes.menulist}>{children}</Box> */}
     </Box>
   );
 
   return (
-    <div>
-      <SwipeableDrawer
-        anchor={anchor}
-        open={menuOpen}
-        onClose={handleDrawerToggle}
-        onOpen={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        hysteresis={0.1}
-      >
-        {SideContent(anchor)}
-      </SwipeableDrawer>
-    </div>
+    <SwipeableDrawer
+      anchor={anchor}
+      open={menuOpen}
+      onClose={handleDrawerToggle}
+      onOpen={handleDrawerToggle}
+      ModalProps={{
+        keepMounted: true, // Better open performance on mobile.
+      }}
+      hysteresis={0.1}
+    >
+      {SideContent(anchor)}
+      {/*{children}*/}
+    </SwipeableDrawer>
   );
 }

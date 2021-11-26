@@ -34,6 +34,28 @@ const Sidebar = () => {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
+  const menuItems = [
+    {
+      text: "Dashboard",
+      path: "/admin/dashboard",
+      icon: <DashboardIcon />,
+    },
+    {
+      text: "Boarding Houses",
+      path: "/admin/boarding-house",
+      icon: <OtherHousesIcon />,
+    },
+    {
+      text: "Export",
+      path: "/admin/export",
+      icon: <ImportExportIcon />,
+    },
+    {
+      text: "Profile",
+      path: "/admin/profile",
+      icon: <ManageAccountsIcon />,
+    },
+  ];
   return (
     <Drawer
       anchor="left"
@@ -61,61 +83,35 @@ const Sidebar = () => {
         </Toolbar>
       </AppBar>
       <List>
-        <ListItem
-          button
-          divider
-          disablePadding
-          onClick={() => history.push("/admin/dashboard")}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem
-          button
-          divider
-          disablePadding
-          onClick={() => history.push("/admin/boarding-house")}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <OtherHousesIcon />
-            </ListItemIcon>
-            <ListItemText primary="Boarding Houses" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem
-          button
-          divider
-          disablePadding
-          onClick={() => history.push("/admin/export")}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <ImportExportIcon />
-            </ListItemIcon>
-            <ListItemText primary="Export" />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem
-          button
-          divider
-          disablePadding
-          onClick={() => history.push("/admin/profile")}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <ManageAccountsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </ListItemButton>
-        </ListItem>
+        {menuItems.map((item) => (
+          <ListItem
+            button
+            divider
+            disablePadding
+            onClick={() => history.push(item.path)}
+            sx={
+              location.pathname === item.path
+                ? {
+                    background: grey[300],
+                    color: grey[900],
+                  }
+                : { background: "transparent" }
+            }
+          >
+            <ListItemButton>
+              <ListItemIcon
+                sx={
+                  location.pathname === item.path
+                    ? { color: grey[800] }
+                    : { color: grey[500] }
+                }
+              >
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </Drawer>
   );
