@@ -14,9 +14,10 @@ import { grey } from "@mui/material/colors";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import logo from "../sns-logo.png";
 import { Avatar } from "@material-ui/core";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const Sidebar = () => {
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
   return (
     <Drawer
       anchor="left"
@@ -59,7 +61,12 @@ const Sidebar = () => {
         </Toolbar>
       </AppBar>
       <List>
-        <ListItem button divider disablePadding>
+        <ListItem
+          button
+          divider
+          disablePadding
+          onClick={() => history.push("/admin/dashboard")}
+        >
           <ListItemButton>
             <ListItemIcon>
               <DashboardIcon />
@@ -67,7 +74,13 @@ const Sidebar = () => {
             <ListItemText primary="Dashboard" />
           </ListItemButton>
         </ListItem>
-        <ListItem button divider disablePadding>
+
+        <ListItem
+          button
+          divider
+          disablePadding
+          onClick={() => history.push("/admin/boarding-house")}
+        >
           <ListItemButton>
             <ListItemIcon>
               <OtherHousesIcon />
@@ -75,12 +88,32 @@ const Sidebar = () => {
             <ListItemText primary="Boarding Houses" />
           </ListItemButton>
         </ListItem>
-        <ListItem button divider disablePadding>
+
+        <ListItem
+          button
+          divider
+          disablePadding
+          onClick={() => history.push("/admin/export")}
+        >
           <ListItemButton>
             <ListItemIcon>
               <ImportExportIcon />
             </ListItemIcon>
             <ListItemText primary="Export" />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem
+          button
+          divider
+          disablePadding
+          onClick={() => history.push("/admin/profile")}
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <ManageAccountsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
           </ListItemButton>
         </ListItem>
       </List>

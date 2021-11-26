@@ -10,7 +10,8 @@ import { blue, orange } from "@mui/material/colors";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Sidebar from "./components/Sidebar";
-
+import Dashboard from "./pages/Dashboard";
+import Export from "./pages/Export";
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     overflow: "hidden",
@@ -71,8 +72,14 @@ const App = () => {
               <Route path="/login">
                 <Login />
               </Route>
-              <Route path="/home">
+              <Route path="/admin/boarding-house">
                 <Home />
+              </Route>
+              <Route path="/admin/dashboard">
+                <Dashboard />
+              </Route>
+              <Route path="/admin/export">
+                <Export />
               </Route>
             </Switch>
           </Container>

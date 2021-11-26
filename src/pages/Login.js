@@ -66,7 +66,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push("/home");
+    history.push("/admin/boarding-house");
   };
 
   return (
@@ -105,6 +105,7 @@ const Login = () => {
                   className={classes.textFields}
                   color="primary"
                   required
+                  margin="normal"
                 />
                 <TextField
                   label="Password"
