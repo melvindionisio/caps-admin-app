@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 import { EditOutlined } from "@mui/icons-material";
 import { useState } from "react";
-import { CardContent, Divider } from "@material-ui/core";
-import { blue, grey } from "@material-ui/core/colors";
+import { CardContent } from "@material-ui/core";
+// import { blue, grey } from "@material-ui/core/colors";
 
 const Profile = () => {
   const [name, setName] = useState("Melvin Dionisio");
