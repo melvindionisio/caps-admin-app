@@ -40,14 +40,14 @@ const Profile = () => {
 
   // CHANGE PASSWORD REQUEST
   const changePassword = () => {
-    let changePasswordContent = {};
+    // let changePasswordContent = {};
     if (curPassword && newPassword && rePassword !== "") {
       if (password === curPassword) {
-        changePasswordContent = {
-          currentPassword: curPassword,
-          newPassword: newPassword,
-          repeatNewPassword: rePassword,
-        };
+        // changePasswordContent = {
+        //   currentPassword: curPassword,
+        //   newPassword: newPassword,
+        //   repeatNewPassword: rePassword,
+        // };
         setIsChangePassword(!isChangePassword);
         setNewPassword("");
         setCurPassword("");
