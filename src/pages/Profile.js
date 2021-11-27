@@ -78,14 +78,26 @@ const Profile = ({ handleDrawerToggle }) => {
                   <EditOutlined />
                 </IconButton>
               ) : (
-                <Button
-                  size="small"
-                  variant="contained"
-                  disableElevation
-                  onClick={() => setProfileEditable(!profileEditable)}
-                >
-                  save
-                </Button>
+                <>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    disableElevation
+                    color="secondary"
+                    sx={{ mr: 1 }}
+                    onClick={() => setProfileEditable(!profileEditable)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    disableElevation
+                    onClick={() => setProfileEditable(!profileEditable)}
+                  >
+                    save
+                  </Button>
+                </>
               )
             }
             title="You are Login as: "

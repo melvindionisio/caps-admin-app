@@ -30,6 +30,8 @@ const HomeNavigation = ({ title, handleDrawerToggle }) => {
             padding: "0 .5rem",
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
+            height: "3.5rem",
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
