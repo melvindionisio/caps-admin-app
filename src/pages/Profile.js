@@ -65,7 +65,7 @@ const Profile = ({ handleDrawerToggle }) => {
   return (
     <Container maxWidth="xl" disableGutters sx={{ minHeight: "100vh" }}>
       <HomeNavigation title="profile" handleDrawerToggle={handleDrawerToggle} />
-      <Container maxWidth="sm" sx={{ p: 2, display: "flex" }}>
+      <Container disableGutters maxWidth="sm" sx={{ p: 2, display: "flex" }}>
         <Card sx={{ width: "90%", p: 2, margin: "0 auto" }}>
           <CardHeader
             avatar={<Avatar aria-label="profile-pic"></Avatar>}

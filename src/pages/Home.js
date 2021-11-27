@@ -43,12 +43,12 @@ const Home = ({ handleDrawerToggle }) => {
     "https://my-json-server.typicode.com/melvindionisio/boardinghouse-serve/boardinghouses"
   );
   return (
-    <Container disableGutters maxWidth="xl">
-      <Box className={classes.mainContent} p={0}>
-        <HomeNavigation
-          title="Boarding Houses"
-          handleDrawerToggle={handleDrawerToggle}
-        />
+    <Container disableGutters maxWidth="xl" sx={{ minHeight: "100vh" }}>
+      <HomeNavigation
+        title="Boarding Houses"
+        handleDrawerToggle={handleDrawerToggle}
+      />
+      <Box className={classes.mainContent}>
         <Box p={2} style={{ height: "85%" }} className={classes.content}>
           {error && <Typography>{error}</Typography>}
           {isPending && <Typography>Loading</Typography>}
