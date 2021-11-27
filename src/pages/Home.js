@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
 }));
-const Home = () => {
+
+const Home = ({ handleDrawerToggle }) => {
   const classes = useStyles();
   const {
     data: boardingHouses,
@@ -44,7 +45,10 @@ const Home = () => {
   return (
     <Container disableGutters maxWidth="xl">
       <Box className={classes.mainContent} p={0}>
-        <HomeNavigation title="Boarding Houses" />
+        <HomeNavigation
+          title="Boarding Houses"
+          handleDrawerToggle={handleDrawerToggle}
+        />
         <Box p={2} style={{ height: "85%" }} className={classes.content}>
           {error && <Typography>{error}</Typography>}
           {isPending && <Typography>Loading</Typography>}

@@ -14,6 +14,9 @@ import Dashboard from "./pages/Dashboard";
 import Export from "./pages/Export";
 import Profile from "./pages/Profile";
 
+import { useState } from "react";
+import Menu from "./components/Menu";
+
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     overflow: "hidden",
@@ -56,6 +59,12 @@ const theme = createTheme({
 
 const App = () => {
   const classes = useStyles();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const handleDrawerToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container
@@ -65,6 +74,11 @@ const App = () => {
         className={classes.mainContainer}
       >
         <Router>
+          <Menu
+            handleDrawerToggle={handleDrawerToggle}
+            menuOpen={menuOpen}
+            anchor="left"
+          />
           <Hidden smDown>
             <Sidebar />
           </Hidden>
@@ -77,16 +91,16 @@ const App = () => {
                 <Login />
               </Route>
               <Route path="/admin/boarding-house">
-                <Home />
+                <Home handleDrawerToggle={handleDrawerToggle} />
               </Route>
               <Route path="/admin/dashboard">
-                <Dashboard />
+                <Dashboard handleDrawerToggle={handleDrawerToggle} />
               </Route>
               <Route path="/admin/export">
-                <Export />
+                <Export handleDrawerToggle={handleDrawerToggle} />
               </Route>
               <Route path="/admin/profile">
-                <Profile />
+                <Profile handleDrawerToggle={handleDrawerToggle} />
               </Route>
             </Switch>
           </Container>

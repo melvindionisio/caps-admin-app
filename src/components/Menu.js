@@ -8,7 +8,22 @@ import IconButton from "@mui/material/IconButton";
 // import Button from "@material-ui/core/Button";
 // import CloseIcon from "@mui/icons-material/Close";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { List, ListItem, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
+
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import OtherHousesIcon from "@mui/icons-material/OtherHouses";
+import ImportExportIcon from "@mui/icons-material/ImportExport";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  ListItemButton,
+} from "@mui/material";
+import { grey } from "@material-ui/core/colors";
+import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -60,6 +75,31 @@ export default function Menu({
   anchor,
 }) {
   const classes = useStyles();
+  const location = useLocation();
+  const history = useHistory();
+
+  const menuItems = [
+    {
+      text: "Dashboard",
+      path: "/admin/dashboard",
+      icon: <DashboardIcon />,
+    },
+    {
+      text: "Boarding Houses",
+      path: "/admin/boarding-house",
+      icon: <OtherHousesIcon />,
+    },
+    {
+      text: "Export",
+      path: "/admin/export",
+      icon: <ImportExportIcon />,
+    },
+    {
+      text: "Profile",
+      path: "/admin/profile",
+      icon: <ManageAccountsIcon />,
+    },
+  ];
 
   const SideContent = (anchor) => (
     <Box
@@ -105,7 +145,29 @@ export default function Menu({
               <CancelIcon />
             </IconButton>
           </ListItem>
-          {children}
+          {/* {children} */}
+
+          {menuItems.map((item) => (
+            <ListItem
+              button
+              divider
+              disablePadding
+              onClick={() => history.push(item.path)}
+              sx={
+                location.pathname === item.path
+                  ? {
+                      background: grey[300],
+                      color: grey[900],
+                    }
+                  : { background: "transparent" }
+              }
+            >
+              <ListItemButton>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Box>
       {/* <Box className={classes.menulist}>{children}</Box> */}

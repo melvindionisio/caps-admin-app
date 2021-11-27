@@ -17,7 +17,7 @@ import { useState } from "react";
 import { CardContent } from "@material-ui/core";
 // import { blue, grey } from "@material-ui/core/colors";
 
-const Profile = () => {
+const Profile = ({ handleDrawerToggle }) => {
   const [name, setName] = useState("Melvin Dionisio");
   const [userName, setUserName] = useState("melsio021");
   const [password, setPassword] = useState("password");
@@ -64,7 +64,7 @@ const Profile = () => {
 
   return (
     <Container maxWidth="xl" disableGutters sx={{ minHeight: "100vh" }}>
-      <HomeNavigation title="profile" />
+      <HomeNavigation title="profile" handleDrawerToggle={handleDrawerToggle} />
       <Container maxWidth="sm" sx={{ p: 2, display: "flex" }}>
         <Card sx={{ width: "90%", p: 2, margin: "0 auto" }}>
           <CardHeader
