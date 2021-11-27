@@ -12,7 +12,7 @@ import React from "react";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
 import { Hidden } from "@mui/material";
-import { Box } from "@material-ui/core";
+// import { Box } from "@material-ui/core";
 import { grey } from "@mui/material/colors";
 import AccountMenu from "./AccountMenu";
 // import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -34,16 +34,16 @@ const HomeNavigation = ({ title, handleDrawerToggle }) => {
             height: "3.5rem",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Hidden mdUp>
-              <IconButton size="medium" onClick={handleDrawerToggle}>
-                <MenuOutlinedIcon fontSize="medium" sx={{ color: "#777" }} />
-              </IconButton>
-            </Hidden>
-            <Typography variant="h6" sx={{ ml: 2 }}>
-              {title.toUpperCase()}
-            </Typography>
-          </Box>
+          {/* <Box sx={{ display: "flex" }}> */}
+          <Hidden mdUp>
+            <IconButton size="medium" onClick={handleDrawerToggle}>
+              <MenuOutlinedIcon fontSize="medium" sx={{ color: "#777" }} />
+            </IconButton>
+          </Hidden>
+          <Typography variant="h6" sx={{ ml: 2 }}>
+            {title.toUpperCase()}
+          </Typography>
+          {/* </Box> */}
           <AccountMenu />
         </Toolbar>
       </AppBar>
