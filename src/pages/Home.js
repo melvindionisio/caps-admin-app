@@ -5,6 +5,7 @@ import useFetch from "../hooks/useFetch";
 import BoardingHouseTable from "../components/BoardingHouseTable";
 import { grey } from "@mui/material/colors";
 import HomeNavigation from "../components/HomeNavigation";
+import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   mainContent: {
@@ -35,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = ({ handleDrawerToggle }) => {
   const classes = useStyles();
+  const history = useHistory();
+  const location = useLocation();
   const {
     data: boardingHouses,
     isPending,
@@ -57,6 +60,7 @@ const Home = ({ handleDrawerToggle }) => {
             variant="contained"
             color="primary"
             sx={{ alignSelf: "flex-end", mt: 1 }}
+            onClick={() => history.push(`${location.pathname}/add`)}
           >
             Add Boarding House
           </Button>

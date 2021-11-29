@@ -6,13 +6,14 @@ import {
 } from "react-router-dom";
 import { createTheme, ThemeProvider, Container, Hidden } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { blue, orange, grey } from "@mui/material/colors";
+import { blue, pink, grey } from "@mui/material/colors";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Export from "./pages/Export";
 import Profile from "./pages/Profile";
+import AddBoardingHouse from "./pages/AddBoardingHouse";
 
 import { useState } from "react";
 import Menu from "./components/Menu";
@@ -34,7 +35,7 @@ const theme = createTheme({
       main: blue[700],
     },
     secondary: {
-      main: orange[700],
+      main: pink[500],
     },
   },
   typography: {
@@ -90,7 +91,7 @@ const App = () => {
               <Route path="/login">
                 <Login />
               </Route>
-              <Route path="/admin/boarding-house">
+              <Route exact path="/admin/boarding-house">
                 <Home handleDrawerToggle={handleDrawerToggle} />
               </Route>
               <Route path="/admin/dashboard">
@@ -101,6 +102,9 @@ const App = () => {
               </Route>
               <Route path="/admin/profile">
                 <Profile handleDrawerToggle={handleDrawerToggle} />
+              </Route>
+              <Route path="/admin/boarding-house/add">
+                <AddBoardingHouse handleDrawerToggle={handleDrawerToggle} />
               </Route>
             </Switch>
           </Container>

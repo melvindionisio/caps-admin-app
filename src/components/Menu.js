@@ -14,6 +14,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import {
   List,
@@ -88,6 +89,11 @@ export default function Menu({
       text: "Boarding Houses",
       path: "/admin/boarding-house",
       icon: <OtherHousesIcon />,
+    },
+    {
+      text: "Add Boarding House",
+      path: "admin/boarding-house/add",
+      icon: <AddCircleIcon />,
     },
     {
       text: "Export",
