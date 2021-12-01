@@ -92,7 +92,7 @@ export default function Menu({
     },
     {
       text: "Add Boarding House",
-      path: "admin/boarding-house/add",
+      path: "/admin/boarding-house/add",
       icon: <AddCircleIcon />,
     },
     {
@@ -167,6 +167,7 @@ export default function Menu({
                     }
                   : { background: "transparent" }
               }
+              key={item.text}
             >
               <ListItemButton>
                 <ListItemIcon>{item.icon}</ListItemIcon>
