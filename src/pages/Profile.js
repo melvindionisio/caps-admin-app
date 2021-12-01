@@ -251,7 +251,7 @@ const Profile = ({ handleDrawerToggle }) => {
                 />
                 <TextField
                   id="re-password"
-                  label="Repeat Password"
+                  label="Repeat New Password"
                   type="password"
                   value={rePassword}
                   onChange={(e) => setRePassword(e.target.value)}

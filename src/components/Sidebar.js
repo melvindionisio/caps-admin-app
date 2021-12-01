@@ -104,6 +104,7 @@ const Sidebar = () => {
                   }
                 : { background: "transparent" }
             }
+            key={item.text}
           >
             <ListItemButton>
               <ListItemIcon

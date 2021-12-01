@@ -57,30 +57,37 @@ const OwnerAccountGeneration = ({
           </Button>
         </Grid>
       </Grid>
-      <Card sx={{ width: "max-content" }}>
+      <Card sx={{ maxWidth: "max-content" }}>
         <CardHeader
           title={
-            <Typography variant="h6" color="text.secondary">
+            <Typography variant="subtitle2" color="text.secondary">
               GENERATED LOGIN FOR:{" "}
-              <span style={{ marginLeft: 10, fontSize: 20, color: blue[600] }}>
+              <span
+                style={{
+                  marginLeft: 10,
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  color: "grey",
+                }}
+              >
                 {bhoName}
               </span>
             </Typography>
           }
           subheader={
             <>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="subtitle2" color="text.secondary">
                 USERNAME:
                 <span
-                  style={{ marginLeft: 10, fontSize: 20, color: blue[600] }}
+                  style={{ marginLeft: 10, fontSize: 18, color: blue[600] }}
                 >
                   {ownerUserName}
                 </span>
               </Typography>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="subtitle2" color="text.secondary">
                 PASSWORD:
                 <span
-                  style={{ marginLeft: 10, fontSize: 20, color: blue[600] }}
+                  style={{ marginLeft: 10, fontSize: 18, color: blue[600] }}
                 >
                   {ownerPassword}
                 </span>
