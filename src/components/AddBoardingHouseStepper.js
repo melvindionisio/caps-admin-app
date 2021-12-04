@@ -262,17 +262,6 @@ export default function AddBoardingHouseStepper() {
   const [contactNumber, setContactNumber] = useState();
   const [tagline, setTagline] = useState("");
 
-  // data to be sent to the database
-  // const ownerAccountData = {
-  //   boardingHouseOwnerName: bhoName,
-  //   ownerUserName: ownerUserName,
-  //   ownerPassword: ownerPassword,
-  //   boardingHouseName: bhName,
-  //   completeAddress: completeAddress,
-  //   contactNumber: contactNumber,
-  //   boardingHouseTagline: tagline,
-  // };
-
   const generateRandomPassword = (length) => {
     let generatedPassword = "";
     let counter = 0;
@@ -376,6 +365,20 @@ export default function AddBoardingHouseStepper() {
       isOptional: isOptional,
     },
   ];
+
+  // data to be sent to the database
+  // const owner_account_data = {
+  //   name: bhoName,
+  //   username: ownerUserName,
+  //   password: ownerPassword,
+  // };
+
+  // const bh_initial_data = {
+  //   boardingHouseName: bhName,
+  //   completeAddress: completeAddress,
+  //   contactNumber: contactNumber,
+  //   boardingHouseTagline: tagline,
+  // };
 
   return (
     <Box>
