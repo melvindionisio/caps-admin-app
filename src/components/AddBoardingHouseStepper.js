@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { TextField, Grid, List, ListItem } from "@mui/material";
+import { TextField, Grid, List, ListItem, Divider } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { CardHeader } from "@mui/material";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
@@ -42,7 +42,7 @@ const OwnerAccountGeneration = ({
             size="small"
             id="bh-owner"
             label="Owner Full Name"
-            color="secondary"
+            color="primary"
             fullWidth
             required
             autoFocus
@@ -54,6 +54,7 @@ const OwnerAccountGeneration = ({
           <Button
             color="secondary"
             variant="contained"
+            disableElevation
             onClick={generateOwnerAccount}
             disabled={!bhoName}
           >
@@ -67,12 +68,18 @@ const OwnerAccountGeneration = ({
             <>
               <Typography
                 variant="subtitle2"
-                style={{ display: "flex", alignItems: "center" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: ".5rem",
+                }}
                 color="text.secondary"
               >
                 <LockOpenIcon fontSize="small" style={{ marginRight: 2 }} />
                 GENERATED LOGIN FOR:{" "}
               </Typography>
+              <Divider />
               <Typography
                 variant="overline"
                 color="initial"
@@ -92,7 +99,11 @@ const OwnerAccountGeneration = ({
               <Typography variant="subtitle2" color="text.secondary">
                 USERNAME:
                 <span
-                  style={{ marginLeft: 10, fontSize: 18, color: blue[600] }}
+                  style={{
+                    marginLeft: 10,
+                    fontSize: 18,
+                    color: blue[600],
+                  }}
                 >
                   {ownerUserName}
                 </span>
@@ -100,7 +111,11 @@ const OwnerAccountGeneration = ({
               <Typography variant="subtitle2" color="text.secondary">
                 PASSWORD:
                 <span
-                  style={{ marginLeft: 10, fontSize: 18, color: blue[600] }}
+                  style={{
+                    marginLeft: 10,
+                    fontSize: 18,
+                    color: blue[600],
+                  }}
                 >
                   {ownerPassword}
                 </span>
@@ -137,7 +152,7 @@ const BoardingHouseDetailsFilling = ({
           id="bh-name"
           label="Boarding House Name"
           variant="outlined"
-          color="secondary"
+          color="primary"
           margin="dense"
           size="small"
           fullWidth
@@ -149,7 +164,7 @@ const BoardingHouseDetailsFilling = ({
           id="bh-owner"
           label="Owner Name"
           variant="outlined"
-          color="secondary"
+          color="primary"
           margin="dense"
           size="small"
           fullWidth
@@ -161,7 +176,7 @@ const BoardingHouseDetailsFilling = ({
           id="bh-address"
           label="Complete Address"
           variant="outlined"
-          color="secondary"
+          color="primary"
           margin="dense"
           size="small"
           fullWidth
@@ -172,7 +187,7 @@ const BoardingHouseDetailsFilling = ({
           id="bh-contacts"
           label="Contact Number"
           variant="outlined"
-          color="secondary"
+          color="primary"
           margin="dense"
           size="small"
           fullWidth
@@ -185,7 +200,7 @@ const BoardingHouseDetailsFilling = ({
           id="bh-tagline"
           label="Tagline"
           variant="outlined"
-          color="secondary"
+          color="primary"
           margin="dense"
           size="small"
           fullWidth

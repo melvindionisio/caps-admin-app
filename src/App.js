@@ -32,10 +32,10 @@ const theme = createTheme({
   palette: {
     // mode: "dark",
     primary: {
-      main: blue[700],
+      main: blue[500],
     },
     secondary: {
-      main: pink[500],
+      main: pink[600],
     },
   },
   typography: {
