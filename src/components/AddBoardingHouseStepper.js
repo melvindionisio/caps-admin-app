@@ -380,6 +380,32 @@ export default function AddBoardingHouseStepper() {
   //   boardingHouseTagline: tagline,
   // };
 
+  const handleSubmitBoardingHouse = async (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3500/api/owners/register", {
+      method: "POST",
+      body: JSON.stringify({
+        name: bhoName,
+        username: ownerUserName,
+        password: ownerPassword,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (res.ok) {
+          console.log(res.status);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
+
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
   return (
     <Box>
       <Stepper activeStep={activeStep} orientation="vertical">
@@ -403,7 +429,11 @@ export default function AddBoardingHouseStepper() {
                 <div>
                   <Button
                     variant="contained"
-                    onClick={handleNext}
+                    onClick={
+                      index === steps.length - 1
+                        ? handleSubmitBoardingHouse
+                        : handleNext
+                    }
                     sx={{ mt: 1, mr: 1 }}
                     disabled={!step.isOptional}
                   >
