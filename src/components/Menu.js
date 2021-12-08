@@ -8,7 +8,8 @@ import IconButton from "@mui/material/IconButton";
 // import Button from "@material-ui/core/Button";
 // import CloseIcon from "@mui/icons-material/Close";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Typography } from "@mui/material";
+import { Typography, Avatar } from "@mui/material";
+import logo from "../sns-logo.png";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
@@ -141,9 +142,15 @@ export default function Menu({
             onKeyDown={handleDrawerToggle}
             divider
           >
-            <Typography variant="body1" style={{ fontFamily: "Quicksand" }}>
-              SEARCH 'N STAY
-            </Typography>
+            <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+              <Avatar
+                src={logo}
+                style={{ height: "1.7rem", width: "1.7rem" }}
+              ></Avatar>
+              <Typography variant="body1" style={{ fontFamily: "Quicksand" }}>
+                SEARCH 'N STAY
+              </Typography>
+            </Box>
             <IconButton
               onClick={handleDrawerToggle}
               onKeyDown={handleDrawerToggle}

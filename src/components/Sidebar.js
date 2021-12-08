@@ -78,8 +78,14 @@ const Sidebar = () => {
       }
     >
       <AppBar position="static" elevation={1} color="default">
-        <Toolbar sx={{ padding: "0 .7rem" }} disableGutters>
-          <Avatar src={logo} style={{ height: "2rem", width: "2rem" }}></Avatar>
+        <Toolbar
+          sx={{ padding: "0 .7rem", display: "flex", gap: 1 }}
+          disableGutters
+        >
+          <Avatar
+            src={logo}
+            style={{ height: "1.7rem", width: "1.7rem" }}
+          ></Avatar>
           <Typography
             variant="body1"
             component="h1"

@@ -74,10 +74,14 @@ const Login = () => {
       <Container maxWidth="sm" disableGutters className={classes.container}>
         <Box className={classes.formContainer} align="center">
           <form onSubmit={handleSubmit}>
-            <Card variant="outlined" className={classes.card}>
+            <Card
+              variant="outlined"
+              className={classes.card}
+              sx={{ paddingBottom: 0 }}
+            >
               <CardHeader
                 title={
-                  <Box>
+                  <Box sx={{ textAlign: "center" }}>
                     <img
                       src={logo}
                       id="logo"
@@ -92,6 +96,7 @@ const Login = () => {
                     color="textSecondary"
                     component="h2"
                     className={classes.appname}
+                    textAlign="center"
                   >
                     SEARCH 'N STAY
                   </Typography>
@@ -101,7 +106,7 @@ const Login = () => {
                 <TextField
                   label="Username"
                   fullWidth
-                  variant="outlined"
+                  variant="filled"
                   className={classes.textFields}
                   color="primary"
                   required
@@ -110,7 +115,7 @@ const Login = () => {
                 <TextField
                   label="Password"
                   fullWidth
-                  variant="outlined"
+                  variant="filled"
                   className={classes.textFields}
                   color="primary"
                   required

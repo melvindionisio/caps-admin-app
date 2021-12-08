@@ -17,6 +17,7 @@ import AddBoardingHouse from "./pages/AddBoardingHouse";
 
 import { useState } from "react";
 import Menu from "./components/Menu";
+import ByZone from "./pages/ByZone";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -96,6 +97,9 @@ const App = () => {
               </Route>
               <Route path="/admin/dashboard">
                 <Dashboard handleDrawerToggle={handleDrawerToggle} />
+              </Route>
+              <Route path="/admin/dashboard/:zone">
+                <ByZone />
               </Route>
               <Route path="/admin/export">
                 <Export handleDrawerToggle={handleDrawerToggle} />
