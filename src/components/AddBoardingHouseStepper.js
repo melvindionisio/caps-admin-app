@@ -62,7 +62,7 @@ const OwnerAccountGeneration = ({
           </Button>
         </Grid>
       </Grid>
-      <Card sx={{ maxWidth: "max-content" }}>
+      <Card sx={{ minWidth: "max-content", maxWidth: 350 }}>
         <CardHeader
           title={
             <>
@@ -191,7 +191,6 @@ const BoardingHouseDetailsFilling = ({
           margin="dense"
           size="small"
           fullWidth
-          type="number"
           helperText="Ex. 09166809369"
           value={contactNumber}
           onChange={(e) => setContactNumber(e.target.value)}
@@ -274,20 +273,8 @@ export default function AddBoardingHouseStepper() {
   // second step
   const [bhName, setBhName] = useState("");
   const [completeAddress, setCompleteAddress] = useState("");
-  const [contactNumber, setContactNumber] = useState();
+  const [contactNumber, setContactNumber] = useState("+639");
   const [tagline, setTagline] = useState("");
-
-  const generateRandomPassword = (length) => {
-    let generatedPassword = "";
-    let counter = 0;
-    const pass_src =
-      "ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&#@";
-    for (counter = 2; counter <= length; counter++) {
-      const char = Math.floor(Math.random() * pass_src.length + 1);
-      generatedPassword += pass_src.charAt(char);
-    }
-    return generatedPassword;
-  };
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -295,16 +282,28 @@ export default function AddBoardingHouseStepper() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  const generateUsername = () => {
-    return `${bhoName.toLowerCase().replace(/\s+/g, "")}${getRandomInt(
-      123,
-      456
-    )}`;
-  };
-
   const generateOwnerAccount = () => {
+    const generateUsername = (name) => {
+      return `${name.toLowerCase().replace(/\s+/g, "")}${getRandomInt(
+        123,
+        456
+      )}`;
+    };
+
+    const generateRandomPassword = (length) => {
+      let generatedPassword = "";
+      let counter = 0;
+      const pass_src =
+        "ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&#@";
+      for (counter = 2; counter <= length; counter++) {
+        const char = Math.floor(Math.random() * pass_src.length + 1);
+        generatedPassword += pass_src.charAt(char);
+      }
+      return generatedPassword;
+    };
+
     setOwnerPassword(generateRandomPassword(10));
-    setOwnerUserName(generateUsername());
+    setOwnerUserName(generateUsername(bhoName));
     setIsOptional(true);
   };
 
@@ -395,43 +394,34 @@ export default function AddBoardingHouseStepper() {
       },
     })
       .then((res) => {
-        if (res.ok) {
-          console.log(res.status);
-        }
         return res.json();
       })
       .then((data) => {
         console.log(data.ownerId);
         // THIS IS THE SECOND REQUEST TO ADD BASIC DETAILS FOR BH
 
-        // bhoName
-        // bhName
-        // completeAddress
-        // contactNumber
-        // tagline
-
-        // fetch(`http://localhost:3500/api/boarding-houses/register/${data.ownerId}`, {
-        //   method: "POST",
-        //   body: JSON.stringify({
-        //     boardinghouse_owner: bhoName,
-        //     boardinghouse_name: bhName,
-        //     complete_address: completeAddress,
-        //     contact_number: contactNumber,
-        //     tagline: tagline,
-        //   }),
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        // })
-        //   .then((res) => {
-        //     if (res.ok) {
-        //       console.log(res.status);
-        //     }
-        //     return res.json();
-        //   })
-        //   .then((data) => {
-        //     console.log(data);
-        //   });
+        fetch(
+          `http://localhost:3500/api/boarding-houses/register/${data.ownerId}`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              boardinghouse_owner: bhoName,
+              boardinghouse_name: bhName,
+              complete_address: completeAddress,
+              contact_number: contactNumber,
+              tagline: tagline,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+          });
       });
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
