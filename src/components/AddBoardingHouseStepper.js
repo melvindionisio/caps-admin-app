@@ -381,20 +381,6 @@ export default function AddBoardingHouseStepper() {
     },
   ];
 
-  // data to be sent to the database
-  // const owner_account_data = {
-  //   name: bhoName,
-  //   username: ownerUserName,
-  //   password: ownerPassword,
-  // };
-
-  // const bh_initial_data = {
-  //   boardingHouseName: bhName,
-  //   completeAddress: completeAddress,
-  //   contactNumber: contactNumber,
-  //   boardingHouseTagline: tagline,
-  // };
-
   const handleSubmitBoardingHouse = async (e) => {
     e.preventDefault();
     fetch("http://localhost:3500/api/owners/register", {
@@ -415,7 +401,37 @@ export default function AddBoardingHouseStepper() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
+        console.log(data.ownerId);
+        // THIS IS THE SECOND REQUEST TO ADD BASIC DETAILS FOR BH
+
+        // bhoName
+        // bhName
+        // completeAddress
+        // contactNumber
+        // tagline
+
+        // fetch(`http://localhost:3500/api/boarding-houses/register/${data.ownerId}`, {
+        //   method: "POST",
+        //   body: JSON.stringify({
+        //     boardinghouse_owner: bhoName,
+        //     boardinghouse_name: bhName,
+        //     complete_address: completeAddress,
+        //     contact_number: contactNumber,
+        //     tagline: tagline,
+        //   }),
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // })
+        //   .then((res) => {
+        //     if (res.ok) {
+        //       console.log(res.status);
+        //     }
+        //     return res.json();
+        //   })
+        //   .then((data) => {
+        //     console.log(data);
+        //   });
       });
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

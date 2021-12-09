@@ -111,6 +111,7 @@ const Login = () => {
                   color="primary"
                   required
                   margin="normal"
+                  autoFocus
                 />
                 <TextField
                   label="Password"
