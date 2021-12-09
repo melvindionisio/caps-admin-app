@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { TextField, Grid, List, ListItem, Divider } from "@mui/material";
+import { TextField, Grid, List, ListItem, Divider, Alert } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { CardHeader } from "@mui/material";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
@@ -276,6 +276,18 @@ export default function AddBoardingHouseStepper() {
   const [contactNumber, setContactNumber] = useState("+639");
   const [tagline, setTagline] = useState("");
 
+  const [message, setMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [severity, setSeverity] = useState("warning");
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (showAlert) {
+        setShowAlert(false);
+      }
+    }, 5000);
+  }, [showAlert]);
+
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -421,6 +433,9 @@ export default function AddBoardingHouseStepper() {
           })
           .then((data) => {
             console.log(data);
+            setMessage(data.message);
+            setShowAlert(true);
+            setSeverity("success");
           });
       });
 
@@ -485,6 +500,12 @@ export default function AddBoardingHouseStepper() {
           </Button>
         </Paper>
       )}
+      <Alert
+        severity={severity}
+        sx={showAlert ? { display: "flex", mt: 2 } : { display: "none", mt: 2 }}
+      >
+        {message}
+      </Alert>
     </Box>
   );
 }
