@@ -81,7 +81,7 @@ const App = () => {
             menuOpen={menuOpen}
             anchor="left"
           />
-          <Hidden smDown>
+          <Hidden mdDown>
             <Sidebar />
           </Hidden>
           <Container disableGutters maxWidth="xl" sx={{ overflowY: "auto" }}>

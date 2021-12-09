@@ -439,7 +439,11 @@ export default function AddBoardingHouseStepper() {
 
   return (
     <Box>
-      <Stepper activeStep={activeStep} orientation="vertical">
+      <Stepper
+        activeStep={activeStep}
+        orientation="vertical"
+        sx={{ borderRadius: 3 }}
+      >
         {steps.map((step, index) => (
           <Step key={step.label}>
             <StepLabel
