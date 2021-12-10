@@ -9,7 +9,18 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import { TextField, Grid, List, ListItem, Divider, Alert } from "@mui/material";
+import {
+  TextField,
+  Grid,
+  List,
+  ListItem,
+  Divider,
+  Alert,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { CardHeader } from "@mui/material";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
@@ -20,6 +31,7 @@ const OwnerAccountGeneration = ({
   generateOwnerAccount,
   ownerUserName,
   ownerPassword,
+  showGenerated,
 }) => {
   return (
     <Box
@@ -62,7 +74,13 @@ const OwnerAccountGeneration = ({
           </Button>
         </Grid>
       </Grid>
-      <Card sx={{ minWidth: "max-content", maxWidth: 350 }}>
+      <Card
+        sx={
+          showGenerated
+            ? { minWidth: "max-content", maxWidth: 350, display: "block" }
+            : { display: "none" }
+        }
+      >
         <CardHeader
           title={
             <>
@@ -132,6 +150,10 @@ const BoardingHouseDetailsFilling = ({
   bhName,
   setBhName,
   bhoName,
+  streetAddress,
+  setStreetAddress,
+  zoneAddress,
+  setZoneAddress,
   completeAddress,
   setCompleteAddress,
   contactNumber,
@@ -172,16 +194,53 @@ const BoardingHouseDetailsFilling = ({
           value={bhoName}
           disabled
         />
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, pt: 1 }}>
+          <TextField
+            id="st-add"
+            label="Street Address"
+            variant="outlined"
+            color="primary"
+            margin="dense"
+            size="small"
+            fullWidth
+            // helperText="e.g. Seaside Drv."
+            value={streetAddress}
+            onChange={(e) => {
+              setStreetAddress(e.target.value);
+              setCompleteAddress(`${streetAddress} ${zoneAddress}`);
+            }}
+          />
+          <FormControl sx={{ width: 200, mt: ".3rem" }}>
+            <InputLabel size="small" id="demo-simple-select-label">
+              Zone Address
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={zoneAddress}
+              size="small"
+              label="Zone Address"
+              onChange={(e) => {
+                setZoneAddress(e.target.value);
+                setCompleteAddress(`${streetAddress} ${zoneAddress}`);
+              }}
+            >
+              <MenuItem value={"Zone 1, UEP"}>Zone 1, UEP</MenuItem>
+              <MenuItem value={"Zone 2, UEP"}>Zone 2, UEP</MenuItem>
+              <MenuItem value={"Zone 3, UEP"}>Zone 3, UEP</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         <TextField
           id="bh-address"
-          label="Complete Address"
+          label="Complete Address Preview"
           variant="outlined"
           color="primary"
           margin="dense"
           size="small"
           fullWidth
           value={completeAddress}
-          onChange={(e) => setCompleteAddress(e.target.value)}
+          disabled
         />
         <TextField
           id="bh-contacts"
@@ -269,9 +328,12 @@ export default function AddBoardingHouseStepper() {
   const [bhoName, setBhoName] = useState("");
   const [ownerUserName, setOwnerUserName] = useState("");
   const [ownerPassword, setOwnerPassword] = useState("");
+  const [showGenerated, setShowGenerated] = useState(false);
 
   // second step
   const [bhName, setBhName] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [zoneAddress, setZoneAddress] = useState("Zone 1, UEP");
   const [completeAddress, setCompleteAddress] = useState("");
   const [contactNumber, setContactNumber] = useState("+639");
   const [tagline, setTagline] = useState("");
@@ -317,6 +379,7 @@ export default function AddBoardingHouseStepper() {
     setOwnerPassword(generateRandomPassword(10));
     setOwnerUserName(generateUsername(bhoName));
     setIsOptional(true);
+    setShowGenerated(true);
   };
 
   const [isOptional, setIsOptional] = useState(false);
@@ -335,6 +398,8 @@ export default function AddBoardingHouseStepper() {
     setOwnerUserName("");
     setOwnerPassword("");
     setBhName("");
+    setStreetAddress("");
+    setZoneAddress("");
     setCompleteAddress("");
     setContactNumber("");
     setTagline("");
@@ -353,6 +418,7 @@ export default function AddBoardingHouseStepper() {
           generateOwnerAccount={generateOwnerAccount}
           ownerUserName={ownerUserName}
           ownerPassword={ownerPassword}
+          showGenerated={showGenerated}
         />
       ),
       isOptional: isOptional,
@@ -365,6 +431,10 @@ export default function AddBoardingHouseStepper() {
           bhName={bhName}
           setBhName={setBhName}
           bhoName={bhoName}
+          streetAddress={streetAddress}
+          setStreetAddress={setStreetAddress}
+          zoneAddress={zoneAddress}
+          setZoneAddress={setZoneAddress}
           completeAddress={completeAddress}
           setCompleteAddress={setCompleteAddress}
           contactNumber={contactNumber}
@@ -419,6 +489,8 @@ export default function AddBoardingHouseStepper() {
             body: JSON.stringify({
               boardinghouse_owner: bhoName,
               boardinghouse_name: bhName,
+              street_address: streetAddress,
+              zone_address: zoneAddress,
               complete_address: completeAddress,
               contact_number: contactNumber,
               tagline: tagline,
