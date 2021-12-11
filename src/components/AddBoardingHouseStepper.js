@@ -207,7 +207,7 @@ const BoardingHouseDetailsFilling = ({
             value={streetAddress}
             onChange={(e) => {
               setStreetAddress(e.target.value);
-              setCompleteAddress(`${streetAddress} ${zoneAddress}`);
+              setCompleteAddress(`${e.target.value} - ${zoneAddress}, UEP`);
             }}
           />
           <FormControl sx={{ width: 200, mt: ".3rem" }}>
@@ -222,12 +222,12 @@ const BoardingHouseDetailsFilling = ({
               label="Zone Address"
               onChange={(e) => {
                 setZoneAddress(e.target.value);
-                setCompleteAddress(`${streetAddress} ${zoneAddress}`);
+                setCompleteAddress(`${streetAddress} - ${zoneAddress}, UEP`);
               }}
             >
-              <MenuItem value={"Zone 1, UEP"}>Zone 1, UEP</MenuItem>
-              <MenuItem value={"Zone 2, UEP"}>Zone 2, UEP</MenuItem>
-              <MenuItem value={"Zone 3, UEP"}>Zone 3, UEP</MenuItem>
+              <MenuItem value={"Zone 1"}>Zone 1, UEP</MenuItem>
+              <MenuItem value={"Zone 2"}>Zone 2, UEP</MenuItem>
+              <MenuItem value={"Zone 3"}>Zone 3, UEP</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -333,7 +333,7 @@ export default function AddBoardingHouseStepper() {
   // second step
   const [bhName, setBhName] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
-  const [zoneAddress, setZoneAddress] = useState("Zone 1, UEP");
+  const [zoneAddress, setZoneAddress] = useState("Zone 1");
   const [completeAddress, setCompleteAddress] = useState("");
   const [contactNumber, setContactNumber] = useState("+639");
   const [tagline, setTagline] = useState("");

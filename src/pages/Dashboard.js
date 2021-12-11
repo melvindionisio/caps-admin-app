@@ -9,15 +9,89 @@ import {
   CardHeader,
   Card,
   Paper,
-  CardContent,
-  Button,
 } from "@mui/material";
 import { Pie } from "react-chartjs-2";
 import { Chart, ArcElement } from "chart.js";
 import { useTheme } from "@mui/system";
+import useFetch from "../hooks/useFetch";
+
 Chart.register(ArcElement);
 
+const ZoneCard = ({ label, value, error }) => {
+  return (
+    <Grid item md={4} sm={6} xs={12}>
+      <Paper
+        variant="outlined"
+        style={{
+          height: 220,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          overflow: "hidden",
+        }}
+      >
+        {error ? (
+          <Typography
+            variant="overline"
+            style={{
+              fontSize: ".6rem",
+              lineHeight: "8rem",
+              fontFamily: "Quicksand",
+              color: "red",
+            }}
+          >
+            {value}
+          </Typography>
+        ) : (
+          <Typography
+            variant="h6"
+            style={{
+              fontSize: "7rem",
+              lineHeight: "8rem",
+              fontFamily: "Quicksand",
+            }}
+            color="text.secondary"
+          >
+            {value}
+          </Typography>
+        )}
+
+        <Typography
+          variant="overline"
+          color="text.secondary"
+          style={{ fontSize: 15 }}
+        >
+          {label}
+        </Typography>
+      </Paper>
+    </Grid>
+  );
+};
+
 const Dashboard = ({ handleDrawerToggle }) => {
+  const {
+    data: boardinghouses,
+    isPending,
+    error,
+  } = useFetch("http://localhost:3500/api/boarding-houses/total");
+
+  const {
+    data: zone1,
+    isPending: zone1IsPending,
+    error: zone1IsError,
+  } = useFetch("http://localhost:3500/api/boarding-houses/total/zone-1");
+  const {
+    data: zone2,
+    isPending: zone2IsPending,
+    error: zone2IsError,
+  } = useFetch("http://localhost:3500/api/boarding-houses/total/zone-2");
+  const {
+    data: zone3,
+    isPending: zone3IsPending,
+    error: zone3IsError,
+  } = useFetch("http://localhost:3500/api/boarding-houses/total/zone-3");
+
   const data = {
     labels: ["Red", "Blue", "Yellow"],
     datasets: [
@@ -36,23 +110,6 @@ const Dashboard = ({ handleDrawerToggle }) => {
       },
     ],
   };
-  const displayData = [
-    {
-      label: "UEP Zone 1",
-      value: 100,
-      link: "/my/boarding-house/",
-    },
-    {
-      label: "UEP Zone2",
-      value: 50,
-      link: "/my/boarding-house/",
-    },
-    {
-      label: "UEP Zone 3",
-      value: 100,
-      link: "/my/boarding-house/",
-    },
-  ];
 
   const theme = useTheme();
 
@@ -109,14 +166,38 @@ const Dashboard = ({ handleDrawerToggle }) => {
                   <Card sx={{ p: 0, pt: 0 }} style={{}} variant="outlined">
                     <CardHeader
                       title={
-                        <Typography
-                          variant="h4"
-                          as="span"
-                          color="text.secondary"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          250
-                        </Typography>
+                        <>
+                          {error && (
+                            <Typography
+                              variant="overline"
+                              color="red"
+                              sx={{ fontFamily: "Quicksand" }}
+                              fontSize=".6rem"
+                            >
+                              {error}
+                            </Typography>
+                          )}
+                          {isPending && (
+                            <Typography
+                              variant="h4"
+                              as="span"
+                              color="text.secondary"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              ...
+                            </Typography>
+                          )}
+                          {boardinghouses && (
+                            <Typography
+                              variant="h4"
+                              as="span"
+                              color="text.secondary"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              {boardinghouses.total}
+                            </Typography>
+                          )}
+                        </>
                       }
                       subheader={
                         <Typography variant="body1" color="text.secondary">
@@ -124,59 +205,47 @@ const Dashboard = ({ handleDrawerToggle }) => {
                         </Typography>
                       }
                     />
-                    <CardContent>
-                      <Typography>Address</Typography>
-                      <Typography>Contact number</Typography>
-                    </CardContent>
                   </Card>
                 </Box>
               </Slide>
 
               <Slide in={true} direction="left">
                 <Grid container spacing={2}>
-                  {displayData.map((data) => (
-                    <Grid item md={4} sm={6} xs={12} key={data.label}>
-                      <Paper
-                        variant="outlined"
-                        style={{
-                          height: 220,
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          overflow: "hidden",
-                        }}
-                      >
-                        <Typography
-                          variant="h6"
-                          style={{
-                            fontSize: "7rem",
-                            lineHeight: "8rem",
-                            fontFamily: "Quicksand",
-                          }}
-                          color="text.secondary"
-                        >
-                          {data.value}
-                        </Typography>
-                        <Typography
-                          variant="overline"
-                          color="text.secondary"
-                          style={{ fontSize: 15 }}
-                        >
-                          {data.label}
-                        </Typography>
-                        <Button
-                          variant="contained"
-                          disableElevation
-                          color="secondary"
-                          fullWidth
-                          style={{ marginBottom: "-16px", borderRadius: 0 }}
-                        >
-                          VIEW
-                        </Button>
-                      </Paper>
-                    </Grid>
-                  ))}
+                  {zone1IsError && (
+                    <ZoneCard
+                      label="UEP Zone 1"
+                      value={zone1IsError}
+                      error={true}
+                    />
+                  )}
+                  {zone1IsPending && (
+                    <ZoneCard label="UEP Zone 1" value={"..."} />
+                  )}
+                  {zone1 && <ZoneCard label="UEP Zone 1" value={zone1.total} />}
+
+                  {zone2IsError && (
+                    <ZoneCard
+                      label="UEP Zone 1"
+                      value={zone2IsError}
+                      error={true}
+                    />
+                  )}
+                  {zone2IsPending && (
+                    <ZoneCard label="UEP Zone 2" value={"..."} />
+                  )}
+                  {zone2 && <ZoneCard label="UEP Zone 2" value={zone2.total} />}
+
+                  {zone3IsError && (
+                    <ZoneCard
+                      label="UEP Zone 1"
+                      value={zone3IsError}
+                      error={true}
+                    />
+                  )}
+                  {zone3IsPending && (
+                    <ZoneCard label="UEP Zone 3" value={"..."} />
+                  )}
+                  {zone3 && <ZoneCard label="UEP Zone 3" value={zone3.total} />}
                 </Grid>
               </Slide>
             </Box>
