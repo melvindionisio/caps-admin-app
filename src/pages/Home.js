@@ -8,10 +8,11 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { useTheme } from "@mui/styles";
 
-// import useFetch from "../hooks/useFetch";
+import useFetch from "../hooks/useFetch";
 import HomeNavigation from "../components/HomeNavigation";
 import BoardingHouseList from "../components/lists/BoardingHouseList";
-// import LoadingState from "../components/LoadingState";
+import LoadingState from "../components/LoadingState";
+import AllByZone from "../components/lists/AllByZone";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,6 +45,11 @@ function a11yProps(index) {
 const Home = ({ handleDrawerToggle }) => {
   const [value, setValue] = useState(0);
   const theme = useTheme();
+  const {
+    data: allBoardinghouses,
+    isPending: isAllBoardinghousePending,
+    error: allBoardinghouseError,
+  } = useFetch("http://localhost:3500/api/boarding-houses");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -60,7 +66,7 @@ const Home = ({ handleDrawerToggle }) => {
         value={value}
         onChange={handleChange}
         indicatorColor="primary"
-        textColor="primary"
+        textColor="text.primary"
         variant="fullWidth"
         aria-label="full width tabs"
         sx={{
@@ -131,7 +137,15 @@ const Home = ({ handleDrawerToggle }) => {
                 px={2}
                 style={{ maxWidth: "75rem", margin: "0 auto" }}
               >
-                <BoardingHouseList />
+                {allBoardinghouseError && (
+                  <Typography variant="overline" color="initial">
+                    {allBoardinghouseError}
+                  </Typography>
+                )}
+                {isAllBoardinghousePending && <LoadingState />}
+                {allBoardinghouses && (
+                  <BoardingHouseList boardinghouses={allBoardinghouses} />
+                )}
               </Box>
             </Box>
           </TabPanel>
@@ -149,9 +163,7 @@ const Home = ({ handleDrawerToggle }) => {
                 px={2}
                 style={{ maxWidth: "75rem", margin: "0 auto" }}
               >
-                <Typography variant="body1" color="initial">
-                  Tab2
-                </Typography>
+                <AllByZone zone="zone-1" />
               </Box>
             </Box>
           </TabPanel>
@@ -168,9 +180,7 @@ const Home = ({ handleDrawerToggle }) => {
                 px={2}
                 style={{ maxWidth: "75rem", margin: "0 auto" }}
               >
-                <Typography variant="body1" color="initial">
-                  Tab3
-                </Typography>
+                <AllByZone zone="zone-2" />
               </Box>
             </Box>
           </TabPanel>
@@ -187,9 +197,7 @@ const Home = ({ handleDrawerToggle }) => {
                 px={2}
                 style={{ maxWidth: "75rem", margin: "0 auto" }}
               >
-                <Typography variant="body1" color="initial">
-                  Tab4
-                </Typography>
+                <AllByZone zone="zone-3" />
               </Box>
             </Box>
           </TabPanel>

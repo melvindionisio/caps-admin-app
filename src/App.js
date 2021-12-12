@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import Export from "./pages/Export";
 import Profile from "./pages/Profile";
 import AddBoardingHouse from "./pages/AddBoardingHouse";
+import BoardingHouse from "./pages/BoardingHouse";
 
 import { useState } from "react";
 import Menu from "./components/Menu";
@@ -92,7 +93,7 @@ const App = () => {
               <Route path="/login">
                 <Login />
               </Route>
-              <Route exact path="/admin/boarding-house">
+              <Route exact path="/admin/boarding-houses">
                 <Home handleDrawerToggle={handleDrawerToggle} />
               </Route>
               <Route path="/admin/dashboard">
@@ -101,14 +102,17 @@ const App = () => {
               <Route path="/admin/dashboard/:zone">
                 <ByZone />
               </Route>
+              <Route exact path="/admin/boarding-houses/add">
+                <AddBoardingHouse handleDrawerToggle={handleDrawerToggle} />
+              </Route>
+              <Route path="/admin/boarding-houses/:bhId">
+                <BoardingHouse />
+              </Route>
               <Route path="/admin/export">
                 <Export handleDrawerToggle={handleDrawerToggle} />
               </Route>
               <Route path="/admin/profile">
                 <Profile handleDrawerToggle={handleDrawerToggle} />
-              </Route>
-              <Route path="/admin/boarding-house/add">
-                <AddBoardingHouse handleDrawerToggle={handleDrawerToggle} />
               </Route>
             </Switch>
           </Container>

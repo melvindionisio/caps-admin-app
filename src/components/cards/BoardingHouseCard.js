@@ -6,30 +6,52 @@ import {
   CardActionArea,
   Grid,
 } from "@mui/material";
-import React from "react";
+import { useLocation, Link } from "react-router-dom";
 
-const BoardingHouseCard = () => {
+const BoardingHouseCard = ({ boardinghouse }) => {
+  const location = useLocation();
+
   return (
     <Grid item lg={3} xs={12} md={4} sm={6}>
-      <Card sx={{ borderRadius: 2 }}>
-        <CardActionArea>
-          <CardHeader
-            avatar={<Avatar aria-label="owner-pic"></Avatar>}
-            title={
-              <Typography variant="body1" color="initial">
-                Boarding house Name
-              </Typography>
-            }
-            subheader={
-              <>
-                <Typography variant="body2" color="text.secondary">
-                  Owner
+      <Link
+        to={`${location.pathname}/${boardinghouse.boardinghouse_id}`}
+        style={{
+          textDecoration: "none",
+        }}
+        sx={{
+          "&:hover": {
+            textDecoration: "underline",
+          },
+        }}
+      >
+        <Card sx={{ borderRadius: 2 }} variant="outlined">
+          <CardActionArea>
+            <CardHeader
+              avatar={<Avatar aria-label="owner-pic"></Avatar>}
+              title={
+                <Typography
+                  variant="body1"
+                  color="initial"
+                  sx={{
+                    "&:hover": {
+                      textDecoration: "underline",
+                    },
+                  }}
+                >
+                  {boardinghouse.bh_name}
                 </Typography>
-              </>
-            }
-          />
-        </CardActionArea>
-      </Card>
+              }
+              subheader={
+                <>
+                  <Typography variant="body2" color="text.secondary">
+                    {boardinghouse.bh_complete_address}
+                  </Typography>
+                </>
+              }
+            />
+          </CardActionArea>
+        </Card>
+      </Link>
     </Grid>
   );
 };

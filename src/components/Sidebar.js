@@ -44,12 +44,12 @@ const Sidebar = () => {
     },
     {
       text: "Boarding Houses",
-      path: "/admin/boarding-house",
+      path: "/admin/boarding-houses",
       icon: <OtherHousesIcon />,
     },
     {
       text: "Add Boarding House",
-      path: "/admin/boarding-house/add",
+      path: "/admin/boarding-houses/add",
       icon: <AddCircleIcon />,
     },
     {

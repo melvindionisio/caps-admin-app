@@ -2,10 +2,16 @@ import { Grid } from "@mui/material";
 import React from "react";
 import BoardingHouseCard from "../cards/BoardingHouseCard";
 
-const BoardingHouseList = () => {
+const BoardingHouseList = ({ boardinghouses }) => {
   return (
     <Grid container spacing={2}>
-      <BoardingHouseCard />
+      {boardinghouses &&
+        boardinghouses.map((boardinghouse) => (
+          <BoardingHouseCard
+            boardinghouse={boardinghouse}
+            key={boardinghouse.id}
+          />
+        ))}
     </Grid>
   );
 };
