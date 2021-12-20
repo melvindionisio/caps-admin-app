@@ -156,6 +156,10 @@ const BoardingHouseDetailsFilling = ({
   setZoneAddress,
   completeAddress,
   setCompleteAddress,
+  longitude,
+  setLongitude,
+  latitude,
+  setLatitude,
   contactNumber,
   setContactNumber,
   tagline,
@@ -230,6 +234,20 @@ const BoardingHouseDetailsFilling = ({
               <MenuItem value={"Zone 3"}>Zone 3, UEP</MenuItem>
             </Select>
           </FormControl>
+        </Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, pt: 1 }}>
+          <TextField
+            id="longitude"
+            label="Longitude"
+            value={longitude}
+            onChange={(e) => setLongitude(e.target.value)}
+          />
+          <TextField
+            id="latitude"
+            label="Latitude"
+            value={latitude}
+            onChange={(e) => setLatitude(e.target.value)}
+          />
         </Box>
         <TextField
           id="bh-address"
@@ -335,6 +353,8 @@ export default function AddBoardingHouseStepper() {
   const [streetAddress, setStreetAddress] = useState("");
   const [zoneAddress, setZoneAddress] = useState("Zone 1");
   const [completeAddress, setCompleteAddress] = useState("");
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
   const [contactNumber, setContactNumber] = useState("+639");
   const [tagline, setTagline] = useState("");
 
@@ -401,6 +421,8 @@ export default function AddBoardingHouseStepper() {
     setStreetAddress("");
     setZoneAddress("");
     setCompleteAddress("");
+    setLongitude(0);
+    setLatitude(0);
     setContactNumber("");
     setTagline("");
     setIsOptional(false);
@@ -437,6 +459,10 @@ export default function AddBoardingHouseStepper() {
           setZoneAddress={setZoneAddress}
           completeAddress={completeAddress}
           setCompleteAddress={setCompleteAddress}
+          longitude={longitude}
+          setLongitude={setLongitude}
+          latitude={latitude}
+          setLatitude={setLatitude}
           contactNumber={contactNumber}
           setContactNumber={setContactNumber}
           tagLine={tagline}
@@ -492,6 +518,8 @@ export default function AddBoardingHouseStepper() {
               street_address: streetAddress,
               zone_address: zoneAddress,
               complete_address: completeAddress,
+              longitude: longitude,
+              latitude: latitude,
               contact_number: contactNumber,
               tagline: tagline,
             }),

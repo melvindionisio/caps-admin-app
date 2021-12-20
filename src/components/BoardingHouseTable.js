@@ -30,8 +30,8 @@ export default function BoardingHouseTable({ data }) {
       width: 150,
     },
     {
-      field: "barangay",
-      headerName: "Barangay",
+      field: "zone",
+      headerName: "Barangay-Zone",
       width: 150,
     },
     {
@@ -41,7 +41,7 @@ export default function BoardingHouseTable({ data }) {
       width: 200,
       valueGetter: (params) =>
         `${params.getValue(params.id, "street") || ""} ${
-          params.getValue(params.id, "barangay") || ""
+          params.getValue(params.id, "zone") || ""
         }`,
     },
     {

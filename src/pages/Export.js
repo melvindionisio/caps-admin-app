@@ -43,13 +43,7 @@ const Export = ({ handleDrawerToggle }) => {
     isPending,
     error,
   } = useFetch("http://localhost:3500/api/boarding-houses/export");
-  // const {
-  //   data: boardingHouses,
-  //   isPending,
-  //   error,
-  // } = useFetch(
-  //   "https://my-json-server.typicode.com/melvindionisio/boardinghouse-serve/boardinghouses"
-  // );
+
   return (
     <Container disableGutters maxWidth="xl" sx={{ minHeight: "100vh" }}>
       <HomeNavigation title="Export" handleDrawerToggle={handleDrawerToggle} />

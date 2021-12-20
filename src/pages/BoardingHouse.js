@@ -45,7 +45,7 @@ const BoardingHouse = () => {
   };
 
   return (
-    <Slide in="true" direction="left">
+    <Slide in={true} direction="left">
       <Container disableGutters maxWidth="xl">
         {error && (
           <Typography

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeNavigation from "../components/HomeNavigation";
 import {
   Container,
@@ -17,7 +17,7 @@ import useFetch from "../hooks/useFetch";
 
 Chart.register(ArcElement);
 
-const ZoneCard = ({ label, value, error }) => {
+const ZoneCard = ({ label, value, error, color }) => {
   return (
     <Grid item md={4} sm={6} xs={12}>
       <Paper
@@ -50,6 +50,7 @@ const ZoneCard = ({ label, value, error }) => {
               fontSize: "7rem",
               lineHeight: "8rem",
               fontFamily: "Quicksand",
+              color: `${color}`,
             }}
             color="text.secondary"
           >
@@ -70,6 +71,31 @@ const ZoneCard = ({ label, value, error }) => {
 };
 
 const Dashboard = ({ handleDrawerToggle }) => {
+  const theme = useTheme();
+  const zoneColors = [
+    "rgb(255, 99, 132)",
+    "rgb(54, 162, 235)",
+    "rgb(255, 205, 86)",
+  ];
+  const [data, setData] = useState({
+    labels: ["Zone 1", "Zone 2", "Zone 3"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [0, 0, 0],
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+        hoverOffset: 4,
+        radius: 210,
+        borderColor: "transparent",
+        offset: 5,
+      },
+    ],
+  });
+
   const {
     data: boardinghouses,
     isPending,
@@ -92,27 +118,28 @@ const Dashboard = ({ handleDrawerToggle }) => {
     error: zone3IsError,
   } = useFetch("http://localhost:3500/api/boarding-houses/total/zone-3");
 
-  const data = {
-    labels: ["Red", "Blue", "Yellow"],
-    datasets: [
-      {
-        label: "My First Dataset",
-        data: [50, 100, 100],
-        backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+  useEffect(() => {
+    if (zone1 && zone2 && zone3) {
+      setData({
+        labels: ["Zone 1", "Zone 2", "Zone 3"],
+        datasets: [
+          {
+            label: "My First Dataset",
+            data: [zone1.total, zone2.total, zone3.total],
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(255, 205, 86)",
+            ],
+            hoverOffset: 4,
+            radius: 210,
+            borderColor: "transparent",
+            offset: 5,
+          },
         ],
-        hoverOffset: 4,
-        radius: 210,
-        borderColor: "transparent",
-        offset: 5,
-      },
-    ],
-  };
-
-  const theme = useTheme();
-
+      });
+    }
+  }, [zone1, zone2, zone3]);
   return (
     <Container maxWidth="xl" disableGutters sx={{ minHeight: "100vh" }}>
       <HomeNavigation
@@ -221,11 +248,17 @@ const Dashboard = ({ handleDrawerToggle }) => {
                   {zone1IsPending && (
                     <ZoneCard label="UEP Zone 1" value={"..."} />
                   )}
-                  {zone1 && <ZoneCard label="UEP Zone 1" value={zone1.total} />}
+                  {zone1 && (
+                    <ZoneCard
+                      label="UEP Zone 1"
+                      value={zone1.total}
+                      color={zoneColors[0]}
+                    />
+                  )}
 
                   {zone2IsError && (
                     <ZoneCard
-                      label="UEP Zone 1"
+                      label="UEP Zone 2"
                       value={zone2IsError}
                       error={true}
                     />
@@ -233,11 +266,17 @@ const Dashboard = ({ handleDrawerToggle }) => {
                   {zone2IsPending && (
                     <ZoneCard label="UEP Zone 2" value={"..."} />
                   )}
-                  {zone2 && <ZoneCard label="UEP Zone 2" value={zone2.total} />}
+                  {zone2 && (
+                    <ZoneCard
+                      label="UEP Zone 2"
+                      value={zone2.total}
+                      color={zoneColors[1]}
+                    />
+                  )}
 
                   {zone3IsError && (
                     <ZoneCard
-                      label="UEP Zone 1"
+                      label="UEP Zone 3"
                       value={zone3IsError}
                       error={true}
                     />
@@ -245,7 +284,13 @@ const Dashboard = ({ handleDrawerToggle }) => {
                   {zone3IsPending && (
                     <ZoneCard label="UEP Zone 3" value={"..."} />
                   )}
-                  {zone3 && <ZoneCard label="UEP Zone 3" value={zone3.total} />}
+                  {zone3 && (
+                    <ZoneCard
+                      label="UEP Zone 3"
+                      value={zone3.total}
+                      color={zoneColors[2]}
+                    />
+                  )}
                 </Grid>
               </Slide>
             </Box>
