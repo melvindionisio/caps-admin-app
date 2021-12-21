@@ -23,9 +23,11 @@ import { useState } from "react";
 
 const BoardingHouse = () => {
   const { bhId } = useParams();
-  const { data, isPending, error } = useFetch(
-    `http://localhost:3500/api/boarding-houses/${bhId}`
-  );
+  const {
+    data: boardinghouse,
+    isPending,
+    error,
+  } = useFetch(`http://localhost:3500/api/boarding-houses/${bhId}`);
 
   const [isBoardinghouseEditable, setIsBoardinghouseEditable] = useState(false);
   // const [alertMessage, setAlertMessage] = useState("");
@@ -57,9 +59,9 @@ const BoardingHouse = () => {
           </Typography>
         )}
         {isPending && <LoadingState />}
-        {data && (
+        {boardinghouse && (
           <>
-            <BackNavbar title={data.bh_name}>
+            <BackNavbar title={boardinghouse.name}>
               <IconButton></IconButton>
             </BackNavbar>
             <Fade in={true}>

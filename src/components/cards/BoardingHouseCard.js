@@ -14,7 +14,7 @@ const BoardingHouseCard = ({ boardinghouse }) => {
   return (
     <Grid item lg={3} xs={12} md={4} sm={6}>
       <Link
-        to={`${location.pathname}/${boardinghouse.boardinghouse_id}`}
+        to={`${location.pathname}/${boardinghouse.id}`}
         style={{
           textDecoration: "none",
         }}
@@ -38,13 +38,13 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                     },
                   }}
                 >
-                  {boardinghouse.bh_name}
+                  {boardinghouse.name}
                 </Typography>
               }
               subheader={
                 <>
                   <Typography variant="body2" color="text.secondary">
-                    {boardinghouse.bh_complete_address}
+                    {boardinghouse.completeAddress}
                   </Typography>
                 </>
               }
