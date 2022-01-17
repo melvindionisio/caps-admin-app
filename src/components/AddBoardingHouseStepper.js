@@ -536,7 +536,8 @@ export default function AddBoardingHouseStepper() {
             setMessage(data.message);
             setShowAlert(true);
             setSeverity("success");
-          });
+          })
+          .catch((err) => console.log(err));
       });
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
