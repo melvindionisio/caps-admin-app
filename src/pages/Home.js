@@ -67,7 +67,7 @@ const Home = ({ handleDrawerToggle }) => {
             value={value}
             onChange={handleChange}
             indicatorColor="primary"
-            textColor="text.primary"
+            textColor="inherit"
             variant="fullWidth"
             aria-label="full width tabs"
             sx={{
