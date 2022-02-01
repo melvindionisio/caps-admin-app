@@ -224,7 +224,13 @@ const Dashboard = ({ handleDrawerToggle }) => {
                                              variant="h4"
                                              as="span"
                                              color="text.secondary"
-                                             style={{ fontWeight: "bold" }}
+                                             style={{
+                                                fontWeight: "bold",
+                                             }}
+                                             sx={{
+                                                fontSize: "5rem",
+                                                p: 2,
+                                             }}
                                           >
                                              {boardinghouses.total}
                                           </Typography>

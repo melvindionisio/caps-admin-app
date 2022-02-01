@@ -1,26 +1,55 @@
-import {
-   Container,
-   IconButton,
-   Typography,
-   Slide,
-   Button,
-   TextField,
-   CardHeader,
-   Card,
-   Fade,
-   Avatar,
-   CardContent,
-   Chip,
-   Box,
-   // Alert,
-} from "@mui/material";
+import React, { useState } from "react";
+import { Container, IconButton, Typography, Slide } from "@mui/material";
 import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import BackNavbar from "../components/BackNavbar";
-import LoadingState from "../components/LoadingState";
-import { EditOutlined } from "@mui/icons-material";
-import { useState } from "react";
 import { domain } from "../fetch-url/fetchUrl";
+import LoadingState from "../components/LoadingState";
+
+import About from "../components/SwipeablePages/About";
+import Rooms from "../components/SwipeablePages/Rooms";
+import Reviews from "../components/SwipeablePages/Reviews";
+
+import PropTypes from "prop-types";
+import SwipeableViews from "react-swipeable-views";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
+
+import { useTheme } from "@mui/styles";
+import InfoIcon from "@mui/icons-material/Info";
+import BedroomChildIcon from "@mui/icons-material/BedroomChild";
+import ReviewsIcon from "@mui/icons-material/Reviews";
+
+function TabPanel(props) {
+   const { children, value, index, ...other } = props;
+   return (
+      <div
+         role="tabpanel"
+         hidden={value !== index}
+         id={`full-width-tabpanel-${index}`}
+         aria-labelledby={`full-width-tab-${index}`}
+         {...other}
+      >
+         {value === index && <Box>{children}</Box>}
+      </div>
+   );
+}
+
+TabPanel.propTypes = {
+   children: PropTypes.node,
+   index: PropTypes.any.isRequired,
+   value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+   return {
+      id: `full-width-tab-${index}`,
+      "aria-controls": `full-width-tabpanel-${index}`,
+   };
+}
 
 const BoardingHouse = () => {
    const { bhId } = useParams();
@@ -30,23 +59,54 @@ const BoardingHouse = () => {
       error,
    } = useFetch(`${domain}/api/boarding-houses/${bhId}`);
 
-   const [isBoardinghouseEditable, setIsBoardinghouseEditable] =
-      useState(false);
-   // const [alertMessage, setAlertMessage] = useState("");
-   // const [severity, setSeverity] = useState("warning");
-   // const [showAlert, setShowAlert] = useState("false");
+   const theme = useTheme();
+   const [value, setValue] = useState(0);
 
-   // useEffect(() => {
-   //   setTimeout(() => {
-   //     if (showAlert) {
-   //       setShowAlert(false);
-   //     }
-   //   }, 5000);
-   // }, [showAlert]);
-
-   const handleSubmit = (e) => {
-      e.preventDefault();
+   const handleChange = (event, newValue) => {
+      setValue(newValue);
    };
+
+   const handleChangeIndex = (index) => {
+      setValue(index);
+   };
+
+   function NavigationTabs() {
+      return (
+         <Tabs
+            sx={{
+               borderBottom: "1px solid rgba(0,0,0,0.2)",
+               "& .MuiTabs-indicator": {
+                  height: 4,
+                  borderRadius: "1.5rem 1.5rem 0 0 ",
+               },
+            }}
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="fullWidth"
+            aria-label="boardinghouse-tabs"
+         >
+            <Tooltip
+               title="About Boarding House"
+               TransitionComponent={Zoom}
+               enterDelay={1000}
+            >
+               <Tab icon={<InfoIcon />} {...a11yProps(0)} />
+            </Tooltip>
+            <Tooltip title="Rooms" TransitionComponent={Zoom} enterDelay={1000}>
+               <Tab icon={<BedroomChildIcon />} {...a11yProps(1)} />
+            </Tooltip>
+            <Tooltip
+               title="Reviews"
+               TransitionComponent={Zoom}
+               enterDelay={1000}
+            >
+               <Tab icon={<ReviewsIcon />} {...a11yProps(2)} />
+            </Tooltip>
+         </Tabs>
+      );
+   }
 
    return (
       <Slide in={true} direction="left">
@@ -63,166 +123,35 @@ const BoardingHouse = () => {
             {isPending && <LoadingState />}
             {boardinghouse && (
                <>
-                  <BackNavbar title={boardinghouse.name}>
+                  <BackNavbar
+                     title={boardinghouse.name}
+                     subtitle="Boarding House"
+                  >
                      <IconButton></IconButton>
                   </BackNavbar>
-                  <Fade in={true}>
-                     <Container
-                        disableGutters
-                        maxWidth="sm"
-                        sx={{ p: 2, display: "flex" }}
-                     >
-                        <Card sx={{ width: "90%", p: 2, margin: "0 auto" }}>
-                           <CardHeader
-                              avatar={
-                                 <Avatar
-                                    sx={{ height: "4rem", width: "4rem" }}
-                                    aria-label="profile-pic"
-                                 ></Avatar>
-                              }
-                              action={
-                                 <IconButton
-                                    aria-label="edit-icon"
-                                    onClick={() =>
-                                       setIsBoardinghouseEditable(
-                                          !isBoardinghouseEditable
-                                       )
-                                    }
-                                 >
-                                    <EditOutlined />
-                                 </IconButton>
-                              }
-                              title="You are Login as: "
-                              subheader="Admin"
-                           />
-                           <CardContent>
-                              <Chip
-                                 size="small"
-                                 label="PROFILE"
-                                 sx={{ mb: 1 }}
-                              />
-                              <Box sx={{ mb: 4 }}>
-                                 <TextField
-                                    id="bh-name"
-                                    label="Boarding house Name"
-                                    fullWidth
-                                    size="small"
-                                    variant="outlined"
-                                    margin="dense"
-                                    disabled={!isBoardinghouseEditable}
-                                 />
-                                 <TextField
-                                    id="bh-owner"
-                                    label="Owner"
-                                    fullWidth
-                                    size="small"
-                                    variant="outlined"
-                                    margin="dense"
-                                    disabled={!isBoardinghouseEditable}
-                                 />
-                                 <TextField
-                                    id="popularity"
-                                    label="Popularity"
-                                    fullWidth
-                                    size="small"
-                                    variant="outlined"
-                                    margin="dense"
-                                    disabled={!isBoardinghouseEditable}
-                                 />
-                                 <TextField
-                                    id="street-address"
-                                    label="Street Address"
-                                    fullWidth
-                                    size="small"
-                                    variant="outlined"
-                                    margin="dense"
-                                    disabled={!isBoardinghouseEditable}
-                                 />
-                                 <TextField
-                                    id="zone-address"
-                                    label="Zone Address"
-                                    fullWidth
-                                    size="small"
-                                    variant="outlined"
-                                    margin="dense"
-                                    disabled={!isBoardinghouseEditable}
-                                 />
-                                 <TextField
-                                    id="longitude"
-                                    label="Longitude"
-                                    fullWidth
-                                    size="small"
-                                    variant="outlined"
-                                    margin="dense"
-                                    disabled={!isBoardinghouseEditable}
-                                 />
-                                 <TextField
-                                    id="latitude"
-                                    label="Latitude"
-                                    fullWidth
-                                    size="small"
-                                    variant="outlined"
-                                    margin="dense"
-                                    disabled={!isBoardinghouseEditable}
-                                 />
-                                 <TextField
-                                    id="contact-number"
-                                    label="Contact No."
-                                    fullWidth
-                                    size="small"
-                                    variant="outlined"
-                                    margin="dense"
-                                    disabled={!isBoardinghouseEditable}
-                                 />
 
-                                 {/* <Alert
-                        severity={severity}
-                        sx={
-                          showAlert
-                            ? { display: "flex", mt: 2 }
-                            : { display: "none", mt: 2 }
-                        }
-                      >
-                        {alertMessage}
-                      </Alert> */}
-                                 <Box
-                                    sx={
-                                       isBoardinghouseEditable
-                                          ? {
-                                               display: "flex",
-                                               justifyContent: "flex-end",
-                                            }
-                                          : { display: "none" }
-                                    }
-                                 >
-                                    <Button
-                                       size="small"
-                                       variant="outlined"
-                                       disableElevation
-                                       color="secondary"
-                                       sx={{ mr: 1 }}
-                                       onClick={() =>
-                                          setIsBoardinghouseEditable(
-                                             !isBoardinghouseEditable
-                                          )
-                                       }
-                                    >
-                                       Cancel
-                                    </Button>
-                                    <Button
-                                       size="small"
-                                       variant="contained"
-                                       disableElevation
-                                       onClick={handleSubmit}
-                                    >
-                                       save
-                                    </Button>
-                                 </Box>
-                              </Box>
-                           </CardContent>
-                        </Card>
-                     </Container>
-                  </Fade>
+                  <Box sx={{ background: "white" }}>
+                     <NavigationTabs />
+                  </Box>
+
+                  <SwipeableViews
+                     axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                     index={value}
+                     onChangeIndex={handleChangeIndex}
+                  >
+                     <TabPanel value={value} index={0} dir={theme.direction}>
+                        <About boardinghouse={boardinghouse} />
+                     </TabPanel>
+                     <TabPanel value={value} index={1} dir={theme.direction}>
+                        <Box sx={{ minHeight: "100vh", paddingBottom: "5rem" }}>
+                           <Rooms bhName={boardinghouse.name} />
+                        </Box>
+                     </TabPanel>
+
+                     <TabPanel value={value} index={2} dir={theme.direction}>
+                        <Reviews />
+                     </TabPanel>
+                  </SwipeableViews>
                </>
             )}
          </Container>
