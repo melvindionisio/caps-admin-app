@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import AddBoardingHouse from "./pages/AddBoardingHouse";
 import BoardingHouse from "./pages/BoardingHouse";
 import Room from "./pages/Room";
+import Owners from "./pages/Owners";
 
 import { useState } from "react";
 import Menu from "./components/Menu";
@@ -103,6 +104,9 @@ const App = () => {
                      </Route>
                      <Route path="/admin/dashboard">
                         <Dashboard handleDrawerToggle={handleDrawerToggle} />
+                     </Route>
+                     <Route path="/admin/owners">
+                        <Owners handleDrawerToggle={handleDrawerToggle} />
                      </Route>
                      <Route path="/admin/dashboard/:zone">
                         <ByZone />

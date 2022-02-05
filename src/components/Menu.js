@@ -16,107 +16,113 @@ import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import GroupsIcon from "@mui/icons-material/Groups";
 
 import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  ListItemButton,
+   List,
+   ListItem,
+   ListItemText,
+   ListItemIcon,
+   ListItemButton,
 } from "@mui/material";
 import { grey } from "@material-ui/core/colors";
 import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "start",
-  },
-  list: {
-    width: 270,
-  },
-  fullList: {
-    width: "auto",
-  },
-  appBar: {
-    [theme.breakpoints.up("sm")]: {
-      // width: `calc(100% - ${drawerWidth}px)`,
-      // marginLeft: drawerWidth,
-    },
-  },
-  toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "0rem 1.5rem",
-  },
-  closeButton: {
-    padding: "1rem",
-    alignSelf: "flex-end",
-  },
-  avatar: {
-    height: 80,
-    width: 80,
-    margin: "auto",
-  },
-  fullWidth: {
-    width: "85%",
-    display: "block",
-    alignSelf: "center",
-  },
+   container: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "start",
+   },
+   list: {
+      width: 270,
+   },
+   fullList: {
+      width: "auto",
+   },
+   appBar: {
+      [theme.breakpoints.up("sm")]: {
+         // width: `calc(100% - ${drawerWidth}px)`,
+         // marginLeft: drawerWidth,
+      },
+   },
+   toolbar: {
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "0rem 1.5rem",
+   },
+   closeButton: {
+      padding: "1rem",
+      alignSelf: "flex-end",
+   },
+   avatar: {
+      height: 80,
+      width: 80,
+      margin: "auto",
+   },
+   fullWidth: {
+      width: "85%",
+      display: "block",
+      alignSelf: "center",
+   },
 
-  menulist: {
-    width: "85%",
-  },
+   menulist: {
+      width: "85%",
+   },
 }));
 
 export default function Menu({
-  children,
-  handleDrawerToggle,
-  menuOpen,
-  anchor,
+   children,
+   handleDrawerToggle,
+   menuOpen,
+   anchor,
 }) {
-  const classes = useStyles();
-  const location = useLocation();
-  const history = useHistory();
+   const classes = useStyles();
+   const location = useLocation();
+   const history = useHistory();
 
-  const menuItems = [
-    {
-      text: "Dashboard",
-      path: "/admin/dashboard",
-      icon: <DashboardIcon />,
-    },
-    {
-      text: "Boarding Houses",
-      path: "/admin/boarding-houses",
-      icon: <OtherHousesIcon />,
-    },
-    {
-      text: "Add Boarding House",
-      path: "/admin/boarding-houses/add",
-      icon: <AddCircleIcon />,
-    },
-    {
-      text: "Export",
-      path: "/admin/export",
-      icon: <ImportExportIcon />,
-    },
-    {
-      text: "Profile",
-      path: "/admin/profile",
-      icon: <ManageAccountsIcon />,
-    },
-  ];
+   const menuItems = [
+      {
+         text: "Dashboard",
+         path: "/admin/dashboard",
+         icon: <DashboardIcon />,
+      },
+      {
+         text: "Owners",
+         path: "/admin/owners",
+         icon: <GroupsIcon />,
+      },
+      {
+         text: "Boarding Houses",
+         path: "/admin/boarding-houses",
+         icon: <OtherHousesIcon />,
+      },
+      {
+         text: "Add Boarding House",
+         path: "/admin/boarding-houses/add",
+         icon: <AddCircleIcon />,
+      },
+      {
+         text: "Export",
+         path: "/admin/export",
+         icon: <ImportExportIcon />,
+      },
+      {
+         text: "Profile",
+         path: "/admin/profile",
+         icon: <ManageAccountsIcon />,
+      },
+   ];
 
-  const SideContent = (anchor) => (
-    <Box
-      pb={2}
-      className={clsx(classes.list, classes.container, {
-        [classes.fullList]: anchor === "top" || anchor === "bottom",
-      })}
-      role="presentation"
-    >
-      {/* <Box
+   const SideContent = (anchor) => (
+      <Box
+         pb={2}
+         className={clsx(classes.list, classes.container, {
+            [classes.fullList]: anchor === "top" || anchor === "bottom",
+         })}
+         role="presentation"
+      >
+         {/* <Box
         className={classes.closeContainer}
         onClick={handleDrawerToggle}
         onKeyDown={handleDrawerToggle}
@@ -127,80 +133,83 @@ export default function Menu({
         <Divider />
       </Box>
       <Box className={classes.menulist}>{children}</Box> */}
-      <Box
-        onClick={handleDrawerToggle}
-        onKeyDown={handleDrawerToggle}
-        sx={{ width: "100%" }}
-      >
-        <List sx={{ paddingTop: "0rem" }}>
-          <ListItem
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
+         <Box
             onClick={handleDrawerToggle}
             onKeyDown={handleDrawerToggle}
-            divider
-          >
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-              <Avatar
-                src={logo}
-                style={{ height: "1.7rem", width: "1.7rem" }}
-              ></Avatar>
-              <Typography variant="body1" style={{ fontFamily: "Quicksand" }}>
-                SEARCH 'N STAY
-              </Typography>
-            </Box>
-            <IconButton
-              onClick={handleDrawerToggle}
-              onKeyDown={handleDrawerToggle}
-            >
-              <CancelIcon />
-            </IconButton>
-          </ListItem>
-          {/* {children} */}
+            sx={{ width: "100%" }}
+         >
+            <List sx={{ paddingTop: "0rem" }}>
+               <ListItem
+                  sx={{
+                     display: "flex",
+                     justifyContent: "space-between",
+                  }}
+                  onClick={handleDrawerToggle}
+                  onKeyDown={handleDrawerToggle}
+                  divider
+               >
+                  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                     <Avatar
+                        src={logo}
+                        style={{ height: "1.7rem", width: "1.7rem" }}
+                     ></Avatar>
+                     <Typography
+                        variant="body1"
+                        style={{ fontFamily: "Quicksand" }}
+                     >
+                        SEARCH 'N STAY
+                     </Typography>
+                  </Box>
+                  <IconButton
+                     onClick={handleDrawerToggle}
+                     onKeyDown={handleDrawerToggle}
+                  >
+                     <CancelIcon />
+                  </IconButton>
+               </ListItem>
+               {/* {children} */}
 
-          {menuItems.map((item) => (
-            <ListItem
-              button
-              divider
-              disablePadding
-              onClick={() => history.push(item.path)}
-              sx={
-                location.pathname === item.path
-                  ? {
-                      background: grey[300],
-                      color: grey[900],
-                    }
-                  : { background: "transparent" }
-              }
-              key={item.text}
-            >
-              <ListItemButton>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+               {menuItems.map((item) => (
+                  <ListItem
+                     button
+                     divider
+                     disablePadding
+                     onClick={() => history.push(item.path)}
+                     sx={
+                        location.pathname === item.path
+                           ? {
+                                background: grey[300],
+                                color: grey[900],
+                             }
+                           : { background: "transparent" }
+                     }
+                     key={item.text}
+                  >
+                     <ListItemButton>
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItemText primary={item.text} />
+                     </ListItemButton>
+                  </ListItem>
+               ))}
+            </List>
+         </Box>
+         {/* <Box className={classes.menulist}>{children}</Box> */}
       </Box>
-      {/* <Box className={classes.menulist}>{children}</Box> */}
-    </Box>
-  );
+   );
 
-  return (
-    <SwipeableDrawer
-      anchor={anchor}
-      open={menuOpen}
-      onClose={handleDrawerToggle}
-      onOpen={handleDrawerToggle}
-      ModalProps={{
-        keepMounted: true, // Better open performance on mobile.
-      }}
-      hysteresis={0.1}
-    >
-      {SideContent(anchor)}
-      {/*{children}*/}
-    </SwipeableDrawer>
-  );
+   return (
+      <SwipeableDrawer
+         anchor={anchor}
+         open={menuOpen}
+         onClose={handleDrawerToggle}
+         onOpen={handleDrawerToggle}
+         ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+         }}
+         hysteresis={0.1}
+      >
+         {SideContent(anchor)}
+         {/*{children}*/}
+      </SwipeableDrawer>
+   );
 }

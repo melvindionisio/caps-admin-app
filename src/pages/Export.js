@@ -1,4 +1,4 @@
-import { Container, Box, Typography, Button } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import useFetch from "../hooks/useFetch";
 import BoardingHouseTable from "../components/BoardingHouseTable";
@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Export = ({ handleDrawerToggle }) => {
    const classes = useStyles();
-   const [isGeneratePending, setIsGeneratePending] = useState(false);
+   const [isGeneratePdfPending, setIsGeneratePdfPending] = useState(false);
+   const [isGenerateExcelPending, setIsGenerateExcelPending] = useState(false);
 
    const {
       data: boardinghouses,
@@ -59,20 +60,27 @@ const Export = ({ handleDrawerToggle }) => {
    };
 
    const createPdf = async () => {
-      setIsGeneratePending(true);
-      let registeredHouse = await fetch(`${domain}/api/boarding-houses/export`);
-      registeredHouse = await registeredHouse.json();
+      setIsGeneratePdfPending(true);
 
-      registeredHouse = registeredHouse.map((house) => {
-         return {
-            id: house.id,
-            name: house.name,
-            owner: house.owner_name,
-            street: house.street,
-            zone: house.zone,
-            address: `${house.street} - ${house.zone}`,
-         };
-      });
+      try {
+         let registeredHouse = await fetch(
+            `${domain}/api/boarding-houses/export`
+         );
+         registeredHouse = await registeredHouse.json();
+
+         registeredHouse = registeredHouse.map((house) => {
+            return {
+               id: house.id,
+               name: house.name,
+               owner: house.owner_name,
+               street: house.street,
+               zone: house.zone,
+               address: `${house.street} - ${house.zone}`,
+            };
+         });
+      } catch (err) {
+         console.log(err);
+      }
 
       fetch(`${domain}/api/pdf/generate`, {
          method: "POST",
@@ -91,7 +99,52 @@ const Export = ({ handleDrawerToggle }) => {
                type: "application/pdf",
             });
             saveAs(pdfBlob, "uep-registered-boardinghouse.pdf");
-            setIsGeneratePending(false);
+            setIsGeneratePdfPending(false);
+         })
+         .catch((err) => console.log(err));
+   };
+
+   const createExcel = async () => {
+      setIsGenerateExcelPending(true);
+
+      try {
+         let registeredHouse = await fetch(
+            `${domain}/api/boarding-houses/export`
+         );
+         registeredHouse = await registeredHouse.json();
+
+         registeredHouse = registeredHouse.map((house) => {
+            return {
+               id: house.id,
+               name: house.name,
+               owner: house.owner_name,
+               street: house.street,
+               zone: house.zone,
+               address: `${house.street} - ${house.zone}`,
+            };
+         });
+      } catch (err) {
+         console.log(err);
+      }
+
+      fetch(`${domain}/api/excel/generate`, {
+         method: "POST",
+         body: JSON.stringify(mydata),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then(() =>
+            axios.get(`${domain}/api/excel/download`, {
+               responseType: "blob",
+            })
+         )
+         .then((res) => {
+            const excelBlob = new Blob([res.data], {
+               type: "application/xlsx",
+            });
+            saveAs(excelBlob, "uep-registered-boardinghouse.xlsx");
+            setIsGenerateExcelPending(false);
          })
          .catch((err) => console.log(err));
    };
@@ -122,17 +175,19 @@ const Export = ({ handleDrawerToggle }) => {
                            color="secondary"
                            startIcon={<PictureAsPdfIcon />}
                            onClick={createPdf}
-                           loading={isGeneratePending}
+                           loading={isGeneratePdfPending}
                         >
                            Download as PDF
                         </LoadingButton>
-                        <Button
+                        <LoadingButton
                            variant="contained"
                            color="primary"
                            startIcon={<ArticleIcon />}
+                           onClick={createExcel}
+                           loading={isGenerateExcelPending}
                         >
                            Download as Excel
-                        </Button>
+                        </LoadingButton>
                      </Box>
                   </>
                )}
