@@ -52,39 +52,33 @@ const Export = ({ handleDrawerToggle }) => {
       error,
    } = useFetch(`${domain}/api/boarding-houses/export`);
 
-   const mydata = {
-      name: "Melvin Dionisio",
-      price1: 200,
-      price2: 500,
-      receiptId: 100,
-   };
-
-   const createPdf = async () => {
+   const createPdf = async (boardinghouses) => {
       setIsGeneratePdfPending(true);
 
-      try {
-         let registeredHouse = await fetch(
-            `${domain}/api/boarding-houses/export`
-         );
-         registeredHouse = await registeredHouse.json();
+      console.log(boardinghouses);
+      //try {
+      //let registeredHouse = await fetch(
+      //`${domain}/api/boarding-houses/export`
+      //);
+      //registeredHouse = await registeredHouse.json();
 
-         registeredHouse = registeredHouse.map((house) => {
-            return {
-               id: house.id,
-               name: house.name,
-               owner: house.owner_name,
-               street: house.street,
-               zone: house.zone,
-               address: `${house.street} - ${house.zone}`,
-            };
-         });
-      } catch (err) {
-         console.log(err);
-      }
+      //registeredHouse = registeredHouse.map((house) => {
+      //return {
+      //id: house.id,
+      //name: house.name,
+      //owner: house.owner_name,
+      //street: house.street,
+      //zone: house.zone,
+      //address: `${house.street} - ${house.zone}`,
+      //};
+      //});
+      //} catch (err) {
+      //console.log(err);
+      //}
 
       fetch(`${domain}/api/pdf/generate`, {
          method: "POST",
-         body: JSON.stringify(mydata),
+         body: JSON.stringify(boardinghouses),
          headers: {
             "Content-Type": "application/json",
          },
@@ -104,32 +98,33 @@ const Export = ({ handleDrawerToggle }) => {
          .catch((err) => console.log(err));
    };
 
-   const createExcel = async () => {
+   const createExcel = async (boardinghouses) => {
       setIsGenerateExcelPending(true);
 
-      try {
-         let registeredHouse = await fetch(
-            `${domain}/api/boarding-houses/export`
-         );
-         registeredHouse = await registeredHouse.json();
+      console.log(boardinghouses);
+      //try {
+      //let registeredHouse = await fetch(
+      //`${domain}/api/boarding-houses/export`
+      //);
+      //registeredHouse = await registeredHouse.json();
 
-         registeredHouse = registeredHouse.map((house) => {
-            return {
-               id: house.id,
-               name: house.name,
-               owner: house.owner_name,
-               street: house.street,
-               zone: house.zone,
-               address: `${house.street} - ${house.zone}`,
-            };
-         });
-      } catch (err) {
-         console.log(err);
-      }
+      //registeredHouse = registeredHouse.map((house) => {
+      //return {
+      //id: house.id,
+      //name: house.name,
+      //owner: house.owner_name,
+      //street: house.street,
+      //zone: house.zone,
+      //address: `${house.street} - ${house.zone}`,
+      //};
+      //});
+      //} catch (err) {
+      //console.log(err);
+      //}
 
       fetch(`${domain}/api/excel/generate`, {
          method: "POST",
-         body: JSON.stringify(mydata),
+         body: JSON.stringify(boardinghouses),
          headers: {
             "Content-Type": "application/json",
          },
@@ -174,7 +169,7 @@ const Export = ({ handleDrawerToggle }) => {
                            variant="contained"
                            color="secondary"
                            startIcon={<PictureAsPdfIcon />}
-                           onClick={createPdf}
+                           onClick={() => createPdf(boardinghouses)}
                            loading={isGeneratePdfPending}
                         >
                            Download as PDF
@@ -183,7 +178,7 @@ const Export = ({ handleDrawerToggle }) => {
                            variant="contained"
                            color="primary"
                            startIcon={<ArticleIcon />}
-                           onClick={createExcel}
+                           onClick={() => createExcel(boardinghouses)}
                            loading={isGenerateExcelPending}
                         >
                            Download as Excel
