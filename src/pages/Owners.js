@@ -16,6 +16,10 @@ function Owners({ handleDrawerToggle }) {
    const [isEdit, setIsEdit] = useState(false);
    const [isDelete, setIsDelete] = useState(false);
 
+   const [showMessage, setShowMessage] = useState(false);
+   const [message, setMessage] = useState("");
+   const [severity, setSeverity] = useState("warning");
+
    const handleOpen = (owner) => {
       setOpen(true);
       console.log(open);
@@ -31,6 +35,7 @@ function Owners({ handleDrawerToggle }) {
    const handleClose = () => {
       setOpen(false);
       setIsEdit(false);
+      setIsDelete(false);
    };
    return (
       <Container maxWidth="xl" disableGutters sx={{ minHeight: "100vh" }}>

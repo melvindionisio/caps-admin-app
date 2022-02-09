@@ -5,9 +5,10 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 //import Slide from "@mui/material/Slide";
 import Typography from "@mui/material/Typography";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Divider } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { CloseOutlined } from "@mui/icons-material";
 import { Save } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 
@@ -18,7 +19,6 @@ const style = {
    transform: "translate(-50%, -50%)",
    width: 400,
    bgcolor: "background.paper",
-   //border: "2px solid rgba(0,0,0,0.8)",
    borderRadius: ".5rem",
    boxShadow: 10,
    p: 2,
@@ -36,9 +36,15 @@ export default function ViewOwnerModal({
 }) {
    const [ownerName, setOwnerName] = useState("");
    const [ownerUsername, setOwnerUsername] = useState("");
+   const [deleteOwnerConfirm, setDeleteOwnerConfirm] = useState("");
 
    const handleDelete = () => {
-      //delete here
+      if (deleteOwnerConfirm === ownerName) {
+         //delete owner with boardinghouse connected to the owner
+         console.log("Owner Deleted");
+      } else {
+         console.log("not match");
+      }
    };
 
    useEffect(() => {
@@ -71,22 +77,42 @@ export default function ViewOwnerModal({
                                  : { display: "none" }
                            }
                         >
-                           <Typography
-                              variant="body1"
-                              align="center"
+                           <Box
                               sx={{
-                                 mb: 1,
-                                 textTransform: "uppercase",
-                                 fontFamily: "Quicksand",
+                                 position: "relative",
                               }}
                            >
-                              Confirm Delete
-                           </Typography>
+                              <Typography
+                                 variant="body1"
+                                 align="center"
+                                 sx={{
+                                    mb: 1,
+                                    textTransform: "uppercase",
+                                    fontFamily: "Quicksand",
+                                 }}
+                              >
+                                 Confirm Delete
+                              </Typography>
+                              <CloseOutlined
+                                 sx={{
+                                    position: "absolute",
+                                    right: 0,
+                                    top: 0,
+                                 }}
+                                 onClick={handleClose}
+                              />
+                           </Box>
+
+                           <Divider sx={{ mb: 1 }} />
                            <TextField
                               size="small"
                               margin="dense"
                               label="Enter Owner Name"
                               fullWidth
+                              value={deleteOwnerConfirm}
+                              onChange={(e) =>
+                                 setDeleteOwnerConfirm(e.target.value)
+                              }
                            />
 
                            <Box
@@ -101,7 +127,10 @@ export default function ViewOwnerModal({
                                  color="primary"
                                  variant="contained"
                                  size="small"
-                                 onClick={() => setIsDelete(false)}
+                                 onClick={() => {
+                                    setIsDelete(false);
+                                    setDeleteOwnerConfirm("");
+                                 }}
                               >
                                  cancel
                               </Button>
@@ -128,17 +157,32 @@ export default function ViewOwnerModal({
                         >
                            {!isEdit ? (
                               <div>
-                                 <Typography
-                                    variant="body1"
-                                    align="center"
+                                 <Box
                                     sx={{
-                                       mb: 1,
-                                       textTransform: "uppercase",
-                                       fontFamily: "Quicksand",
+                                       position: "relative",
                                     }}
                                  >
-                                    Owner
-                                 </Typography>
+                                    <Typography
+                                       variant="body1"
+                                       align="center"
+                                       sx={{
+                                          mb: 1,
+                                          textTransform: "uppercase",
+                                          fontFamily: "Quicksand",
+                                       }}
+                                    >
+                                       Owner
+                                    </Typography>
+                                    <CloseOutlined
+                                       sx={{
+                                          position: "absolute",
+                                          right: 0,
+                                          top: 0,
+                                       }}
+                                       onClick={handleClose}
+                                    />
+                                 </Box>
+                                 <Divider sx={{ mb: 1 }} />
                                  <Typography
                                     id="transition-modal-title"
                                     variant="h6"
@@ -158,17 +202,32 @@ export default function ViewOwnerModal({
                               </div>
                            ) : (
                               <>
-                                 <Typography
-                                    variant="body1"
-                                    align="center"
+                                 <Box
                                     sx={{
-                                       mb: 1,
-                                       textTransform: "uppercase",
-                                       fontFamily: "Quicksand",
+                                       position: "relative",
                                     }}
                                  >
-                                    Edit Owner
-                                 </Typography>
+                                    <Typography
+                                       variant="body1"
+                                       align="center"
+                                       sx={{
+                                          mb: 1,
+                                          textTransform: "uppercase",
+                                          fontFamily: "Quicksand",
+                                       }}
+                                    >
+                                       Edit {ownerName}
+                                    </Typography>
+                                    <CloseOutlined
+                                       sx={{
+                                          position: "absolute",
+                                          right: 0,
+                                          top: 0,
+                                       }}
+                                       onClick={handleClose}
+                                    />
+                                 </Box>
+                                 <Divider sx={{ mb: 1 }} />
                                  <TextField
                                     size="small"
                                     fullWidth

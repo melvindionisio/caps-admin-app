@@ -21,6 +21,7 @@ import Owners from "./pages/Owners";
 import { useState } from "react";
 import Menu from "./components/Menu";
 import ByZone from "./pages/ByZone";
+import LoginContextProvider from "./contexts/LoginContext";
 
 const useStyles = makeStyles((theme) => ({
    mainContainer: {
@@ -72,66 +73,68 @@ const App = () => {
 
    return (
       <ThemeProvider theme={theme}>
-         <Container
-            disableGutters
-            maxWidth="xl"
-            sx={{ display: "flex" }}
-            className={classes.mainContainer}
-         >
-            <Router>
-               <Menu
-                  handleDrawerToggle={handleDrawerToggle}
-                  menuOpen={menuOpen}
-                  anchor="left"
-               />
-               <Hidden mdDown>
-                  <Sidebar />
-               </Hidden>
-               <Container
-                  disableGutters
-                  maxWidth="xl"
-                  sx={{ overflowY: "auto" }}
-               >
-                  <Switch>
-                     <Route exact path="/">
-                        <Redirect to="/login" />
-                     </Route>
-                     <Route path="/login">
-                        <Login />
-                     </Route>
-                     <Route exact path="/admin/boarding-houses">
-                        <Home handleDrawerToggle={handleDrawerToggle} />
-                     </Route>
-                     <Route path="/admin/dashboard">
-                        <Dashboard handleDrawerToggle={handleDrawerToggle} />
-                     </Route>
-                     <Route path="/admin/owners">
-                        <Owners handleDrawerToggle={handleDrawerToggle} />
-                     </Route>
-                     <Route path="/admin/dashboard/:zone">
-                        <ByZone />
-                     </Route>
-                     <Route exact path="/admin/boarding-houses/add">
-                        <AddBoardingHouse
-                           handleDrawerToggle={handleDrawerToggle}
-                        />
-                     </Route>
-                     <Route path="/admin/boarding-houses/:bhId">
-                        <BoardingHouse />
-                     </Route>
-                     <Route exact path="/admin/rooms/:roomId">
-                        <Room />
-                     </Route>
-                     <Route path="/admin/export">
-                        <Export handleDrawerToggle={handleDrawerToggle} />
-                     </Route>
-                     <Route path="/admin/profile">
-                        <Profile handleDrawerToggle={handleDrawerToggle} />
-                     </Route>
-                  </Switch>
-               </Container>
-            </Router>
-         </Container>
+         <LoginContextProvider>
+            <Container
+               disableGutters
+               maxWidth="xl"
+               sx={{ display: "flex" }}
+               className={classes.mainContainer}
+            >
+               <Router>
+                  <Menu
+                     handleDrawerToggle={handleDrawerToggle}
+                     menuOpen={menuOpen}
+                     anchor="left"
+                  />
+                  <Hidden mdDown>
+                     <Sidebar />
+                  </Hidden>
+                  <Container
+                     disableGutters
+                     maxWidth="xl"
+                     sx={{ overflowY: "auto" }}
+                  >
+                     <Switch>
+                        <Route exact path="/">
+                           <Redirect to="/login" />
+                        </Route>
+                        <Route path="/login">
+                           <Login />
+                        </Route>
+                        <Route exact path="/admin/boarding-houses">
+                           <Home handleDrawerToggle={handleDrawerToggle} />
+                        </Route>
+                        <Route path="/admin/dashboard">
+                           <Dashboard handleDrawerToggle={handleDrawerToggle} />
+                        </Route>
+                        <Route path="/admin/owners">
+                           <Owners handleDrawerToggle={handleDrawerToggle} />
+                        </Route>
+                        <Route path="/admin/dashboard/:zone">
+                           <ByZone />
+                        </Route>
+                        <Route exact path="/admin/boarding-houses/add">
+                           <AddBoardingHouse
+                              handleDrawerToggle={handleDrawerToggle}
+                           />
+                        </Route>
+                        <Route path="/admin/boarding-houses/:bhId">
+                           <BoardingHouse />
+                        </Route>
+                        <Route exact path="/admin/rooms/:roomId">
+                           <Room />
+                        </Route>
+                        <Route path="/admin/export">
+                           <Export handleDrawerToggle={handleDrawerToggle} />
+                        </Route>
+                        <Route path="/admin/profile">
+                           <Profile handleDrawerToggle={handleDrawerToggle} />
+                        </Route>
+                     </Switch>
+                  </Container>
+               </Router>
+            </Container>
+         </LoginContextProvider>
       </ThemeProvider>
    );
 };
