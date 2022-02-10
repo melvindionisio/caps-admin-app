@@ -6,7 +6,7 @@ export const LoginContext = createContext();
 
 function LoginContextProvider(props) {
    const [isAdminLoggedIn, setIsAdminLoggedIn] = useLocalStorage(
-      "isOwnerLoggedIn",
+      "isAdminLoggedIn",
       false
    );
 

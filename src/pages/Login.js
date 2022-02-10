@@ -115,14 +115,17 @@ const Login = () => {
 
                console.log(data.message);
                history.push("/admin/dashboard");
+               setIsLoginLoading(false);
             } else if (data.error === "incorrect") {
                setSeverity("warning");
                setMessage(data.message);
                setShowMessage(true);
+               setIsLoginLoading(false);
             } else {
                setShowMessage(true);
                setSeverity("error");
                setMessage(data.message);
+               setIsLoginLoading(false);
             }
          });
    };

@@ -163,6 +163,7 @@ const Export = ({ handleDrawerToggle }) => {
                            display: "flex",
                            gap: 1,
                            mt: 1,
+                           flexWrap: "wrap",
                         }}
                      >
                         <LoadingButton

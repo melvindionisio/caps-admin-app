@@ -16,9 +16,10 @@ function Owners({ handleDrawerToggle }) {
    const [isEdit, setIsEdit] = useState(false);
    const [isDelete, setIsDelete] = useState(false);
 
-   const [showMessage, setShowMessage] = useState(false);
-   const [message, setMessage] = useState("");
-   const [severity, setSeverity] = useState("warning");
+   const [deleteOwnerConfirm, setDeleteOwnerConfirm] = useState("");
+   const [newPassword, setNewPassword] = useState("");
+   const [repeatNewPassword, setRepeatNewPassword] = useState("");
+   const [profileChanged, setProfileChanged] = useState(false);
 
    const handleOpen = (owner) => {
       setOpen(true);
@@ -31,12 +32,16 @@ function Owners({ handleDrawerToggle }) {
          .catch((err) => console.log(err));
    };
 
-   //const handleOpen = () => setOpen(true);
    const handleClose = () => {
       setOpen(false);
       setIsEdit(false);
       setIsDelete(false);
+      setDeleteOwnerConfirm("");
+      setNewPassword("");
+      setRepeatNewPassword("");
+      setProfileChanged(false);
    };
+
    return (
       <Container maxWidth="xl" disableGutters sx={{ minHeight: "100vh" }}>
          <ViewOwnerModal
@@ -47,6 +52,14 @@ function Owners({ handleDrawerToggle }) {
             setIsEdit={setIsEdit}
             isDelete={isDelete}
             setIsDelete={setIsDelete}
+            deleteOwnerConfirm={deleteOwnerConfirm}
+            setDeleteOwnerConfirm={setDeleteOwnerConfirm}
+            newPassword={newPassword}
+            setNewPassword={setNewPassword}
+            repeatNewPassword={repeatNewPassword}
+            setRepeatNewPassword={setRepeatNewPassword}
+            profileChanged={profileChanged}
+            setProfileChanged={setProfileChanged}
          />
          <HomeNavigation
             title="Owners"
