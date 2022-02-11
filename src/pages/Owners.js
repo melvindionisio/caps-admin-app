@@ -23,7 +23,6 @@ function Owners({ handleDrawerToggle }) {
 
    const handleOpen = (owner) => {
       setOpen(true);
-      console.log(open);
       fetch(`${domain}/api/owners/${owner.id}`)
          .then((res) => res.json())
          .then((data) => {

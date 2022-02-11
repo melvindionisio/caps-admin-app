@@ -76,7 +76,6 @@ function About({ boardinghouse }) {
    }, [boardinghouse]);
 
    useEffect(() => {
-      console.log("Address Changed");
       setCompleteAddress(`${streetAddress} - ${zoneAddress}, UEP`);
    }, [zoneAddress, streetAddress]);
 
@@ -116,6 +115,7 @@ function About({ boardinghouse }) {
          })
          .catch((err) => console.log(err));
    };
+
    return (
       <>
          <Snackbar

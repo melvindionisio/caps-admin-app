@@ -50,6 +50,7 @@ const BackNavbar = ({ title, subtitle, children }) => {
                   sx={{
                      fontFamily: "Quicksand",
                   }}
+                  align="center"
                >
                   {title.toUpperCase()}
                </Typography>

@@ -146,7 +146,6 @@ export default function ViewOwnerModal({
          fetch(`${domain}/api/boarding-houses/by-owner/${owner.id}`)
             .then((res) => res.json())
             .then((data) => {
-               console.log(data);
                setOwnerBoardinghouse(data);
             })
             .catch((err) => console.log(err));
