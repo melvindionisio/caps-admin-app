@@ -43,7 +43,7 @@ const Rooms = ({ bhName }) => {
             {rooms &&
                rooms.map((room) => (
                   //<SimpleRoomCard key={room.id} room={room} />
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={6} key={room.id}>
                      <Link
                         to={`/admin/rooms/${room.id}`}
                         style={{ textDecoration: "none " }}

@@ -563,6 +563,7 @@ const Room = () => {
                                                 size="small"
                                                 fullWidth
                                                 label="Total Slots"
+                                                type="number"
                                                 value={totalSlots}
                                                 disabled={isEditable}
                                                 onChange={(e) =>
@@ -573,6 +574,7 @@ const Room = () => {
                                                 variant="outlined"
                                                 size="small"
                                                 fullWidth
+                                                type="number"
                                                 label="Occupied Slots"
                                                 value={occupiedSlots}
                                                 disabled={isEditable}

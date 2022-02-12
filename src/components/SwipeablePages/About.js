@@ -218,6 +218,7 @@ function About({ boardinghouse }) {
                         color="primary"
                         margin="dense"
                         size="small"
+                        type="number"
                         fullWidth
                         helperText="Ex. 09166809369"
                         value={contact}
@@ -333,6 +334,7 @@ function About({ boardinghouse }) {
                            id="longitude"
                            label="Longitude"
                            value={longitude}
+                           type="number"
                            size="small"
                            onChange={(e) => setLongitude(e.target.value)}
                            disabled={isBoardinghouseEditable}
@@ -342,6 +344,7 @@ function About({ boardinghouse }) {
                            label="Latitude"
                            value={latitude}
                            size="small"
+                           type="number"
                            onChange={(e) => setLatitude(e.target.value)}
                            disabled={isBoardinghouseEditable}
                         />

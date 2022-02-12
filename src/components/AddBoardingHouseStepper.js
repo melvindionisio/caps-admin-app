@@ -247,12 +247,14 @@ const BoardingHouseDetailsFilling = ({
                <TextField
                   id="longitude"
                   label="Longitude"
+                  type="number"
                   value={longitude}
                   onChange={(e) => setLongitude(e.target.value)}
                />
                <TextField
                   id="latitude"
                   label="Latitude"
+                  type="number"
                   value={latitude}
                   onChange={(e) => setLatitude(e.target.value)}
                />
@@ -277,6 +279,7 @@ const BoardingHouseDetailsFilling = ({
                size="small"
                fullWidth
                helperText="Ex. 09166809369"
+               type="number"
                value={contactNumber}
                onChange={(e) => setContactNumber(e.target.value)}
             />

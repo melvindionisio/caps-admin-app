@@ -83,6 +83,7 @@ function Owners({ handleDrawerToggle }) {
                   <OwnerCard
                      handleOpen={() => handleOpen(owner)}
                      owner={owner}
+                     key={owner.id}
                   />
                ))}
          </Container>
