@@ -23,6 +23,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import BedroomChildIcon from "@mui/icons-material/BedroomChild";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 
+import Notification from "../components/Notification";
+
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
    return (
@@ -70,6 +72,10 @@ const BoardingHouse = () => {
       setValue(index);
    };
 
+   const [message, setMessage] = useState("");
+   const [showMessage, setShowMessage] = useState(false);
+   const [messageSeverity, setMessageSeverity] = useState("warning");
+
    function NavigationTabs() {
       return (
          <Tabs
@@ -111,6 +117,12 @@ const BoardingHouse = () => {
    return (
       <Slide in={true} direction="left">
          <Container disableGutters maxWidth="xl">
+            <Notification
+               message={message}
+               setShowMessage={setShowMessage}
+               messageSeverity={messageSeverity}
+               showMessage={showMessage}
+            />
             {error && (
                <Typography
                   variant="body1"
@@ -140,7 +152,15 @@ const BoardingHouse = () => {
                      onChangeIndex={handleChangeIndex}
                   >
                      <TabPanel value={value} index={0} dir={theme.direction}>
-                        <About boardinghouse={boardinghouse} />
+                        <About
+                           boardinghouse={boardinghouse}
+                           message={message}
+                           showMessage={showMessage}
+                           messageSeverity={messageSeverity}
+                           setMessageSeverity={setMessageSeverity}
+                           setMessage={setMessage}
+                           setShowMessage={setShowMessage}
+                        />
                      </TabPanel>
                      <TabPanel value={value} index={1} dir={theme.direction}>
                         <Box sx={{ minHeight: "100vh", paddingBottom: "5rem" }}>

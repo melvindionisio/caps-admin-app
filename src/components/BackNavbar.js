@@ -52,7 +52,7 @@ const BackNavbar = ({ title, subtitle, children }) => {
                   }}
                   align="center"
                >
-                  {title.toUpperCase()}
+                  {title}
                </Typography>
                <Typography variant="body2" align="center" sx={{ fontSize: 12 }}>
                   {subtitle}

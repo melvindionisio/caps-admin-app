@@ -58,12 +58,25 @@ export default function ViewOwnerModal({
 
    const handleDelete = () => {
       if (deleteOwnerConfirm === ownerName) {
-         //delete owner with boardinghouse connected to the owner
          setIsDeletePending(true);
-         console.log("Owner Deleted");
-         setShowMessage(true);
-         setSeverity("success");
-         setMessage("Owner was deleted along with the boarding house.");
+         //delete owner with boardinghouse connected to the owner
+         fetch(`${domain}/api/owners/delete/${owner.id}`, {
+            method: "DELETE",
+         })
+            .then((res) => res.json())
+            .then((data) => {
+               console.log(data);
+               setIsDeletePending(false);
+               setShowMessage(true);
+               setSeverity("success");
+               setMessage(data.message);
+               setTimeout(() => {
+                  window.location.reload(false);
+               }, 1000);
+            })
+            .catch((err) => {
+               console.log(err);
+            });
       } else {
          setShowMessage(true);
          setSeverity("warning");

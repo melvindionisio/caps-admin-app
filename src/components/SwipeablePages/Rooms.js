@@ -11,6 +11,7 @@ import { domain } from "../../fetch-url/fetchUrl";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardActionArea from "@mui/material/CardActionArea";
+import BedIcon from "@mui/icons-material/Bed";
 
 const Rooms = ({ bhName }) => {
    const { bhId } = useParams();
@@ -55,11 +56,15 @@ const Rooms = ({ bhName }) => {
                         >
                            <CardActionArea>
                               <CardHeader
+                                 avatar={<BedIcon />}
                                  title={
                                     <Typography
                                        variant="body1"
                                        sx={{
                                           fontSize: 16,
+                                          "&:hover": {
+                                             textDecoration: "underline",
+                                          },
                                        }}
                                     >
                                        {room.name.toUpperCase()}

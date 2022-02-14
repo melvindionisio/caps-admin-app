@@ -18,6 +18,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useContext, useState, useEffect } from "react";
 import { domain } from "../fetch-url/fetchUrl";
 import { LoginContext } from "../contexts/LoginContext";
+import loginBg from "../login-bg.png";
 
 const useStyles = makeStyles({
    container: {
@@ -132,83 +133,103 @@ const Login = () => {
 
    return (
       <Fade in={true}>
-         <Container maxWidth="sm" disableGutters className={classes.container}>
-            <Box className={classes.formContainer} align="center">
-               <form onSubmit={handleLogin}>
-                  <Card
-                     variant="outlined"
-                     className={classes.card}
-                     sx={{ paddingBottom: 0 }}
-                  >
-                     <CardHeader
-                        title={
-                           <Box sx={{ textAlign: "center" }}>
-                              <img
-                                 src={logo}
-                                 id="logo"
-                                 alt="logo"
-                                 className={classes.sns_logo}
-                              />
-                           </Box>
-                        }
-                        subheader={
-                           <Typography
-                              variant="h5"
-                              color="textSecondary"
-                              component="h2"
-                              className={classes.appname}
-                              textAlign="center"
+         <Box
+            sx={{
+               "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  backgroundImage: `url(${loginBg})`,
+                  opacity: "0.7",
+                  filter: "blur(3px) brightness(0.6)",
+               },
+            }}
+         >
+            <Container
+               maxWidth="sm"
+               disableGutters
+               className={classes.container}
+            >
+               <Box className={classes.formContainer} align="center">
+                  <form onSubmit={handleLogin}>
+                     <Card
+                        variant="outlined"
+                        className={classes.card}
+                        sx={{ paddingBottom: 0 }}
+                     >
+                        <CardHeader
+                           title={
+                              <Box sx={{ textAlign: "center" }}>
+                                 <img
+                                    src={logo}
+                                    id="logo"
+                                    alt="logo"
+                                    className={classes.sns_logo}
+                                 />
+                              </Box>
+                           }
+                           subheader={
+                              <Typography
+                                 variant="h5"
+                                 color="textSecondary"
+                                 component="h2"
+                                 className={classes.appname}
+                                 textAlign="center"
+                              >
+                                 SEARCH 'N STAY
+                              </Typography>
+                           }
+                        />
+                        <CardContent>
+                           <TextField
+                              label="Username"
+                              fullWidth
+                              variant="filled"
+                              className={classes.textFields}
+                              color="primary"
+                              required
+                              margin="normal"
+                              autoFocus
+                              value={username}
+                              onChange={(e) => setUsername(e.target.value)}
+                           />
+                           <TextField
+                              label="Password"
+                              fullWidth
+                              variant="filled"
+                              className={classes.textFields}
+                              color="primary"
+                              required
+                              type="password"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                           />
+                        </CardContent>
+                        <CardActions className={classes.cardActions}>
+                           <LoadingButton
+                              variant="contained"
+                              color="primary"
+                              type="submit"
+                              size="large"
+                              fullWidth
+                              loading={isLoginLoading}
                            >
-                              SEARCH 'N STAY
-                           </Typography>
-                        }
-                     />
-                     <CardContent>
-                        <TextField
-                           label="Username"
-                           fullWidth
-                           variant="filled"
-                           className={classes.textFields}
-                           color="primary"
-                           required
-                           margin="normal"
-                           autoFocus
-                           value={username}
-                           onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <TextField
-                           label="Password"
-                           fullWidth
-                           variant="filled"
-                           className={classes.textFields}
-                           color="primary"
-                           required
-                           type="password"
-                           value={password}
-                           onChange={(e) => setPassword(e.target.value)}
-                        />
-                     </CardContent>
-                     <CardActions className={classes.cardActions}>
-                        <LoadingButton
-                           variant="contained"
-                           color="primary"
-                           type="submit"
-                           size="large"
-                           fullWidth
-                           loading={isLoginLoading}
-                        >
-                           Login as admin
-                        </LoadingButton>
-                     </CardActions>
-                     {showMessage && (
-                        <Alert severity={severity} sx={{ mt: 2 }}>
-                           {message}
-                        </Alert>
-                     )}
-                  </Card>
-               </form>
-            </Box>
-         </Container>
+                              Login as admin
+                           </LoadingButton>
+                        </CardActions>
+                        {showMessage && (
+                           <Alert severity={severity} sx={{ mt: 2 }}>
+                              {message}
+                           </Alert>
+                        )}
+                     </Card>
+                  </form>
+               </Box>
+            </Container>
+         </Box>
       </Fade>
    );
 };

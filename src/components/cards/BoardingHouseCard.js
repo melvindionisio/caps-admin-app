@@ -1,7 +1,6 @@
 import {
    Card,
    CardHeader,
-   Avatar,
    Typography,
    CardActionArea,
    Grid,
@@ -28,11 +27,7 @@ const BoardingHouseCard = ({ boardinghouse }) => {
             <Card sx={{ borderRadius: 2 }} variant="outlined">
                <CardActionArea>
                   <CardHeader
-                     avatar={
-                        <Avatar color="primary">
-                           <HouseIcon />
-                        </Avatar>
-                     }
+                     avatar={<HouseIcon />}
                      title={
                         <Typography
                            variant="body1"
@@ -43,7 +38,7 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                               },
                            }}
                         >
-                           {boardinghouse.name}
+                           {boardinghouse.name.toUpperCase()}
                         </Typography>
                      }
                      subheader={

@@ -372,7 +372,7 @@ export default function AddBoardingHouseStepper() {
    const [completeAddress, setCompleteAddress] = useState("");
    const [longitude, setLongitude] = useState(0);
    const [latitude, setLatitude] = useState(0);
-   const [contactNumber, setContactNumber] = useState("+639");
+   const [contactNumber, setContactNumber] = useState("09");
    const [tagline, setTagline] = useState("");
 
    const [message, setMessage] = useState("");

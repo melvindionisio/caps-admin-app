@@ -17,27 +17,19 @@ import {
 
 import LoadingButton from "@mui/lab/LoadingButton";
 import { EditOutlined } from "@mui/icons-material";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
+
 import { domain } from "../../fetch-url/fetchUrl";
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
-function About({ boardinghouse }) {
+function About({
+   boardinghouse,
+   message,
+   setMessage,
+   showMessage,
+   setShowMessage,
+   messageSeverity,
+   setMessageSeverity,
+}) {
    const [isBoardinghouseEditable, setIsBoardinghouseEditable] = useState(true);
-
-   const [message, setMessage] = useState("");
-   const [showMessage, setShowMessage] = useState(false);
-   const [messageSeverity, setMessageSeverity] = useState("warning");
-
-   const handleClose = (event, reason) => {
-      if (reason === "clickaway") {
-         return;
-      }
-      setShowMessage(false);
-   };
 
    const [name, setName] = useState("");
    const [owner, setOwner] = useState("");
@@ -112,30 +104,13 @@ function About({ boardinghouse }) {
             setMessageSeverity("success");
             setShowMessage(true);
             console.log("Boardinghouse updated");
+            setIsBoardinghouseEditable(true);
          })
          .catch((err) => console.log(err));
    };
 
    return (
       <>
-         <Snackbar
-            open={showMessage}
-            autoHideDuration={1500}
-            onClose={handleClose}
-            anchorOrigin={{
-               vertical: "bottom",
-               horizontal: "right",
-            }}
-         >
-            <Alert
-               onClose={handleClose}
-               severity={messageSeverity}
-               sx={{ width: "100%" }}
-            >
-               {message}
-            </Alert>
-         </Snackbar>
-
          <Fade in={true}>
             <Container maxWidth="sm">
                <Box

@@ -26,17 +26,12 @@ import { useHistory } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
 import LoadingButton from "@mui/lab/LoadingButton";
 import CustomInputPicture from "../components/CustomInputPicture";
 import { domain } from "../fetch-url/fetchUrl";
 import RoomToggler from "../components/RoomToggler";
 import BackNavbar from "../components/BackNavbar";
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import Notification from "../components/Notification";
 
 const Room = () => {
    const { roomId } = useParams();
@@ -124,60 +119,67 @@ const Room = () => {
       //delete the old picture from file system
       //update new link in the room picture datbase
 
-      setSavePictureIsPending(true);
-      const formData = new FormData();
-      formData.append("room-image", roomPicture);
+      if (roomPicture) {
+         setSavePictureIsPending(true);
+         const formData = new FormData();
+         formData.append("room-image", roomPicture);
 
-      fetch(`${domain}/api/rooms/delete-picture/${roomId}`)
-         .then((res) => res.json())
-         .then((data) => {
-            console.log(data.message);
+         fetch(`${domain}/api/rooms/delete-picture/${roomId}`)
+            .then((res) => res.json())
+            .then((data) => {
+               console.log(data.message);
 
-            fetch(`${domain}/api/rooms/upload`, {
-               method: "POST",
-               body: formData,
-            })
-               .then((res) => {
-                  return res.json();
+               fetch(`${domain}/api/rooms/upload`, {
+                  method: "POST",
+                  body: formData,
                })
-               .then((newImage) => {
-                  console.log(newImage);
-                  //setRoomPicture(newImage.imagepath);
-
-                  fetch(`${domain}/api/rooms/update-room-picture/${roomId}`, {
-                     method: "PUT",
-                     body: JSON.stringify({
-                        newImageLink: newImage.imagepath,
-                     }),
-                     headers: {
-                        "Content-Type": "application/json",
-                     },
+                  .then((res) => {
+                     return res.json();
                   })
-                     .then((res) => {
-                        return res.json();
-                     })
-                     .then((data) => {
-                        setIsPictureEditable(false);
-                        setSavePictureIsPending(false);
-                        setImagePreview(null);
-                        setRoomName("");
+                  .then((newImage) => {
+                     console.log(newImage);
+                     //setRoomPicture(newImage.imagepath);
 
-                        setMessage(data.message);
-                        setMessageSeverity("success");
-                        setShowMessage(true);
-                        setDeleteIsPending(false);
-                        setIsModalOpen(false);
+                     fetch(
+                        `${domain}/api/rooms/update-room-picture/${roomId}`,
+                        {
+                           method: "PUT",
+                           body: JSON.stringify({
+                              newImageLink: newImage.imagepath,
+                           }),
+                           headers: {
+                              "Content-Type": "application/json",
+                           },
+                        }
+                     )
+                        .then((res) => {
+                           return res.json();
+                        })
+                        .then((data) => {
+                           setIsPictureEditable(false);
+                           setSavePictureIsPending(false);
+                           setImagePreview(null);
+                           setRoomName("");
 
-                        setTimeout(() => {
-                           window.location.reload(false);
-                        }, 1000);
-                     })
-                     .catch((err) => console.log(err));
-               })
-               .catch((err) => console.log(err));
-         })
+                           setMessage(data.message);
+                           setMessageSeverity("success");
+                           setShowMessage(true);
+                           setDeleteIsPending(false);
+                           setIsModalOpen(false);
 
-         .catch((err) => console.log(err));
+                           setTimeout(() => {
+                              window.location.reload(false);
+                           }, 1000);
+                        })
+                        .catch((err) => console.log(err));
+                  })
+                  .catch((err) => console.log(err));
+            })
+
+            .catch((err) => console.log(err));
+      } else {
+         console.log("Cannot be null");
+      }
    };
    const handleCancelUpdatePicture = () => {
       setIsPictureEditable(false);
@@ -212,12 +214,6 @@ const Room = () => {
       }
    };
 
-   const handleClose = (event, reason) => {
-      if (reason === "clickaway") {
-         return;
-      }
-      setShowMessage(false);
-   };
    const handleModalClose = () => {
       setIsModalOpen(false);
    };
@@ -342,24 +338,13 @@ const Room = () => {
                               </Container>
                            </Fade>
                         </Modal>
-                        <Snackbar
-                           open={showMessage}
-                           autoHideDuration={1500}
-                           onClose={handleClose}
-                           anchorOrigin={{
-                              vertical: "bottom",
-                              horizontal: "right",
-                           }}
-                        >
-                           <Alert
-                              onClose={handleClose}
-                              severity={messageSeverity}
-                              sx={{ width: "100%" }}
-                           >
-                              {message}
-                           </Alert>
-                        </Snackbar>
 
+                        <Notification
+                           message={message}
+                           setShowMessage={setShowMessage}
+                           messageSeverity={messageSeverity}
+                           showMessage={showMessage}
+                        />
                         <BackNavbar
                            title={room.name}
                            subtitle={`Room by ${boardinghouseName}`}
@@ -388,120 +373,129 @@ const Room = () => {
                            <Grid container spacing={2}>
                               {isPictureEditable ? (
                                  <Grid item lg={5} sm={6} xs={12}>
-                                    <Box
+                                    <Card
                                        sx={{
-                                          display: "flex",
-                                          justifyContent: "flex-end",
-                                          padding: 0,
-                                          marginBottom: 2,
-                                          gap: 1,
+                                          padding: 1,
                                        }}
                                     >
-                                       <Button
-                                          variant="contained"
-                                          onClick={handleCancelUpdatePicture}
-                                          size="small"
-                                          disableElevation
-                                          color="secondary"
+                                       <Box
+                                          sx={{
+                                             display: "flex",
+                                             justifyContent: "flex-end",
+                                             padding: 0,
+                                             marginBottom: 2,
+                                             gap: 1,
+                                          }}
                                        >
-                                          cancel
-                                       </Button>
-                                       <LoadingButton
-                                          variant="contained"
-                                          onClick={handleSavePicture}
-                                          size="small"
-                                          disableElevation
-                                          loading={savePictureIsPending}
-                                       >
-                                          Save
-                                       </LoadingButton>
-                                    </Box>
-                                    <CustomInputPicture
-                                       imagePreview={imagePreview}
-                                       setImagePreview={setImagePreview}
-                                       imageName={imageName}
-                                       setImageName={setImageName}
-                                       setRoomPicture={setRoomPicture}
-                                    />
+                                          <Button
+                                             variant="contained"
+                                             onClick={handleCancelUpdatePicture}
+                                             size="small"
+                                             disableElevation
+                                             color="secondary"
+                                          >
+                                             cancel
+                                          </Button>
+                                          <LoadingButton
+                                             variant="contained"
+                                             onClick={handleSavePicture}
+                                             size="small"
+                                             disableElevation
+                                             disabled={!imageName}
+                                             loading={savePictureIsPending}
+                                          >
+                                             Save
+                                          </LoadingButton>
+                                       </Box>
+                                       <CustomInputPicture
+                                          imagePreview={imagePreview}
+                                          setImagePreview={setImagePreview}
+                                          imageName={imageName}
+                                          setImageName={setImageName}
+                                          setRoomPicture={setRoomPicture}
+                                       />
+                                    </Card>
                                  </Grid>
                               ) : (
                                  <Grid item lg={5} sm={6} xs={12}>
-                                    <CardActions
-                                       sx={{
-                                          display: "flex",
-                                          justifyContent: "flex-end",
-                                          padding: 0,
-                                          marginBottom: 2,
-                                       }}
-                                    >
-                                       <Button
-                                          variant="contained"
-                                          onClick={() =>
-                                             setIsPictureEditable(true)
-                                          }
-                                          size="small"
-                                          disableElevation
+                                    <Card sx={{ padding: 1 }}>
+                                       <CardActions
+                                          sx={{
+                                             display: "flex",
+                                             justifyContent: "flex-end",
+                                             padding: 0,
+                                             marginBottom: 2,
+                                          }}
                                        >
-                                          Edit
-                                       </Button>
-                                    </CardActions>
-                                    <Card>
-                                       <CardMedia
-                                          height="250"
-                                          component="img"
-                                          alt="room-image"
-                                          image={room.picture}
-                                       />
+                                          <Button
+                                             variant="contained"
+                                             onClick={() =>
+                                                setIsPictureEditable(true)
+                                             }
+                                             size="small"
+                                             disableElevation
+                                          >
+                                             Edit
+                                          </Button>
+                                       </CardActions>
+                                       <Card>
+                                          <CardMedia
+                                             height="250"
+                                             component="img"
+                                             alt="room-image"
+                                             image={room.picture}
+                                          />
+                                       </Card>
                                     </Card>
                                  </Grid>
                               )}
 
                               <Grid item lg={7} sm={6} xs={12}>
                                  <>
-                                    <Box
-                                       sx={{
-                                          display: "flex",
-                                          justifyContent: "flex-end",
-                                          marginBottom: 2,
-                                          gap: 1,
-                                       }}
-                                    >
-                                       {isEditable ? (
-                                          <Button
-                                             variant="contained"
-                                             size="small"
-                                             onClick={() =>
-                                                setIsEditable(!isEditable)
-                                             }
-                                             disableElevation
-                                          >
-                                             edit
-                                          </Button>
-                                       ) : (
-                                          <>
+                                    <Card>
+                                       <Box
+                                          sx={{
+                                             display: "flex",
+                                             justifyContent: "flex-end",
+                                             gap: 1,
+                                             padding: 1,
+                                          }}
+                                       >
+                                          {isEditable ? (
                                              <Button
                                                 variant="contained"
                                                 size="small"
-                                                color="secondary"
-                                                onClick={handleCancelEdits}
+                                                onClick={() =>
+                                                   setIsEditable(!isEditable)
+                                                }
                                                 disableElevation
                                              >
-                                                cancel
+                                                edit
                                              </Button>
-                                             <LoadingButton
-                                                variant="contained"
-                                                size="small"
-                                                color="primary"
-                                                onClick={handleSaveEdits}
-                                                loading={isRoomSavePending}
-                                             >
-                                                Save
-                                             </LoadingButton>
-                                          </>
-                                       )}
-                                    </Box>
+                                          ) : (
+                                             <>
+                                                <Button
+                                                   variant="contained"
+                                                   size="small"
+                                                   color="secondary"
+                                                   onClick={handleCancelEdits}
+                                                   disableElevation
+                                                >
+                                                   cancel
+                                                </Button>
+                                                <LoadingButton
+                                                   variant="contained"
+                                                   size="small"
+                                                   color="primary"
+                                                   onClick={handleSaveEdits}
+                                                   loading={isRoomSavePending}
+                                                >
+                                                   Save
+                                                </LoadingButton>
+                                             </>
+                                          )}
+                                       </Box>
 
-                                    <Card>
                                        <Box
                                           sx={{
                                              display: "flex",

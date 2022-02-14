@@ -110,45 +110,49 @@ const Export = ({ handleDrawerToggle }) => {
    };
 
    const createExcel = async (boardinghouses) => {
-      const response = await fetch(`${domain}/api/admin/validate-export`, {
-         method: "POST",
-         body: JSON.stringify({
-            password: exportDownloadConfirm,
-            admin: currentAdmin.username,
-         }),
-         headers: {
-            "Content-Type": "application/json",
-         },
-      });
-
-      let isValid = await response.json();
-      isValid = isValid.isValid;
-
-      setIsGenerateExcelPending(true);
-
-      console.log(boardinghouses);
-      if (isValid) {
-         fetch(`${domain}/api/excel/generate`, {
+      try {
+         const response = await fetch(`${domain}/api/admin/validate-export`, {
             method: "POST",
-            body: JSON.stringify(boardinghouses),
+            body: JSON.stringify({
+               password: exportDownloadConfirm,
+               admin: currentAdmin.username,
+            }),
             headers: {
                "Content-Type": "application/json",
             },
-         })
-            .then(() =>
-               axios.get(`${domain}/api/excel/download`, {
-                  responseType: "blob",
-               })
-            )
-            .then((res) => {
-               const excelBlob = new Blob([res.data], {
-                  type: "application/xlsx",
-               });
-               saveAs(excelBlob, "uep-registered-boardinghouse.xlsx");
-               setIsGenerateExcelPending(false);
-               setExportDownloadConfirm("");
+         });
+
+         let isValid = await response.json();
+         isValid = isValid.isValid;
+
+         setIsGenerateExcelPending(true);
+
+         console.log(boardinghouses);
+         if (isValid) {
+            fetch(`${domain}/api/excel/generate`, {
+               method: "POST",
+               body: JSON.stringify(boardinghouses),
+               headers: {
+                  "Content-Type": "application/json",
+               },
             })
-            .catch((err) => console.log(err));
+               .then(() =>
+                  axios.get(`${domain}/api/excel/download`, {
+                     responseType: "blob",
+                  })
+               )
+               .then((res) => {
+                  const excelBlob = new Blob([res.data], {
+                     type: "application/xlsx",
+                  });
+                  saveAs(excelBlob, "uep-registered-boardinghouse.xlsx");
+                  setIsGenerateExcelPending(false);
+                  setExportDownloadConfirm("");
+               })
+               .catch((err) => console.log(err));
+         }
+      } catch (err) {
+         console.log(err);
       }
    };
 
