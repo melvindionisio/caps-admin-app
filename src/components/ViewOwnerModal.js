@@ -63,7 +63,7 @@ export default function ViewOwnerModal({
       if (deleteOwnerConfirm === ownerName) {
          setIsDeletePending(true);
          //delete owner with boardinghouse connected to the owner
-         fetch(`${domain}/api/owners/delete/${owner.id}`, {
+         fetch(`${domain}/api/admin/delete/owner/${owner.id}`, {
             method: "DELETE",
          })
             .then((res) => res.json())
