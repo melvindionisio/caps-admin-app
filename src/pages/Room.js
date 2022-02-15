@@ -16,6 +16,7 @@ import {
    CardActions,
    Fade,
    Backdrop,
+   Divider,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useParams } from "react-router-dom";
@@ -32,6 +33,7 @@ import { domain } from "../fetch-url/fetchUrl";
 import RoomToggler from "../components/RoomToggler";
 import BackNavbar from "../components/BackNavbar";
 import Notification from "../components/Notification";
+import CloseOutlined from "@mui/icons-material/CloseOutlined";
 
 const Room = () => {
    const { roomId } = useParams();
@@ -295,8 +297,14 @@ const Room = () => {
                                        py: 2,
                                        height: "max-content",
                                        flexDirection: "column",
+                                       display: "flex",
                                     }}
                                  >
+                                    <CloseOutlined
+                                       sx={{ alignSelf: "flex-end" }}
+                                       onClick={handleModalClose}
+                                       color="warning"
+                                    />
                                     <Typography
                                        variant="h6"
                                        align="center"
@@ -309,6 +317,11 @@ const Room = () => {
                                     >
                                        Confirm Deletion
                                     </Typography>
+                                    <Divider sx={{ mb: 1 }} />
+                                    <Typography variant="caption ">
+                                       Enter the room name to confirm deletion.{" "}
+                                    </Typography>
+
                                     <TextField
                                        size="small"
                                        color="secondary"
@@ -317,7 +330,7 @@ const Room = () => {
                                           setRoomDeleteConfirm(e.target.value)
                                        }
                                        autoFocus
-                                       label="Enter the room name"
+                                       label="Room name"
                                        fullWidth
                                        margin="normal"
                                     />

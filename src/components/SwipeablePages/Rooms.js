@@ -12,6 +12,7 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardActionArea from "@mui/material/CardActionArea";
 import BedIcon from "@mui/icons-material/Bed";
+import RoomToggler from "../../components/RoomToggler";
 
 const Rooms = ({ bhName }) => {
    const { bhId } = useParams();
@@ -45,18 +46,30 @@ const Rooms = ({ bhName }) => {
                rooms.map((room) => (
                   //<SimpleRoomCard key={room.id} room={room} />
                   <Grid item xs={12} md={6} key={room.id}>
-                     <Link
-                        to={`/admin/rooms/${room.id}`}
-                        style={{ textDecoration: "none " }}
+                     <Card
+                        key={room.id}
+                        sx={{
+                           borderRadius: 2,
+                           display: "flex",
+                           alignItems: "center",
+                        }}
+                        variant="outlined"
                      >
-                        <Card
-                           key={room.id}
-                           sx={{ borderRadius: 2 }}
-                           variant="outlined"
-                        >
-                           <CardActionArea>
+                        <CardActionArea>
+                           <Link
+                              to={`/admin/rooms/${room.id}`}
+                              style={{
+                                 textDecoration: "none ",
+                              }}
+                           >
                               <CardHeader
-                                 avatar={<BedIcon />}
+                                 avatar={
+                                    <BedIcon
+                                       sx={{
+                                          color: "text.primary",
+                                       }}
+                                    />
+                                 }
                                  title={
                                     <Typography
                                        variant="body1"
@@ -66,6 +79,7 @@ const Rooms = ({ bhName }) => {
                                              textDecoration: "underline",
                                           },
                                        }}
+                                       color="text.primary"
                                     >
                                        {room.name.toUpperCase()}
                                     </Typography>
@@ -80,9 +94,10 @@ const Rooms = ({ bhName }) => {
                                     </Typography>
                                  }
                               />
-                           </CardActionArea>
-                        </Card>
-                     </Link>
+                           </Link>
+                        </CardActionArea>
+                        <RoomToggler room={room} />
+                     </Card>
                   </Grid>
                ))}
             {/*</Masonry>*/}

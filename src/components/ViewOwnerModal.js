@@ -15,6 +15,7 @@ import { LoginContext } from "../contexts/LoginContext";
 import { domain } from "../fetch-url/fetchUrl";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Link } from "react-router-dom";
+import LoadingState from "../components/LoadingState";
 
 const style = {
    zIndex: 100,
@@ -55,6 +56,8 @@ export default function ViewOwnerModal({
 
    const [isDeletePending, setIsDeletePending] = useState(false);
    const { currentAdmin, setCurrentAdmin } = useContext(LoginContext);
+   const [isSaveProfilePending, setIsSaveProfilePending] = useState(false);
+   const [ownerIsPending, setOwnerIsPending] = useState(true);
 
    const handleDelete = () => {
       if (deleteOwnerConfirm === ownerName) {
@@ -86,6 +89,7 @@ export default function ViewOwnerModal({
    };
 
    const handleUpdateProfile = () => {
+      setIsSaveProfilePending(true);
       fetch(`${domain}/api/owners/update-profile/${owner.id}`, {
          method: "PUT",
          body: JSON.stringify({
@@ -109,10 +113,10 @@ export default function ViewOwnerModal({
             setShowMessage(true);
             setMessage(data.message);
             setSeverity("success");
+            setIsSaveProfilePending(false);
          });
    };
    const handleResetPassword = () => {
-      //setIsEdit(false);
       if (newPassword && repeatNewPassword !== "") {
          if (newPassword !== repeatNewPassword) {
             setShowMessage(true);
@@ -142,6 +146,8 @@ export default function ViewOwnerModal({
                      setShowMessage(true);
                      setSeverity("success");
                      setMessage(data.message);
+                     setNewPassword("");
+                     setRepeatNewPassword("");
                   });
             }
          }
@@ -160,6 +166,7 @@ export default function ViewOwnerModal({
             .then((res) => res.json())
             .then((data) => {
                setOwnerBoardinghouse(data);
+               setOwnerIsPending(false);
             })
             .catch((err) => console.log(err));
       }
@@ -206,6 +213,7 @@ export default function ViewOwnerModal({
                   }}
                >
                   <Box sx={style}>
+                     {ownerIsPending && <LoadingState />}
                      {owner && (
                         <>
                            <Box
@@ -243,6 +251,7 @@ export default function ViewOwnerModal({
                                        top: 0,
                                     }}
                                     onClick={handleClose}
+                                    color="warning"
                                  />
                               </Box>
 
@@ -479,16 +488,17 @@ export default function ViewOwnerModal({
                                           justifyContent: "flex-end",
                                        }}
                                     >
-                                       <Button
+                                       <LoadingButton
                                           variant="contained"
                                           color="success"
                                           size="small"
                                           startIcon={<Save />}
                                           onClick={handleUpdateProfile}
                                           disabled={!profileChanged}
+                                          loading={isSaveProfilePending}
                                        >
                                           Save Profile
-                                       </Button>
+                                       </LoadingButton>
                                     </Box>
 
                                     <Typography variant="caption">

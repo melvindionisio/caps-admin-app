@@ -18,7 +18,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useContext, useState, useEffect } from "react";
 import { domain } from "../fetch-url/fetchUrl";
 import { LoginContext } from "../contexts/LoginContext";
-import loginBg from "../login-bg.png";
+//import loginBg from "../login-bg.png";
 
 const useStyles = makeStyles({
    container: {
@@ -142,7 +142,7 @@ const Login = () => {
                   left: 0,
                   width: "100%",
                   height: "100%",
-                  backgroundImage: `url(${loginBg})`,
+                  //backgroundImage: `url(${loginBg})`,
                   opacity: "0.7",
                   filter: "blur(3px) brightness(0.6)",
                },

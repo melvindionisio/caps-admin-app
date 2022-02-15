@@ -7,6 +7,7 @@ import {
    Backdrop,
    TextField,
    Button,
+   Divider,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import useFetch from "../hooks/useFetch";
@@ -21,6 +22,8 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { useState, useContext } from "react";
 import { LoginContext } from "../contexts/LoginContext";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { CloseOutlined } from "@mui/icons-material";
+import Notification from "../components/Notification";
 
 import { saveAs } from "file-saver";
 import axios from "axios";
@@ -60,6 +63,10 @@ const Export = ({ handleDrawerToggle }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [exportDownloadConfirm, setExportDownloadConfirm] = useState("");
 
+   const [message, setMessage] = useState("");
+   const [showMessage, setShowMessage] = useState(false);
+   const [messageSeverity, setMessageSeverity] = useState("warning");
+
    const {
       data: boardinghouses,
       isPending,
@@ -67,7 +74,8 @@ const Export = ({ handleDrawerToggle }) => {
    } = useFetch(`${domain}/api/boarding-houses/export`);
 
    const createPdf = async (boardinghouses) => {
-      const response = await fetch(`${domain}/api/admin/validate-export`, {
+      setIsGeneratePdfPending(true);
+      fetch(`${domain}/api/admin/validate-export`, {
          method: "POST",
          body: JSON.stringify({
             password: exportDownloadConfirm,
@@ -76,84 +84,91 @@ const Export = ({ handleDrawerToggle }) => {
          headers: {
             "Content-Type": "application/json",
          },
-      });
-      let isValid = await response.json();
-      isValid = isValid.isValid;
-
-      setIsGeneratePdfPending(true);
-
-      console.log(boardinghouses);
-
-      if (isValid) {
-         fetch(`${domain}/api/pdf/generate`, {
-            method: "POST",
-            body: JSON.stringify(boardinghouses),
-            headers: {
-               "Content-Type": "application/json",
-            },
-         })
-            .then(() =>
-               axios.get(`${domain}/api/pdf/download`, {
-                  responseType: "blob",
-               })
-            )
-            .then((res) => {
-               const pdfBlob = new Blob([res.data], {
-                  type: "application/pdf",
-               });
-               saveAs(pdfBlob, "uep-registered-boardinghouse.pdf");
+      })
+         .then((res) => res.json())
+         .then((data) => {
+            if (!data.isValid) {
+               setMessage("Password is incorrect.");
+               setMessageSeverity("error");
+               setShowMessage(true);
+               console.log("Wrong password.");
                setIsGeneratePdfPending(false);
-               setExportDownloadConfirm("");
-            })
-            .catch((err) => console.log(err));
-      }
+            } else {
+               console.log("Downloading");
+               fetch(`${domain}/api/pdf/generate`, {
+                  method: "POST",
+                  body: JSON.stringify(boardinghouses),
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+               })
+                  .then(() =>
+                     axios.get(`${domain}/api/pdf/download`, {
+                        responseType: "blob",
+                     })
+                  )
+                  .then((res) => {
+                     const pdfBlob = new Blob([res.data], {
+                        type: "application/pdf",
+                     });
+                     saveAs(pdfBlob, "uep-registered-boardinghouse.pdf");
+                     setIsGeneratePdfPending(false);
+                     setExportDownloadConfirm("");
+                  })
+                  .catch((err) => console.log(err));
+            }
+         })
+         .catch((err) => {
+            console.log(err);
+         });
    };
 
    const createExcel = async (boardinghouses) => {
-      try {
-         const response = await fetch(`${domain}/api/admin/validate-export`, {
-            method: "POST",
-            body: JSON.stringify({
-               password: exportDownloadConfirm,
-               admin: currentAdmin.username,
-            }),
-            headers: {
-               "Content-Type": "application/json",
-            },
-         });
-
-         let isValid = await response.json();
-         isValid = isValid.isValid;
-
-         setIsGenerateExcelPending(true);
-
-         console.log(boardinghouses);
-         if (isValid) {
-            fetch(`${domain}/api/excel/generate`, {
-               method: "POST",
-               body: JSON.stringify(boardinghouses),
-               headers: {
-                  "Content-Type": "application/json",
-               },
-            })
-               .then(() =>
-                  axios.get(`${domain}/api/excel/download`, {
-                     responseType: "blob",
-                  })
-               )
-               .then((res) => {
-                  const excelBlob = new Blob([res.data], {
-                     type: "application/xlsx",
-                  });
-                  saveAs(excelBlob, "uep-registered-boardinghouse.xlsx");
-                  setIsGenerateExcelPending(false);
-                  setExportDownloadConfirm("");
+      setIsGenerateExcelPending(true);
+      fetch(`${domain}/api/admin/validate-export`, {
+         method: "POST",
+         body: JSON.stringify({
+            password: exportDownloadConfirm,
+            admin: currentAdmin.username,
+         }),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then((res) => res.json())
+         .then((data) => {
+            if (!data.isValid) {
+               setMessage("Password is incorrect.");
+               setMessageSeverity("error");
+               setShowMessage(true);
+               console.log("Wrong password.");
+               setIsGenerateExcelPending(false);
+            } else {
+               console.log("Downloading...");
+               fetch(`${domain}/api/excel/generate`, {
+                  method: "POST",
+                  body: JSON.stringify(boardinghouses),
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
                })
-               .catch((err) => console.log(err));
-         }
-      } catch (err) {
-         console.log(err);
-      }
+                  .then(() =>
+                     axios.get(`${domain}/api/excel/download`, {
+                        responseType: "blob",
+                     })
+                  )
+                  .then((res) => {
+                     const excelBlob = new Blob([res.data], {
+                        type: "application/xlsx",
+                     });
+                     saveAs(excelBlob, "uep-registered-boardinghouse.xlsx");
+                     setIsGenerateExcelPending(false);
+                     setExportDownloadConfirm("");
+                  })
+                  .catch((err) => console.log(err));
+            }
+         })
+         .catch((err) => console.log(err));
    };
 
    const handleModalClose = () => {
@@ -168,6 +183,12 @@ const Export = ({ handleDrawerToggle }) => {
          />
          <Box className={classes.mainContent}>
             <Box p={2} style={{ height: "85%" }} className={classes.content}>
+               <Notification
+                  message={message}
+                  setShowMessage={setShowMessage}
+                  messageSeverity={messageSeverity}
+                  showMessage={showMessage}
+               />
                {error && <Typography>{error}</Typography>}
                {isPending && <LoadingState />}
                {boardinghouses && (
@@ -205,8 +226,14 @@ const Export = ({ handleDrawerToggle }) => {
                                     py: 2,
                                     height: "max-content",
                                     flexDirection: "column",
+                                    display: "flex",
                                  }}
                               >
+                                 <CloseOutlined
+                                    sx={{ alignSelf: "flex-end" }}
+                                    onClick={handleModalClose}
+                                    color="warning"
+                                 />
                                  <Typography
                                     variant="h6"
                                     align="center"
@@ -217,7 +244,15 @@ const Export = ({ handleDrawerToggle }) => {
                                     }}
                                     component="h2"
                                  >
-                                    COnfirm with password
+                                    Confirm with password
+                                 </Typography>
+                                 <Divider
+                                    sx={{
+                                       mb: 1,
+                                    }}
+                                 />
+                                 <Typography variant="caption">
+                                    Enter your password to export file.
                                  </Typography>
                                  <TextField
                                     size="small"
@@ -227,7 +262,7 @@ const Export = ({ handleDrawerToggle }) => {
                                        setExportDownloadConfirm(e.target.value)
                                     }
                                     autoFocus
-                                    label="Enter your password."
+                                    label="Password"
                                     fullWidth
                                     margin="normal"
                                     type="password"
@@ -247,6 +282,7 @@ const Export = ({ handleDrawerToggle }) => {
                                        onClick={() => createPdf(boardinghouses)}
                                        loading={isGeneratePdfPending}
                                        disabled={exportDownloadConfirm === ""}
+                                       fullWidth
                                     >
                                        Download as PDF
                                     </LoadingButton>
@@ -260,6 +296,7 @@ const Export = ({ handleDrawerToggle }) => {
                                        }
                                        loading={isGenerateExcelPending}
                                        disabled={exportDownloadConfirm === ""}
+                                       fullWidth
                                     >
                                        Download as Excel
                                     </LoadingButton>
