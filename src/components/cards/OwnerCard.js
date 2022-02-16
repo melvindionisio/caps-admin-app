@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Box, Typography, Button, Avatar } from "@mui/material";
-import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import { deepOrange } from "@mui/material/colors";
 
 function OwnerCard({ handleOpen, owner }) {
    return (
@@ -21,8 +21,8 @@ function OwnerCard({ handleOpen, owner }) {
                   gap: 2,
                }}
             >
-               <Avatar>
-                  <AssignmentIndIcon />
+               <Avatar sx={{ bgcolor: deepOrange[500] }}>
+                  {owner.name.charAt(0).toUpperCase()}
                </Avatar>
                <Typography variant="body1" sx={{ fontFamily: "Quicksand" }}>
                   {owner.name}
