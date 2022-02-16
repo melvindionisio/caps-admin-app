@@ -65,7 +65,7 @@ function Owners({ handleDrawerToggle }) {
             handleDrawerToggle={handleDrawerToggle}
          />
          <Container
-            maxWidth="md"
+            maxWidth="sm"
             sx={{
                p: 2,
                pt: 5,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FormGroup, Switch, FormControlLabel } from "@mui/material";
 import { domain } from "../fetch-url/fetchUrl";
 
-function RoomToggler({ room }) {
+function RoomToggler({ room, isShowLabel }) {
    const [isAvailable, setIsAvailable] = useState(false);
    const [roomStatus, setRoomStatus] = useState("Available");
    const [isSwitchPending, setIsSwitchPending] = useState(false);
@@ -52,7 +52,21 @@ function RoomToggler({ room }) {
    return (
       <FormGroup>
          <FormControlLabel
-            sx={{ color: "text.secondary" }}
+            sx={
+               isShowLabel
+                  ? {
+                       color: "text.secondary",
+                       "& .MuiFormControlLabel-label": {
+                          display: "flex",
+                       },
+                    }
+                  : {
+                       color: "text.secondary",
+                       "& .MuiFormControlLabel-label": {
+                          display: "none",
+                       },
+                    }
+            }
             label={isAvailable ? "ENABLED" : "DISABLED"}
             labelPlacement="end"
             value="bottom"

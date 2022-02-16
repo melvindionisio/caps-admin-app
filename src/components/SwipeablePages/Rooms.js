@@ -96,7 +96,7 @@ const Rooms = ({ bhName }) => {
                               />
                            </Link>
                         </CardActionArea>
-                        <RoomToggler room={room} />
+                        <RoomToggler room={room} isShowLabel={false} />
                      </Card>
                   </Grid>
                ))}

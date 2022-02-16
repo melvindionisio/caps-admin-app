@@ -521,7 +521,10 @@ const Room = () => {
                                           <Typography variant="body1">
                                              Room Status
                                           </Typography>
-                                          <RoomToggler room={room} />
+                                          <RoomToggler
+                                             room={room}
+                                             isShowLabel={true}
+                                          />
                                        </Box>
                                        <CardContent>
                                           <TextField
