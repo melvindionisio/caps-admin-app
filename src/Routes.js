@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { Container } from "@mui/material";
+import { Typography, Container } from "@mui/material";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -13,10 +13,11 @@ import Room from "./pages/Room";
 import Owners from "./pages/Owners";
 import AddRoom from "./pages/AddRoom";
 
-import { LoginContext } from "./contexts/LoginContext";
+//import {useContext} from "react"
+//import { LoginContext } from "./contexts/LoginContext";
 
 const Routes = ({ handleDrawerToggle }) => {
-   const { isAdminLoggedIn } = useContext(LoginContext);
+   //const { isAdminLoggedIn } = useContext(LoginContext);
    return (
       <Container disableGutters maxWidth="xl" sx={{ overflowY: "auto" }}>
          <Switch>
@@ -24,11 +25,14 @@ const Routes = ({ handleDrawerToggle }) => {
                <Redirect to="/login" />
             </Route>
             <Route path="/login">
+               {/*
                {isAdminLoggedIn ? (
                   <Redirect to="/admin/dashboard" />
                ) : (
                   <Login />
                )}
+               */}
+               <Login />
             </Route>
             <Route exact path="/admin/boarding-houses">
                <Home handleDrawerToggle={handleDrawerToggle} />
@@ -59,6 +63,15 @@ const Routes = ({ handleDrawerToggle }) => {
             </Route>
             <Route path="/admin/profile">
                <Profile handleDrawerToggle={handleDrawerToggle} />
+            </Route>
+            <Route path="*">
+               <Typography
+                  variant="h6"
+                  sx={{ fontFamily: "Quicksand" }}
+                  align="center "
+               >
+                  404 Not Found
+               </Typography>
             </Route>
          </Switch>
       </Container>
