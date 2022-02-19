@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Typography, Container } from "@mui/material";
 import Home from "./pages/Home";
