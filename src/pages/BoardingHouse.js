@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import { Container, IconButton, Typography, Slide } from "@mui/material";
-import { useParams } from "react-router-dom";
+import {
+   Container,
+   IconButton,
+   Button,
+   Typography,
+   Slide,
+} from "@mui/material";
+import { useParams, useHistory } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import BackNavbar from "../components/BackNavbar";
 import { domain } from "../fetch-url/fetchUrl";
@@ -22,6 +28,7 @@ import { useTheme } from "@mui/styles";
 import InfoIcon from "@mui/icons-material/Info";
 import BedroomChildIcon from "@mui/icons-material/BedroomChild";
 import ReviewsIcon from "@mui/icons-material/Reviews";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 import Notification from "../components/Notification";
 
@@ -55,21 +62,33 @@ function a11yProps(index) {
 
 const BoardingHouse = () => {
    const { bhId } = useParams();
+   const history = useHistory();
    const {
       data: boardinghouse,
       isPending,
       error,
    } = useFetch(`${domain}/api/boarding-houses/${bhId}`);
+   const [isRoomPage, setIsRoomPage] = useState(false);
 
    const theme = useTheme();
    const [value, setValue] = useState(0);
 
    const handleChange = (event, newValue) => {
       setValue(newValue);
+      if (newValue === 1) {
+         setIsRoomPage(true);
+      } else {
+         setIsRoomPage(false);
+      }
    };
 
    const handleChangeIndex = (index) => {
       setValue(index);
+      if (index === 1) {
+         setIsRoomPage(true);
+      } else {
+         setIsRoomPage(false);
+      }
    };
 
    const [message, setMessage] = useState("");
@@ -139,7 +158,24 @@ const BoardingHouse = () => {
                      title={boardinghouse.name}
                      subtitle="Boarding House"
                   >
-                     <IconButton></IconButton>
+                     {isRoomPage ? (
+                        <Button
+                           variant="contained"
+                           color="success"
+                           sx={{ mr: 1 }}
+                           size="small"
+                           onClick={() =>
+                              history.push(
+                                 `/admin/boarding-houses/${boardinghouse.id}/add-room`
+                              )
+                           }
+                           startIcon={<AddOutlinedIcon />}
+                        >
+                           Add
+                        </Button>
+                     ) : (
+                        <IconButton></IconButton>
+                     )}
                   </BackNavbar>
 
                   <Box sx={{ background: "white" }}>

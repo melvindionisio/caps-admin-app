@@ -202,7 +202,7 @@ const Room = () => {
                   history.goBack();
                }, 1500);
                setMessage(data.message);
-               setMessageSeverity("info");
+               setMessageSeverity("success");
                setShowMessage(true);
                setDeleteIsPending(false);
                setIsModalOpen(false);

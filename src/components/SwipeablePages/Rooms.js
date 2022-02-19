@@ -31,6 +31,7 @@ const Rooms = ({ bhName }) => {
             paddingBottom: "5rem",
             height: "85vh",
             overflowY: "auto",
+            position: "relative ",
          }}
       >
          <Grid container spacing={1}>
