@@ -12,7 +12,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import useFetch from "../hooks/useFetch";
 import BoardingHouseTable from "../components/BoardingHouseTable";
-import { grey } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import HomeNavigation from "../components/HomeNavigation";
 import LoadingState from "../components/LoadingState";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
@@ -234,18 +234,36 @@ const Export = ({ handleDrawerToggle }) => {
                                     onClick={handleModalClose}
                                     color="warning"
                                  />
-                                 <Typography
-                                    variant="h6"
-                                    align="center"
+
+                                 <Box
                                     sx={{
-                                       textTransform: "uppercase",
-                                       fontFamily: "Quicksand",
-                                       mb: 1,
+                                       display: "flex",
+                                       flexDirection: "column",
+                                       alignItems: "center",
+                                       gap: 1,
                                     }}
-                                    component="h2"
                                  >
-                                    Confirm with password
-                                 </Typography>
+                                    <FileDownloadIcon
+                                       sx={{
+                                          height: "3rem",
+                                          width: "3rem",
+                                          color: red[500],
+                                       }}
+                                    />
+                                    <Typography
+                                       variant="h6"
+                                       align="center"
+                                       sx={{
+                                          textTransform: "uppercase",
+                                          fontFamily: "Quicksand",
+                                          mb: 1,
+                                          fontWeight: "bold",
+                                       }}
+                                       component="p"
+                                    >
+                                       Export
+                                    </Typography>
+                                 </Box>
                                  <Divider
                                     sx={{
                                        mb: 1,
@@ -256,7 +274,7 @@ const Export = ({ handleDrawerToggle }) => {
                                  </Typography>
                                  <TextField
                                     size="small"
-                                    color="secondary"
+                                    color="primary"
                                     value={exportDownloadConfirm}
                                     onChange={(e) =>
                                        setExportDownloadConfirm(e.target.value)

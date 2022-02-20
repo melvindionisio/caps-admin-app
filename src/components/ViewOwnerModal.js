@@ -73,6 +73,7 @@ export default function ViewOwnerModal({
                setShowMessage(true);
                setSeverity("success");
                setMessage(data.message);
+               //handleClose();
                setTimeout(() => {
                   window.location.reload(false);
                }, 1000);
@@ -228,22 +229,39 @@ export default function ViewOwnerModal({
                                     position: "relative",
                                  }}
                               >
-                                 <Typography
-                                    variant="body1"
-                                    align="center"
+                                 <Box
                                     sx={{
-                                       mb: 1,
-                                       fontFamily: "Quicksand",
+                                       display: "flex",
+                                       flexDirection: "column",
+                                       alignItems: "center",
+                                       gap: 1,
                                     }}
                                  >
-                                    Confirm Delete{" "}
+                                    <DeleteIcon
+                                       sx={{
+                                          height: "3rem",
+                                          width: "3rem",
+                                          color: red[500],
+                                       }}
+                                    />
                                     <Typography
-                                       variant=" caption"
-                                       sx={{ color: red[500] }}
+                                       variant="body1"
+                                       align="center"
+                                       sx={{
+                                          mb: 1,
+                                          fontFamily: "Quicksand",
+                                       }}
                                     >
-                                       {ownerName}
+                                       Delete{" "}
+                                       <Typography
+                                          variant=" caption"
+                                          sx={{ color: red[500] }}
+                                       >
+                                          {ownerName}
+                                       </Typography>{" "}
+                                       ?
                                     </Typography>
-                                 </Typography>
+                                 </Box>
                                  <CloseOutlined
                                     sx={{
                                        position: "absolute",
@@ -269,13 +287,14 @@ export default function ViewOwnerModal({
                               </Typography>
                               <Typography variant="caption">
                                  Note: Deleting the owner also deletes the owned
+                                 boarding house and all related to their
                                  boarding house.
                               </Typography>
                               <TextField
                                  sx={{ mt: 2 }}
                                  size="small"
                                  margin="dense"
-                                 label="Enter Owner Name"
+                                 label="Enter Owner name to confirm"
                                  fullWidth
                                  autoFocus
                                  value={deleteOwnerConfirm}
