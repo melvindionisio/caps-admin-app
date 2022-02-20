@@ -44,10 +44,8 @@ const OwnerAccountGeneration = ({
          }}
       >
          <Typography variant="body1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
-            asperiores aliquid velit laudantium nulla totam error ea in
-            doloremque vel delectus, corporis aperiam? Illum odio veritatis
-            ipsam atque eos tempora.
+            Create owner account first. This account will be used by the owner
+            using the Search 'N Stay Owner control panel.
          </Typography>
          <Grid container spacing={1} sx={{ my: 2 }}>
             <Grid item xs={12} lg={8}>

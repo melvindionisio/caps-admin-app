@@ -1,25 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomeNavigation from "../components/HomeNavigation";
 import Container from "@mui/material/Container";
-import { Typography } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
 import useFetch from "../hooks/useFetch";
 import { domain } from "../fetch-url/fetchUrl";
 import LoadingState from "../components/LoadingState";
 import OwnerCard from "../components/cards/OwnerCard";
 import ViewOwnerModal from "../components/ViewOwnerModal";
+import { AddCircle } from "@mui/icons-material";
+import { useHistory } from "react-router-dom";
 
 function Owners({ handleDrawerToggle }) {
+   const history = useHistory();
    const { data: owners, isPending, error } = useFetch(`${domain}/api/owners`);
 
    const [open, setOpen] = useState(false);
    const [owner, setOwner] = useState();
    const [isEdit, setIsEdit] = useState(false);
    const [isDelete, setIsDelete] = useState(false);
+   const [isEmpty, setIsEmpty] = useState(false);
 
    const [deleteOwnerConfirm, setDeleteOwnerConfirm] = useState("");
    const [newPassword, setNewPassword] = useState("");
    const [repeatNewPassword, setRepeatNewPassword] = useState("");
    const [profileChanged, setProfileChanged] = useState(false);
+
+   useEffect(() => {
+      if (owners) {
+         if (owners.length <= 0) {
+            setIsEmpty(true);
+         }
+      }
+   }, [owners]);
 
    const handleOpen = (owner) => {
       setOpen(true);
@@ -76,6 +88,32 @@ function Owners({ handleDrawerToggle }) {
             }}
             disableGutters
          >
+            {isEmpty && (
+               <Box
+                  sx={{
+                     display: " flex",
+                     flexDirection: "column",
+                     alignItems: "center",
+                  }}
+               >
+                  <Typography
+                     variant="body2"
+                     color="text.secondary"
+                     align="center"
+                     sx={{ mt: 4 }}
+                  >
+                     No available owners yet.
+                  </Typography>
+
+                  <IconButton
+                     onClick={() => history.push("/admin/boarding-houses/add")}
+                     size="large"
+                  >
+                     <AddCircle sx={{ height: "2.5rem", width: "2.5rem" }} />
+                  </IconButton>
+               </Box>
+            )}
+
             {error && <Typography variant="body1">{error}</Typography>}
             {isPending && <LoadingState />}
             {owners &&
