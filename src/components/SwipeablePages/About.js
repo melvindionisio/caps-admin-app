@@ -43,7 +43,7 @@ function About({
    const [offers, setOffers] = useState("");
    const [houseProtocols, setHouseProtocols] = useState("");
    const [waterSource, setWaterSource] = useState("");
-   const [gendersAllowed, setGendersAllowed] = useState("All");
+   const [gendersAllowed, setGendersAllowed] = useState("Male/Female");
    const [priceRange, setPriceRange] = useState("P 400-500");
 
    const [isSavePending, setIsSavePending] = useState(false);
@@ -62,7 +62,7 @@ function About({
          setTagline(boardinghouse.tagline ?? "Not Available");
          setHouseProtocols(boardinghouse.houseProtocols ?? "Not Available");
          setWaterSource(boardinghouse.waterSource ?? "Not Available");
-         setGendersAllowed(boardinghouse.genderAllowed ?? "All");
+         setGendersAllowed(boardinghouse.genderAllowed ?? "Male/Female");
          setPriceRange(boardinghouse.priceRange ?? "P 400-500");
       }
    }, [boardinghouse]);
@@ -223,7 +223,9 @@ function About({
                               }}
                               disabled={isBoardinghouseEditable}
                            >
-                              <MenuItem value={"All"}>All</MenuItem>
+                              <MenuItem value={"Male/Female"}>
+                                 Male & Female
+                              </MenuItem>
                               <MenuItem value={"Female"}>Female</MenuItem>
                               <MenuItem value={"Male"}>Male</MenuItem>
                            </Select>

@@ -13,11 +13,12 @@ import Room from "./pages/Room";
 import Owners from "./pages/Owners";
 import AddRoom from "./pages/AddRoom";
 
-//import {useContext} from "react"
-//import { LoginContext } from "./contexts/LoginContext";
+import { useContext } from "react";
+import { LoginContext } from "./contexts/LoginContext";
 
 const Routes = ({ handleDrawerToggle }) => {
-   //const { isAdminLoggedIn } = useContext(LoginContext);
+   const { isAdminLoggedIn } = useContext(LoginContext);
+
    return (
       <Container disableGutters maxWidth="xl" sx={{ overflowY: "auto" }}>
          <Switch>
@@ -35,40 +36,68 @@ const Routes = ({ handleDrawerToggle }) => {
                <Login />
             </Route>
             <Route exact path="/admin/boarding-houses">
-               <Home handleDrawerToggle={handleDrawerToggle} />
+               {!isAdminLoggedIn ? (
+                  <Redirect to="/login" />
+               ) : (
+                  <Home handleDrawerToggle={handleDrawerToggle} />
+               )}
             </Route>
             <Route path="/admin/dashboard">
-               <Dashboard handleDrawerToggle={handleDrawerToggle} />
+               {!isAdminLoggedIn ? (
+                  <Redirect to="/login" />
+               ) : (
+                  <Dashboard handleDrawerToggle={handleDrawerToggle} />
+               )}
             </Route>
             <Route path="/admin/owners">
-               <Owners handleDrawerToggle={handleDrawerToggle} />
+               {!isAdminLoggedIn ? (
+                  <Redirect to="/login" />
+               ) : (
+                  <Owners handleDrawerToggle={handleDrawerToggle} />
+               )}
             </Route>
             <Route path="/admin/dashboard/:zone">
-               <ByZone />
+               {!isAdminLoggedIn ? <Redirect to="/login" /> : <ByZone />}
             </Route>
             <Route exact path="/admin/boarding-houses/add">
-               <AddBoardingHouse handleDrawerToggle={handleDrawerToggle} />
+               {!isAdminLoggedIn ? (
+                  <Redirect to="/login" />
+               ) : (
+                  <AddBoardingHouse handleDrawerToggle={handleDrawerToggle} />
+               )}
             </Route>
             <Route exact path="/admin/boarding-houses/:bhId/add-room">
-               <AddRoom handleDrawerToggle={handleDrawerToggle} />
+               {!isAdminLoggedIn ? (
+                  <Redirect to="/login" />
+               ) : (
+                  <AddRoom handleDrawerToggle={handleDrawerToggle} />
+               )}
             </Route>
             <Route path="/admin/boarding-houses/:bhId">
-               <BoardingHouse />
+               {!isAdminLoggedIn ? <Redirect to="/login" /> : <BoardingHouse />}
             </Route>
             <Route exact path="/admin/rooms/:roomId">
-               <Room />
+               {!isAdminLoggedIn ? <Redirect to="/login" /> : <Room />}
             </Route>
             <Route path="/admin/export">
-               <Export handleDrawerToggle={handleDrawerToggle} />
+               {!isAdminLoggedIn ? (
+                  <Redirect to="/login" />
+               ) : (
+                  <Export handleDrawerToggle={handleDrawerToggle} />
+               )}
             </Route>
             <Route path="/admin/profile">
-               <Profile handleDrawerToggle={handleDrawerToggle} />
+               {!isAdminLoggedIn ? (
+                  <Redirect to="/login" />
+               ) : (
+                  <Profile handleDrawerToggle={handleDrawerToggle} />
+               )}
             </Route>
             <Route path="*">
                <Typography
                   variant="h6"
                   sx={{ fontFamily: "Quicksand" }}
-                  align="center "
+                  align="center"
                >
                   404 Not Found
                </Typography>

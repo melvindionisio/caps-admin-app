@@ -17,6 +17,7 @@ import {
    Fade,
    Backdrop,
    Divider,
+   IconButton,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import { useParams } from "react-router-dom";
@@ -35,6 +36,8 @@ import RoomToggler from "../components/RoomToggler";
 import BackNavbar from "../components/BackNavbar";
 import Notification from "../components/Notification";
 import CloseOutlined from "@mui/icons-material/CloseOutlined";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 const Room = () => {
    const { roomId } = useParams();
@@ -60,7 +63,7 @@ const Room = () => {
 
    const [roomName, setRoomName] = useState("");
    const [roomType, setRoomType] = useState("");
-   const [genderAllowed, setGenderAllowed] = useState("All");
+   const [genderAllowed, setGenderAllowed] = useState("Male/Female");
    const [roomPicture, setRoomPicture] = useState(null);
    const [imagePreview, setImagePreview] = useState(null);
    const [imageName, setImageName] = useState();
@@ -69,6 +72,21 @@ const Room = () => {
    //const [priceRange, setPriceRange] = useState("");
 
    const [boardinghouse, setBoardinghouse] = useState({});
+
+   const incrementTotal = () => {
+      setTotalSlots(totalSlots + 1);
+   };
+   const decrementTotal = () => {
+      setTotalSlots(totalSlots - 1);
+   };
+   const incrementOccupied = () => {
+      if (occupiedSlots < totalSlots) {
+         setOccupiedSlots(occupiedSlots + 1);
+      }
+   };
+   const decrementOccupied = () => {
+      setOccupiedSlots(occupiedSlots - 1);
+   };
 
    const {
       data: room,
@@ -591,36 +609,91 @@ const Room = () => {
                                                 my: 2,
                                              }}
                                           >
+                                             <Box
+                                                sx={{
+                                                   display: "flex",
+                                                   flexGrow: 2,
+                                                }}
+                                             >
+                                                <IconButton
+                                                   color="error"
+                                                   onClick={decrementTotal}
+                                                   disabled={
+                                                      totalSlots === 0 ||
+                                                      isEditable
+                                                   }
+                                                >
+                                                   <RemoveCircleIcon />
+                                                </IconButton>
+                                                <TextField
+                                                   variant="outlined"
+                                                   size="small"
+                                                   fullWidth
+                                                   label="Total Slots"
+                                                   type="number"
+                                                   value={totalSlots}
+                                                   disabled={isEditable}
+                                                   onChange={(e) =>
+                                                      setTotalSlots(
+                                                         e.target.value
+                                                      )
+                                                   }
+                                                />
+                                                <IconButton
+                                                   onClick={incrementTotal}
+                                                   disabled={isEditable}
+                                                   color="success"
+                                                >
+                                                   <AddCircleIcon />
+                                                </IconButton>
+                                             </Box>
+
+                                             <Box
+                                                sx={{
+                                                   display: "flex",
+                                                   flexGrow: 2,
+                                                }}
+                                             >
+                                                <IconButton
+                                                   onClick={decrementOccupied}
+                                                   color="error"
+                                                   disabled={
+                                                      occupiedSlots === 0 ||
+                                                      isEditable
+                                                   }
+                                                >
+                                                   <RemoveCircleIcon />
+                                                </IconButton>
+                                                <TextField
+                                                   variant="outlined"
+                                                   size="small"
+                                                   fullWidth
+                                                   type="number"
+                                                   label="Occupied Slots"
+                                                   value={occupiedSlots}
+                                                   disabled={isEditable}
+                                                   onChange={(e) =>
+                                                      setOccupiedSlots(
+                                                         e.target.value
+                                                      )
+                                                   }
+                                                />
+
+                                                <IconButton
+                                                   onClick={incrementOccupied}
+                                                   color="success"
+                                                   disabled={
+                                                      occupiedSlots ===
+                                                         totalSlots ||
+                                                      isEditable
+                                                   }
+                                                >
+                                                   <AddCircleIcon />
+                                                </IconButton>
+                                             </Box>
                                              <TextField
                                                 variant="outlined"
                                                 size="small"
-                                                fullWidth
-                                                label="Total Slots"
-                                                type="number"
-                                                value={totalSlots}
-                                                disabled={isEditable}
-                                                onChange={(e) =>
-                                                   setTotalSlots(e.target.value)
-                                                }
-                                             />
-                                             <TextField
-                                                variant="outlined"
-                                                size="small"
-                                                fullWidth
-                                                type="number"
-                                                label="Occupied Slots"
-                                                value={occupiedSlots}
-                                                disabled={isEditable}
-                                                onChange={(e) =>
-                                                   setOccupiedSlots(
-                                                      e.target.value
-                                                   )
-                                                }
-                                             />
-                                             <TextField
-                                                variant="outlined"
-                                                size="small"
-                                                fullWidth
                                                 label="Available Slots"
                                                 value={
                                                    totalSlots - occupiedSlots
@@ -631,6 +704,7 @@ const Room = () => {
                                                 }
                                              />
                                           </Box>
+
                                           <Box
                                              sx={{
                                                 display: "flex",
@@ -699,14 +773,16 @@ const Room = () => {
                                                    }
                                                    disabled={isEditable}
                                                 >
+                                                   <MenuItem
+                                                      value={"Male/Female"}
+                                                   >
+                                                      Male & Female
+                                                   </MenuItem>
                                                    <MenuItem value={"Male"}>
                                                       Male Only
                                                    </MenuItem>
                                                    <MenuItem value={"Female"}>
                                                       Female Only
-                                                   </MenuItem>
-                                                   <MenuItem value={"All"}>
-                                                      All
                                                    </MenuItem>
                                                 </Select>
                                              </FormControl>
