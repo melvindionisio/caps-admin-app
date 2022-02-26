@@ -339,7 +339,7 @@ function About({
                      />
 
                      <TextField
-                        label="Water Source"
+                        label="Water Source (Separate every entry by using / sign.)"
                         variant="outlined"
                         color="primary"
                         margin="dense"
@@ -348,6 +348,16 @@ function About({
                         value={waterSource}
                         onChange={(e) => setWaterSource(e.target.value)}
                         disabled={isBoardinghouseEditable}
+                        onKeyUp={(e) => {
+                           if (e.key === "Enter") {
+                              if (
+                                 waterSource.charAt(waterSource.length - 2) !==
+                                 "/"
+                              ) {
+                                 setWaterSource(waterSource + "/");
+                              }
+                           }
+                        }}
                      />
 
                      <TextField
@@ -367,7 +377,7 @@ function About({
                      />
                      <TextField
                         id="bh-offers"
-                        label="Offers"
+                        label="Offers (Sepate every entry by using / sign.)"
                         variant="outlined"
                         color="primary"
                         margin="dense"
@@ -379,10 +389,17 @@ function About({
                         value={offers}
                         onChange={(e) => setOffers(e.target.value)}
                         disabled={isBoardinghouseEditable}
+                        onKeyUp={(e) => {
+                           if (e.key === "Enter") {
+                              if (offers.charAt(offers.length - 2) !== "/") {
+                                 setOffers(offers + "/");
+                              }
+                           }
+                        }}
                      />
                      <TextField
                         id="bh-protocols"
-                        label="House Protocols"
+                        label="House Protocols (Separate every entry by using / sign.)"
                         variant="outlined"
                         color="primary"
                         margin="dense"
@@ -394,6 +411,17 @@ function About({
                         value={houseProtocols}
                         onChange={(e) => setHouseProtocols(e.target.value)}
                         disabled={isBoardinghouseEditable}
+                        onKeyUp={(e) => {
+                           if (e.key === "Enter") {
+                              if (
+                                 houseProtocols.charAt(
+                                    houseProtocols.length - 2
+                                 ) !== "/"
+                              ) {
+                                 setHouseProtocols(houseProtocols + "/");
+                              }
+                           }
+                        }}
                      />
                   </CardContent>
                </Card>
