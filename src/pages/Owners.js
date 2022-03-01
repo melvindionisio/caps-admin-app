@@ -9,6 +9,7 @@ import OwnerCard from "../components/cards/OwnerCard";
 import ViewOwnerModal from "../components/ViewOwnerModal";
 import { AddCircle } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
+import Notification from "../components/Notification";
 
 function Owners({ handleDrawerToggle }) {
    const history = useHistory();
@@ -53,8 +54,18 @@ function Owners({ handleDrawerToggle }) {
       setProfileChanged(false);
    };
 
+   const [showMessage, setShowMessage] = useState(false);
+   const [message, setMessage] = useState("");
+   const [severity, setSeverity] = useState("warning");
+
    return (
       <Container maxWidth="xl" disableGutters sx={{ minHeight: "100vh" }}>
+         <Notification
+            message={message}
+            setShowMessage={setShowMessage}
+            severity={severity}
+            showMessage={showMessage}
+         />
          <ViewOwnerModal
             open={open}
             handleClose={handleClose}
@@ -71,6 +82,12 @@ function Owners({ handleDrawerToggle }) {
             setRepeatNewPassword={setRepeatNewPassword}
             profileChanged={profileChanged}
             setProfileChanged={setProfileChanged}
+            setMessage={setMessage}
+            setShowMessage={setShowMessage}
+            setSeverity={setSeverity}
+            showMessage={showMessage}
+            severity={severity}
+            message={message}
          />
          <HomeNavigation
             title="Owners"

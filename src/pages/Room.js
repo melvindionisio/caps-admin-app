@@ -351,7 +351,9 @@ const Room = () => {
                                           Delete{" "}
                                           <Typography
                                              variant=" caption"
-                                             sx={{ color: red[500] }}
+                                             sx={{
+                                                color: red[500],
+                                             }}
                                           >
                                              {room.name}
                                           </Typography>{" "}

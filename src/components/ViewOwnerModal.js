@@ -44,14 +44,18 @@ export default function ViewOwnerModal({
    setRepeatNewPassword,
    profileChanged,
    setProfileChanged,
+
+   setMessage,
+   setShowMessage,
+   setSeverity,
+   showMessage,
+   severity,
+   message,
 }) {
    const [ownerName, setOwnerName] = useState("");
    const [ownerUsername, setOwnerUsername] = useState("");
    const [ownedBoardinghouse, setOwnerBoardinghouse] = useState("");
 
-   const [showMessage, setShowMessage] = useState(false);
-   const [message, setMessage] = useState("");
-   const [severity, setSeverity] = useState("warning");
    const [resetReady, setResetReady] = useState(false);
 
    const [isDeletePending, setIsDeletePending] = useState(false);
@@ -73,10 +77,11 @@ export default function ViewOwnerModal({
                setShowMessage(true);
                setSeverity("success");
                setMessage(data.message);
-               //handleClose();
-               setTimeout(() => {
-                  window.location.reload(false);
-               }, 1000);
+               handleClose();
+
+               //setTimeout(() => {
+               //window.location.reload(false);
+               //}, 1000);
             })
             .catch((err) => {
                console.log(err);
@@ -179,13 +184,13 @@ export default function ViewOwnerModal({
       }
    }, [newPassword, repeatNewPassword]);
 
-   useEffect(() => {
-      setTimeout(() => {
-         if (showMessage) {
-            setShowMessage(false);
-         }
-      }, 3000);
-   }, [showMessage]);
+   //useEffect(() => {
+   //setTimeout(() => {
+   //if (showMessage) {
+   //setShowMessage(false);
+   //}
+   //}, 3000);
+   //}, [showMessage]);
 
    return (
       <div>

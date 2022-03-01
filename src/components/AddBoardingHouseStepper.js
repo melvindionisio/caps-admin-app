@@ -21,7 +21,6 @@ import {
    MenuItem,
    Select,
 } from "@mui/material";
-import { blue } from "@mui/material/colors";
 import { CardHeader } from "@mui/material";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { domain } from "../fetch-url/fetchUrl";
@@ -102,12 +101,15 @@ const OwnerAccountGeneration = ({
                      <Divider />
                      <Typography
                         variant="overline"
+                        component="p"
                         color="initial"
                         style={{
                            fontSize: 15,
                            fontWeight: "bold",
+                           fontFamily: "Quicksand",
                            color: "grey",
                         }}
+                        align="center"
                      >
                         {" "}
                         {bhoName}
@@ -116,30 +118,30 @@ const OwnerAccountGeneration = ({
                }
                subheader={
                   <>
-                     <Typography variant="subtitle2" color="text.secondary">
-                        USERNAME:
-                        <span
-                           style={{
-                              marginLeft: 10,
-                              fontSize: 18,
-                              color: blue[600],
-                           }}
-                        >
-                           {ownerUserName}
-                        </span>
-                     </Typography>
-                     <Typography variant="subtitle2" color="text.secondary">
-                        PASSWORD:
-                        <span
-                           style={{
-                              marginLeft: 10,
-                              fontSize: 18,
-                              color: blue[600],
-                           }}
-                        >
-                           {ownerPassword}
-                        </span>
-                     </Typography>
+                     <Box sx={{ mb: 1, display: "flex", alignItems: "center" }}>
+                        <Typography variant="subtitle2" color="text.secondary">
+                           USERNAME:
+                        </Typography>
+                        <TextField
+                           size="small"
+                           value={ownerUserName}
+                           variant="outlined"
+                           sx={{ ml: 1 }}
+                        />
+                     </Box>
+
+                     <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Typography variant="subtitle2" color="text.secondary">
+                           PASSWORD:
+                        </Typography>
+
+                        <TextField
+                           size="small"
+                           value={ownerPassword}
+                           variant="outlined"
+                           sx={{ ml: 1 }}
+                        />
+                     </Box>
                   </>
                }
             />

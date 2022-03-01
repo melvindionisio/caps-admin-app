@@ -181,6 +181,8 @@ const Dashboard = ({ handleDrawerToggle }) => {
                            justifyContent: "center",
                            alignItems: "center",
                            paddingBotton: 2,
+                           borderRadius: "50%",
+                           overflow: "hidden",
                         }}
                      >
                         <Pie data={data} />
