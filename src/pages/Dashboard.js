@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import HomeNavigation from "../components/HomeNavigation";
 import {
    Container,
@@ -11,12 +11,12 @@ import {
    Paper,
 } from "@mui/material";
 import { Pie } from "react-chartjs-2";
-import { Chart, ArcElement } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useTheme } from "@mui/system";
 import useFetch from "../hooks/useFetch";
 import { domain } from "../fetch-url/fetchUrl";
 
-Chart.register(ArcElement);
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ZoneCard = ({ label, value, error, color }) => {
    return (
@@ -78,6 +78,9 @@ const Dashboard = ({ handleDrawerToggle }) => {
       "rgb(54, 162, 235)",
       "rgb(255, 205, 86)",
    ];
+   //const [chartView, setChartView] = useState([]);
+   const summaryRef = useRef(null);
+
    const [data, setData] = useState({
       labels: ["Zone 1", "Zone 2", "Zone 3"],
       datasets: [
@@ -96,6 +99,29 @@ const Dashboard = ({ handleDrawerToggle }) => {
          },
       ],
    });
+
+   const pieOptions = {
+      plugins: {
+         legend: {
+            display: false,
+            labels: {
+               font: {
+                  size: 14,
+               },
+            },
+         },
+         tooltip: {
+            labels: {
+               font: {
+                  size: 20,
+               },
+            },
+         },
+      },
+   };
+   //useEffect(() => {
+   //setChartView(summaryRef?.current?.legend?.legendItems);
+   //}, []);
 
    const {
       data: boardinghouses,
@@ -158,6 +184,7 @@ const Dashboard = ({ handleDrawerToggle }) => {
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
+                        gap: 2,
                      }}
                   >
                      <Typography
@@ -185,7 +212,27 @@ const Dashboard = ({ handleDrawerToggle }) => {
                            overflow: "hidden",
                         }}
                      >
-                        <Pie data={data} />
+                        <Pie
+                           data={data}
+                           options={pieOptions}
+                           ref={summaryRef}
+                        />
+                        {/*
+      {charView?.map((data: any, i: number) => (
+          <Box display="flex" sx={{ mt: 2 }} key={i}>
+                        <Box
+              sx={{
+                  height: 16,
+                  width: 16,
+                  background: `${data?.fillStyle}`,
+                  borderRadius: 5,
+                  mr: 0.5,
+                  }}
+              />
+              	<Typography variant="body2"> {data?.text}</Typography>
+              </Box>
+		))}
+                        */}
                      </Box>
                   </Box>
                </Grid>

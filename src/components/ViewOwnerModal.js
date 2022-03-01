@@ -272,6 +272,7 @@ export default function ViewOwnerModal({
                                        position: "absolute",
                                        right: 0,
                                        top: 0,
+                                       cursor: "pointer",
                                     }}
                                     onClick={handleClose}
                                     color="warning"
@@ -373,6 +374,7 @@ export default function ViewOwnerModal({
                                              position: "absolute",
                                              right: 0,
                                              top: 0,
+                                             cursor: "pointer",
                                           }}
                                           onClick={handleClose}
                                        />
@@ -477,6 +479,7 @@ export default function ViewOwnerModal({
                                              position: "absolute",
                                              right: 0,
                                              top: 0,
+                                             cursor: "pointer",
                                           }}
                                           onClick={handleClose}
                                        />

@@ -23,8 +23,10 @@ const AllByZone = ({ zone }) => {
                sx={{ fontFamily: "Quicksand", fontSize: 15, py: 5 }}
             >
                {" "}
-               NO BOARDING HOUSE IN{" "}
-               {zone.charAt(0).toUpperCase() + zone.slice(1).replace(/-/g, " ")}
+               No Boarding house for{" "}
+               {zone.charAt(0).toUpperCase() +
+                  zone.slice(1).replace(/-/g, " ")}{" "}
+               yet.
             </Typography>
          ) : (
             <BoardingHouseList boardinghouses={data} />

@@ -1,4 +1,4 @@
-import { Container, Box, Typography } from "@mui/material";
+import { IconButton, Container, Box, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import Tabs from "@mui/material/Tabs";
@@ -14,6 +14,8 @@ import BoardingHouseList from "../components/lists/BoardingHouseList";
 import LoadingState from "../components/LoadingState";
 import AllByZone from "../components/lists/AllByZone";
 import { domain } from "../fetch-url/fetchUrl";
+import { AddCircle } from "@mui/icons-material";
+import { useHistory } from "react-router-dom";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -44,6 +46,7 @@ function a11yProps(index) {
 }
 
 const Home = ({ handleDrawerToggle }) => {
+   const history = useHistory();
    const [value, setValue] = useState(0);
    const theme = useTheme();
    const {
@@ -112,6 +115,13 @@ const Home = ({ handleDrawerToggle }) => {
    }
    return (
       <Container disableGutters maxWidth="xl" sx={{ minHeight: "100vh" }}>
+         <IconButton
+            onClick={() => history.push("/admin/boarding-houses/add")}
+            size="large"
+            sx={{ position: "absolute", bottom: 10, right: 10 }}
+         >
+            <AddCircle sx={{ height: "2.5rem", width: "2.5rem" }} />
+         </IconButton>
          <HomeNavigation
             title="Boarding Houses"
             handleDrawerToggle={handleDrawerToggle}

@@ -44,7 +44,18 @@ const OwnerAccountGeneration = ({
       >
          <Typography variant="body1">
             Create owner account first. This account will be used by the owner
-            using the Search 'N Stay Owner control panel.
+            to have access the{" "}
+            <Typography
+               variant="body1"
+               component="a"
+               href="https://searchnstay-owner-panel.vercel.app"
+               sx={{
+                  fontWeight: "bold",
+                  color: "text.secondary",
+               }}
+            >
+               Search 'N Stay Owner control panel.
+            </Typography>
          </Typography>
          <Grid container spacing={1} sx={{ my: 2 }}>
             <Grid item xs={12} lg={8}>

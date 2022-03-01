@@ -672,8 +672,8 @@ const Room = () => {
                                                    fullWidth
                                                    type="number"
                                                    label="Occupied Slots"
-                                                   value={occupiedSlots}
                                                    disabled={isEditable}
+                                                   value={occupiedSlots}
                                                    onChange={(e) =>
                                                       setOccupiedSlots(
                                                          e.target.value
