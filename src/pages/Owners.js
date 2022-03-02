@@ -68,6 +68,7 @@ function Owners({ handleDrawerToggle }) {
             <IconButton
                onClick={() => history.push("/admin/boarding-houses/add")}
                size="large"
+               color="primary"
                sx={{ position: "absolute", bottom: 10, right: 10 }}
             >
                <AddCircle sx={{ height: "2.5rem", width: "2.5rem" }} />

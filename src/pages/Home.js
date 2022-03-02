@@ -119,6 +119,7 @@ const Home = ({ handleDrawerToggle }) => {
             onClick={() => history.push("/admin/boarding-houses/add")}
             size="large"
             sx={{ position: "absolute", bottom: 10, right: 10 }}
+            color="primary"
          >
             <AddCircle sx={{ height: "2.5rem", width: "2.5rem" }} />
          </IconButton>

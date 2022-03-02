@@ -25,7 +25,7 @@ import {
    ListItemIcon,
    ListItemButton,
 } from "@mui/material";
-import { grey } from "@material-ui/core/colors";
+import { grey, amber } from "@mui/material/colors";
 import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -153,12 +153,29 @@ export default function Menu({
                         src={logo}
                         style={{ height: "1.7rem", width: "1.7rem" }}
                      ></Avatar>
-                     <Typography
-                        variant="body1"
-                        style={{ fontFamily: "Quicksand" }}
-                     >
-                        SEARCH 'N STAY
-                     </Typography>
+
+                     <Box sx={{ position: "relative" }}>
+                        <Typography
+                           variant="body1"
+                           style={{ fontFamily: "Quicksand" }}
+                        >
+                           SEARCH 'N STAY
+                        </Typography>
+                        <Typography
+                           variant="caption"
+                           component="span"
+                           sx={{
+                              position: "absolute",
+                              right: "-3rem",
+                              top: -1,
+                              borderRadius: 1,
+                              outline: `1px solid ${amber[500]}`,
+                              px: 0.5,
+                           }}
+                        >
+                           admin
+                        </Typography>
+                     </Box>
                   </Box>
                   <IconButton
                      onClick={handleDrawerToggle}

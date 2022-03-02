@@ -8,9 +8,10 @@ import {
    ListItemIcon,
    ListItemText,
    ListItemButton,
+   Box,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { grey } from "@mui/material/colors";
+import { grey, amber } from "@mui/material/colors";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
@@ -92,13 +93,29 @@ const Sidebar = () => {
                   src={logo}
                   style={{ height: "1.7rem", width: "1.7rem" }}
                ></Avatar>
-               <Typography
-                  variant="body1"
-                  component="h1"
-                  sx={{ fontFamily: "Quicksand" }}
-               >
-                  SEARCH 'N STAY
-               </Typography>
+               <Box sx={{ position: "relative" }}>
+                  <Typography
+                     variant="body1"
+                     component="h1"
+                     sx={{ fontFamily: "Quicksand" }}
+                  >
+                     SEARCH 'N STAY
+                  </Typography>
+                  <Typography
+                     variant="caption"
+                     component="span"
+                     sx={{
+                        position: "absolute",
+                        right: "-3rem",
+                        top: -1,
+                        borderRadius: 1,
+                        outline: `1px solid ${amber[500]}`,
+                        px: 0.5,
+                     }}
+                  >
+                     admin
+                  </Typography>
+               </Box>
             </Toolbar>
          </AppBar>
          <List>

@@ -32,6 +32,8 @@ const OwnerAccountGeneration = ({
    ownerUserName,
    ownerPassword,
    showGenerated,
+   setOwnerPassword,
+   setOwnerUserName,
 }) => {
    return (
       <Box
@@ -138,6 +140,9 @@ const OwnerAccountGeneration = ({
                            value={ownerUserName}
                            variant="outlined"
                            sx={{ ml: 1 }}
+                           onChange={(e) => {
+                              setOwnerUserName(e.target.value);
+                           }}
                         />
                      </Box>
 
@@ -151,6 +156,9 @@ const OwnerAccountGeneration = ({
                            value={ownerPassword}
                            variant="outlined"
                            sx={{ ml: 1 }}
+                           onChange={(e) => {
+                              setOwnerPassword(e.target.value);
+                           }}
                         />
                      </Box>
                   </>
@@ -469,6 +477,8 @@ export default function AddBoardingHouseStepper() {
                ownerUserName={ownerUserName}
                ownerPassword={ownerPassword}
                showGenerated={showGenerated}
+               setOwnerPassword={setOwnerPassword}
+               setOwnerUserName={setOwnerUserName}
             />
          ),
          isOptional: isOptional,
