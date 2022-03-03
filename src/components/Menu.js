@@ -166,10 +166,13 @@ export default function Menu({
                            component="span"
                            sx={{
                               position: "absolute",
-                              right: "-3rem",
+                              right: "-3.2rem",
                               top: -1,
                               borderRadius: 1,
                               outline: `1px solid ${amber[500]}`,
+                              background: amber[50],
+                              fontWeight: "bold",
+                              fontFamily: "Quicksand",
                               px: 0.5,
                            }}
                         >

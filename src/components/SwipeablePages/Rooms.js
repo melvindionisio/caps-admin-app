@@ -13,6 +13,7 @@ import CardHeader from "@mui/material/CardHeader";
 import CardActionArea from "@mui/material/CardActionArea";
 import BedIcon from "@mui/icons-material/Bed";
 import RoomToggler from "../../components/RoomToggler";
+import { useEffect, useState } from "react";
 
 const Rooms = ({ bhName }) => {
    const { bhId } = useParams();
@@ -21,6 +22,16 @@ const Rooms = ({ bhName }) => {
       isPending,
       error,
    } = useFetch(`${domain}/api/rooms/all/${bhId}`);
+
+   const [isEmpty, setIsEmpty] = useState(false);
+
+   useEffect(() => {
+      if (rooms) {
+         if (rooms.length <= 0) {
+            setIsEmpty(true);
+         }
+      }
+   }, [rooms]);
 
    return (
       <Container
@@ -34,14 +45,24 @@ const Rooms = ({ bhName }) => {
             position: "relative ",
          }}
       >
-         <Grid container spacing={1}>
-            {error && (
-               <Typography variant="caption" align="center">
-                  Error. {error}
-               </Typography>
-            )}
-            {isPending && <LoadingState loadWhat="rooms" />}
+         {error && (
+            <Typography variant="caption" align="center">
+               Error. {error}
+            </Typography>
+         )}
+         {isPending && <LoadingState loadWhat="rooms" />}
+         {isEmpty && (
+            <Typography
+               variant="body2"
+               align="center"
+               color="text.secondary"
+               sx={{ py: 5 }}
+            >
+               No Available rooms.
+            </Typography>
+         )}
 
+         <Grid container spacing={1}>
             {/*<Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={2}>*/}
             {rooms &&
                rooms.map((room) => (

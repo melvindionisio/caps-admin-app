@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { useTheme } from "@mui/styles";
@@ -16,6 +15,7 @@ import AllByZone from "../components/lists/AllByZone";
 import { domain } from "../fetch-url/fetchUrl";
 import { AddCircle } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
+import useSessionStorage from "../hooks/useSessionStorage";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -47,7 +47,7 @@ function a11yProps(index) {
 
 const Home = ({ handleDrawerToggle }) => {
    const history = useHistory();
-   const [value, setValue] = useState(0);
+   const [value, setValue] = useSessionStorage("zone-tab", 0);
    const theme = useTheme();
    const {
       data: allBoardinghouses,

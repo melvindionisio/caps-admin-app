@@ -31,6 +31,7 @@ import ReviewsIcon from "@mui/icons-material/Reviews";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 import Notification from "../components/Notification";
+import useSessionStorage from "../hooks/useSessionStorage";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -71,7 +72,7 @@ const BoardingHouse = () => {
    const [isRoomPage, setIsRoomPage] = useState(false);
 
    const theme = useTheme();
-   const [value, setValue] = useState(0);
+   const [value, setValue] = useSessionStorage("admin-house-tab", 0);
 
    const handleChange = (event, newValue) => {
       setValue(newValue);

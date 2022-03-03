@@ -13,8 +13,9 @@ const AddBoardingHouse = () => {
          </BackNavbar>
          <Container maxWidth="md" sx={{ p: 2, pt: 5, pb: 5 }} disableGutters>
             <Typography variant="body1" style={{ marginBottom: 10 }}>
-               Here you can add new boarding house owner account for owner and
-               can fill details but optional.
+               To add a boarding house, an account for the owner should be
+               create first. Here you can add new boarding house owner account
+               for owner and can fill details but optional.
             </Typography>
             <Zoom in={true}>
                <Paper style={{ padding: 15 }} variant="outlined">
