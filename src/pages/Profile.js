@@ -17,12 +17,16 @@ import HomeNavigation from "../components/HomeNavigation";
 import { useState, useEffect, useContext } from "react";
 import { EditOutlined } from "@mui/icons-material";
 // import CancelIcon from "@mui/icons-material/Cancel";
+import Logout from "@mui/icons-material/Logout";
+import { useHistory } from "react-router-dom";
 
 import { LoginContext } from "../contexts/LoginContext";
 import { domain } from "../fetch-url/fetchUrl";
 
 const Profile = ({ handleDrawerToggle }) => {
-   const { currentAdmin, setCurrentAdmin } = useContext(LoginContext);
+   const { currentAdmin, setCurrentAdmin, handleAdminLogout } =
+      useContext(LoginContext);
+   const history = useHistory();
 
    const [name, setName] = useState(currentAdmin.name);
    const [userName, setUserName] = useState(currentAdmin.username);
@@ -364,6 +368,19 @@ const Profile = ({ handleDrawerToggle }) => {
                         {passwordAlertMessage}
                      </Alert>
                   </CardContent>
+                  <Button
+                     variant="contained"
+                     size="small"
+                     fullWidth
+                     color="secondary"
+                     startIcon={<Logout />}
+                     onClick={() => {
+                        handleAdminLogout();
+                        history.push("/");
+                     }}
+                  >
+                     Logout
+                  </Button>
                </Card>
             </Container>
          </Zoom>
