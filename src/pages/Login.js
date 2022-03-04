@@ -10,6 +10,7 @@ import {
    CardContent,
    Fade,
    Alert,
+   IconButton,
 } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import logo from "../sns-logo.png";
@@ -19,6 +20,9 @@ import { useContext, useState, useEffect } from "react";
 import { domain } from "../fetch-url/fetchUrl";
 import { LoginContext } from "../contexts/LoginContext";
 //import loginBg from "../login-bg.png";
+
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const useStyles = makeStyles({
    container: {
@@ -77,6 +81,15 @@ const Login = () => {
    const [password, setPassword] = useState("");
 
    const { setIsAdminLoggedIn, setCurrentAdmin } = useContext(LoginContext);
+   const [showPassword, setIsShowPassword] = useState(false);
+
+   const handleClickShowPassword = () => {
+      setIsShowPassword(!showPassword);
+   };
+
+   const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+   };
 
    useEffect(() => {
       setTimeout(() => {
@@ -196,17 +209,38 @@ const Login = () => {
                               value={username}
                               onChange={(e) => setUsername(e.target.value)}
                            />
-                           <TextField
-                              label="Password"
-                              fullWidth
-                              variant="filled"
-                              className={classes.textFields}
-                              color="primary"
-                              required
-                              type="password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                           />
+                           <Box sx={{ position: "relative" }}>
+                              <TextField
+                                 label="Password"
+                                 fullWidth
+                                 variant="filled"
+                                 className={classes.textFields}
+                                 color="primary"
+                                 required
+                                 type={showPassword ? "text" : "password"}
+                                 value={password}
+                                 onChange={(e) => setPassword(e.target.value)}
+                              />
+                              <IconButton
+                                 aria-label="toggle password visibility"
+                                 onClick={handleClickShowPassword}
+                                 onMouseDown={handleMouseDownPassword}
+                                 edge="end"
+                                 sx={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    right: 3,
+                                    mr: 0.5,
+                                    transform: "translateY(-50%)",
+                                 }}
+                              >
+                                 {showPassword ? (
+                                    <VisibilityOff />
+                                 ) : (
+                                    <Visibility />
+                                 )}
+                              </IconButton>
+                           </Box>
                         </CardContent>
                         <CardActions className={classes.cardActions}>
                            <LoadingButton
