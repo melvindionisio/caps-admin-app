@@ -143,6 +143,8 @@ export default function Menu({
                   sx={{
                      display: "flex",
                      justifyContent: "space-between",
+                     paddingRight: 0.5,
+                     mb: 1,
                   }}
                   onClick={handleDrawerToggle}
                   onKeyDown={handleDrawerToggle}
