@@ -16,6 +16,7 @@ import { domain } from "../fetch-url/fetchUrl";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Link } from "react-router-dom";
 import LoadingState from "../components/LoadingState";
+import PasswordField from "../components/PasswordField";
 
 const style = {
    zIndex: 100,
@@ -531,27 +532,17 @@ export default function ViewOwnerModal({
                                     <Typography variant="caption">
                                        Reset Password
                                     </Typography>
-                                    <TextField
+                                    <PasswordField
+                                       password={newPassword}
+                                       setPassword={setNewPassword}
                                        size="small"
-                                       fullWidth
-                                       margin="dense"
                                        label="New Password"
-                                       type="password"
-                                       value={newPassword}
-                                       onChange={(e) =>
-                                          setNewPassword(e.target.value)
-                                       }
                                     />
-                                    <TextField
+                                    <PasswordField
+                                       password={repeatNewPassword}
+                                       setPassword={setRepeatNewPassword}
                                        size="small"
-                                       fullWidth
-                                       margin="dense"
                                        label="Confirm Password"
-                                       type="password"
-                                       value={repeatNewPassword}
-                                       onChange={(e) =>
-                                          setRepeatNewPassword(e.target.value)
-                                       }
                                     />
                                  </>
                               )}

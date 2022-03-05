@@ -22,6 +22,7 @@ import { useHistory } from "react-router-dom";
 
 import { LoginContext } from "../contexts/LoginContext";
 import { domain } from "../fetch-url/fetchUrl";
+import PasswordField from "../components/PasswordField";
 
 const Profile = ({ handleDrawerToggle }) => {
    const { currentAdmin, setCurrentAdmin, handleAdminLogout } =
@@ -286,16 +287,11 @@ const Profile = ({ handleDrawerToggle }) => {
                         </IconButton>
                      </Box>
                      <Box>
-                        <TextField
-                           id="cur-password"
+                        <PasswordField
+                           password={curPassword}
+                           setPassword={setCurPassword}
                            label="Current Password"
-                           type="password"
-                           value={curPassword}
-                           onChange={(e) => setCurPassword(e.target.value)}
-                           fullWidth
                            size="small"
-                           variant="outlined"
-                           margin="dense"
                            disabled={!isChangePassword}
                         />
                         <TextField

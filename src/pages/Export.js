@@ -5,7 +5,6 @@ import {
    Modal,
    Fade,
    Backdrop,
-   TextField,
    Button,
    Divider,
 } from "@mui/material";
@@ -24,6 +23,7 @@ import { LoginContext } from "../contexts/LoginContext";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { CloseOutlined } from "@mui/icons-material";
 import Notification from "../components/Notification";
+import PasswordField from "../components/PasswordField";
 
 import { saveAs } from "file-saver";
 import axios from "axios";
@@ -234,7 +234,6 @@ const Export = ({ handleDrawerToggle }) => {
                                     onClick={handleModalClose}
                                     color="warning"
                                  />
-
                                  <Box
                                     sx={{
                                        display: "flex",
@@ -272,25 +271,19 @@ const Export = ({ handleDrawerToggle }) => {
                                  <Typography variant="caption">
                                     Enter your password to export file.
                                  </Typography>
-                                 <TextField
+                                 <PasswordField
+                                    label="Enter your password"
                                     size="small"
-                                    color="primary"
-                                    value={exportDownloadConfirm}
-                                    onChange={(e) =>
-                                       setExportDownloadConfirm(e.target.value)
-                                    }
-                                    autoFocus
-                                    label="Password"
-                                    fullWidth
-                                    margin="normal"
-                                    type="password"
+                                    password={exportDownloadConfirm}
+                                    setPassword={setExportDownloadConfirm}
+                                    autoFocus={true}
                                  />
-
                                  <Box
                                     sx={{
                                        display: "flex",
                                        gap: 1,
                                        justifyContent: "center",
+                                       mt: 1,
                                     }}
                                  >
                                     <LoadingButton
