@@ -59,17 +59,13 @@ function Owners({ handleDrawerToggle }) {
    const [severity, setSeverity] = useState("warning");
 
    return (
-      <Container
-         maxWidth="xl"
-         disableGutters
-         sx={{ minHeight: "100vh", position: "relative" }}
-      >
+      <Container maxWidth="xl" disableGutters sx={{ height: "100vh" }}>
          {!isEmpty && (
             <IconButton
                onClick={() => history.push("/admin/boarding-houses/add")}
                size="large"
-               color="primary"
-               sx={{ position: "absolute", bottom: 10, right: 10 }}
+               color="warning"
+               sx={{ position: "absolute", bottom: 10, right: 10, zIndex: 100 }}
             >
                <AddCircle sx={{ height: "2.5rem", width: "2.5rem" }} />
             </IconButton>
@@ -116,6 +112,7 @@ function Owners({ handleDrawerToggle }) {
                display: "flex",
                gap: 1,
                flexDirection: "column",
+               overflowY: "auto",
             }}
             disableGutters
          >
