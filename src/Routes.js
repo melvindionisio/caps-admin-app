@@ -12,6 +12,7 @@ import BoardingHouse from "./pages/BoardingHouse";
 import Room from "./pages/Room";
 import Owners from "./pages/Owners";
 import AddRoom from "./pages/AddRoom";
+import PendingReviews from "./pages/PendingReviews";
 
 import { useContext } from "react";
 import { LoginContext } from "./contexts/LoginContext";
@@ -91,6 +92,14 @@ const Routes = ({ handleDrawerToggle }) => {
                   <Redirect to="/login" />
                ) : (
                   <Profile handleDrawerToggle={handleDrawerToggle} />
+               )}
+            </Route>
+
+            <Route path="/admin/pending-reviews">
+               {!isAdminLoggedIn ? (
+                  <Redirect to="/login" />
+               ) : (
+                  <PendingReviews handleDrawerToggle={handleDrawerToggle} />
                )}
             </Route>
             <Route path="*">

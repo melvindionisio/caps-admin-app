@@ -17,6 +17,7 @@ import OtherHousesIcon from "@mui/icons-material/OtherHouses";
 import ImportExportIcon from "@mui/icons-material/ImportExport";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import GroupsIcon from "@mui/icons-material/Groups";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import logo from "../sns-logo.png";
 import { Avatar } from "@material-ui/core";
@@ -53,6 +54,11 @@ const Sidebar = () => {
          text: "Boarding Houses",
          path: "/admin/boarding-houses",
          icon: <OtherHousesIcon />,
+      },
+      {
+         text: "Pending Reviews",
+         path: "/admin/pending-reviews",
+         icon: <PendingActionsIcon />,
       },
       {
          text: "Add Boarding House",

@@ -1,11 +1,11 @@
 import {
-  IconButton,
-  Toolbar,
-  Typography,
-  // ListItem,
-  // ListItemText,
-  // ListItemIcon,
-  // ListItemButton,
+   IconButton,
+   Toolbar,
+   Typography,
+   // ListItem,
+   // ListItemText,
+   // ListItemIcon,
+   // ListItemButton,
 } from "@mui/material";
 import { AppBar } from "@mui/material";
 import React from "react";
@@ -20,35 +20,43 @@ import AccountMenu from "./AccountMenu";
 // import ImportExportIcon from "@mui/icons-material/ImportExport";
 // import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
-const HomeNavigation = ({ title, handleDrawerToggle }) => {
-  return (
-    <React.Fragment>
-      <AppBar position="sticky" elevation={1} sx={{ background: grey[900] }}>
-        <Toolbar
-          disableGutters
-          sx={{
-            padding: "0 .5rem",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            height: "3.5rem",
-          }}
-        >
-          {/* <Box sx={{ display: "flex" }}> */}
-          <Hidden mdUp>
-            <IconButton size="medium" onClick={handleDrawerToggle}>
-              <MenuOutlinedIcon fontSize="medium" sx={{ color: "#777" }} />
-            </IconButton>
-          </Hidden>
-          <Typography variant="h6" sx={{ ml: 2 }}>
-            {title.toUpperCase()}
-          </Typography>
-          {/* </Box> */}
-          <AccountMenu />
-        </Toolbar>
-      </AppBar>
-    </React.Fragment>
-  );
+const HomeNavigation = ({ title, icon, handleDrawerToggle }) => {
+   return (
+      <React.Fragment>
+         <AppBar position="sticky" elevation={1} sx={{ background: grey[900] }}>
+            <Toolbar
+               disableGutters
+               sx={{
+                  padding: "0 .5rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  height: "3.5rem",
+               }}
+            >
+               {/* <Box sx={{ display: "flex" }}> */}
+
+               <Hidden mdUp>
+                  <IconButton size="medium" onClick={handleDrawerToggle}>
+                     <MenuOutlinedIcon
+                        fontSize="medium"
+                        sx={{ color: "#777" }}
+                     />
+                  </IconButton>
+               </Hidden>
+               <Typography
+                  variant="h6"
+                  sx={{ ml: 2, display: "flex", alignItems: "center", gap: 1 }}
+               >
+                  {icon && <Hidden mdDown>{icon}</Hidden>}
+                  {title.toUpperCase()}
+               </Typography>
+               {/* </Box> */}
+               <AccountMenu />
+            </Toolbar>
+         </AppBar>
+      </React.Fragment>
+   );
 };
 
 export default HomeNavigation;

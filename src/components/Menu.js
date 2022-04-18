@@ -17,6 +17,7 @@ import ImportExportIcon from "@mui/icons-material/ImportExport";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import GroupsIcon from "@mui/icons-material/Groups";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 
 import {
    List,
@@ -96,6 +97,11 @@ export default function Menu({
          text: "Boarding Houses",
          path: "/admin/boarding-houses",
          icon: <OtherHousesIcon />,
+      },
+      {
+         text: "Pending Reviews",
+         path: "/admin/pending-reviews",
+         icon: <PendingActionsIcon />,
       },
       {
          text: "Add Boarding House",
