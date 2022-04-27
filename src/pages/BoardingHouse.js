@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
    Container,
    IconButton,
@@ -82,6 +82,14 @@ const BoardingHouse = () => {
          setIsRoomPage(false);
       }
    };
+
+   useEffect(() => {
+      if (value === 1) {
+         setIsRoomPage(true);
+      } else {
+         setIsRoomPage(false);
+      }
+   }, [value]);
 
    const handleChangeIndex = (index) => {
       setValue(index);

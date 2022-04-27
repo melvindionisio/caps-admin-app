@@ -62,6 +62,7 @@ const Room = () => {
    const [occupiedSlots, setOccupiedSlots] = useState(0);
 
    const [roomName, setRoomName] = useState("");
+   const [roomPrice, setRoomPrice] = useState(0);
    const [roomType, setRoomType] = useState("");
    const [genderAllowed, setGenderAllowed] = useState("Male/Female");
    const [roomPicture, setRoomPicture] = useState(null);
@@ -69,7 +70,6 @@ const Room = () => {
    const [imageName, setImageName] = useState();
 
    const [boardinghouseName, setBoardinghouseName] = useState("");
-   //const [priceRange, setPriceRange] = useState("");
 
    const [boardinghouse, setBoardinghouse] = useState({});
 
@@ -101,6 +101,7 @@ const Room = () => {
          method: "PUT",
          body: JSON.stringify({
             roomName: roomName,
+            roomPrice: roomPrice,
             roomDescription: roomDescription,
             roomType: roomType,
             roomStatus: "Available",
@@ -242,6 +243,7 @@ const Room = () => {
    useEffect(() => {
       if (room && boardinghouse) {
          setRoomName(room.name);
+         setRoomPrice(room.price ?? 0);
          setRoomDescription(room.description);
          setTotalSlots(room.totalSlots);
          setOccupiedSlots(room.occupiedSlots);
@@ -249,7 +251,6 @@ const Room = () => {
          setGenderAllowed(room.genderAllowed);
          setRoomPicture(room.picture);
          setBoardinghouseName(boardinghouse.name);
-         //setPriceRange(boardinghouse.priceRange);
       }
    }, [room, boardinghouse]);
 
@@ -586,6 +587,46 @@ const Room = () => {
                                              }
                                              disabled={isEditable}
                                           />
+
+                                          <Box
+                                             sx={{
+                                                position: "relative",
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                                mb: 1,
+                                             }}
+                                          >
+                                             <span
+                                                style={{
+                                                   fontSize: 22,
+                                                   fontFamily: "Quicksand",
+                                                   fontWeight: "bold",
+                                                   paddingLeft: 2,
+                                                }}
+                                             >
+                                                ₱
+                                             </span>
+                                             <TextField
+                                                label="Price"
+                                                fullWidth
+                                                size="small"
+                                                type="number"
+                                                variant="standard"
+                                                color="primary"
+                                                value={roomPrice}
+                                                required
+                                                margin="dense"
+                                                sx={{
+                                                   background: "#fff",
+                                                   width: "93%",
+                                                }}
+                                                onChange={(e) =>
+                                                   setRoomPrice(e.target.value)
+                                                }
+                                                disabled={isEditable}
+                                             />
+                                          </Box>
                                           <TextField
                                              label="Room Description (Separate every entry using / sign.)"
                                              fullWidth

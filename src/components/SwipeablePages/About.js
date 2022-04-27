@@ -35,6 +35,7 @@ function About({
    const [owner, setOwner] = useState("");
    const [completeAddress, setCompleteAddress] = useState("");
    const [contact, setContact] = useState(0);
+   const [email, setEmail] = useState("");
    const [zoneAddress, setZoneAddress] = useState("");
    const [streetAddress, setStreetAddress] = useState("");
    const [tagline, setTagline] = useState("");
@@ -54,6 +55,7 @@ function About({
          setOwner(boardinghouse.owner);
          setCompleteAddress(boardinghouse.completeAddress);
          setContact(boardinghouse.contacts);
+         setEmail(boardinghouse.email);
          setZoneAddress(boardinghouse.zoneAddress);
          setStreetAddress(boardinghouse.streetAddress);
          setLongitude(boardinghouse.longitude);
@@ -80,6 +82,7 @@ function About({
             owner: owner,
             completeAddress: completeAddress,
             contact: contact,
+            email: email,
             zoneAddress: zoneAddress,
             streetAddress: streetAddress,
             longitude: longitude,
@@ -198,6 +201,20 @@ function About({
                         helperText="Ex. 09166809369"
                         value={contact}
                         onChange={(e) => setContact(e.target.value)}
+                        disabled={isBoardinghouseEditable}
+                     />
+                     <TextField
+                        id="bh-email"
+                        label="Email Address"
+                        variant="outlined"
+                        color="primary"
+                        margin="dense"
+                        size="small"
+                        type="email"
+                        fullWidth
+                        helperText="Ex. owneremail@gmail.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         disabled={isBoardinghouseEditable}
                      />
                      <Box

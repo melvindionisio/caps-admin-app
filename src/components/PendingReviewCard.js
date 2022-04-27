@@ -23,7 +23,7 @@ function PendingReviewCard({ review, approveReview, rejectReview }) {
             title={review ? review.reviewerName : "Empty"}
             subheader={
                review
-                  ? `A review for ... boarding house | ${review.reviewDate}`
+                  ? `A review for ... boarding house | ${review.date}`
                   : "Empty"
             }
             action={
@@ -52,7 +52,7 @@ function PendingReviewCard({ review, approveReview, rejectReview }) {
             }
          />
          <CardContent>
-            {review ? review.reviewText : "Please select a review to view."}
+            {review ? review.text : "Please select a review to view."}
          </CardContent>
          <Typography
             variant="caption"

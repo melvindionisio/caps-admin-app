@@ -59,7 +59,7 @@ function Owners({ handleDrawerToggle }) {
    const [severity, setSeverity] = useState("warning");
 
    return (
-      <Container maxWidth="xl" disableGutters sx={{ height: "100vh" }}>
+      <Container maxWidth="xl" disableGutters sx={{ minHeight: "100vh" }}>
          {!isEmpty && (
             <IconButton
                onClick={() => history.push("/admin/boarding-houses/add")}

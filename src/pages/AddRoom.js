@@ -42,6 +42,7 @@ const AddRoom = () => {
    const [imageName, setImageName] = useState();
 
    const [roomName, setRoomName] = useState("");
+   const [roomPrice, setRoomPrice] = useState(0);
    const [roomDescription, setRoomDescription] = useState("");
    const [roomType, setRoomType] = useState("");
    const [genderAllowed, setGenderAllowed] = useState("Male/Female");
@@ -53,64 +54,69 @@ const AddRoom = () => {
    const [messageSeverity, setMessageSeverity] = useState("warning");
    const [isSavePending, setSaveIsPending] = useState(false);
 
-   const handleRoomSave = async (e) => {
+   const handleRoomSave = (e) => {
       e.preventDefault();
       setSaveIsPending(true);
 
       const formData = new FormData();
-      formData.append("room-image", roomPicture);
+      formData.append("file", roomPicture);
+      formData.append("upload_preset", "bwqfoub6");
 
-      fetch(`${domain}/api/rooms/upload`, {
-         method: "POST",
-         body: formData,
-      })
-         .then((res) => {
-            return res.json();
-         })
+      Axios.post(
+         "https://api.cloudinary.com/v1_1/searchnstay/image/upload",
+         formData
+      )
          .then((image) => {
+            console.log(image.data.secure_url);
             setImageName("Select Image");
-            fetch(`${domain}/api/rooms/add/${bhId}`, {
-               method: "POST",
-               body: JSON.stringify({
-                  roomName: roomName,
-                  roomDescription: roomDescription,
-                  roomType: roomType,
-                  roomPicture: image.imagepath,
-                  roomStatus: "Available",
-                  genderAllowed: genderAllowed,
-                  totalSlots: totalSlots,
-                  occupiedSlots: occupiedSlots,
-               }),
-               headers: {
-                  "Content-Type": "application/json",
-               },
-            })
-               .then((res) => {
-                  return res.json();
-               })
+            fetch(`${domain}/api/boarding-houses/by-owner/${currentOwner.id}`)
+               .then((res) => res.json())
                .then((data) => {
-                  setMessage(data.message);
-                  setShowMessage(true);
-                  setMessageSeverity("success");
+                  fetch(`${domain}/api/rooms/add/${data.id}`, {
+                     method: "POST",
+                     body: JSON.stringify({
+                        roomName: roomName,
+                        roomPrice: roomPrice,
+                        roomDescription: roomDescription,
+                        roomType: roomType,
+                        roomPicture: image.data.secure_url,
+                        roomStatus: "Available",
+                        genderAllowed: genderAllowed,
+                        totalSlots: totalSlots,
+                        occupiedSlots: occupiedSlots,
+                     }),
+                     headers: {
+                        "Content-Type": "application/json",
+                     },
+                  })
+                     .then((res) => {
+                        return res.json();
+                     })
+                     .then((data) => {
+                        setMessage(data.message);
+                        setShowMessage(true);
+                        setMessageSeverity("success");
 
-                  setRoomName("");
-                  setRoomDescription("");
-                  setRoomPicture(null);
-                  setRoomType("");
-                  setGenderAllowed("Male/Female");
-                  setTotalSlots(0);
-                  setOccupiedSlots(0);
-                  setRoomPicture(null);
+                        setRoomName("");
+                        setRoomPrice(0);
+                        setRoomDescription("");
+                        setRoomPicture(null);
+                        setRoomType("");
+                        setGenderAllowed("Male/Female");
+                        setTotalSlots(0);
+                        setOccupiedSlots(0);
+                        setRoomPicture(null);
 
-                  setImageName("");
-                  setImagePreview(null);
-                  setSaveIsPending(false);
-               })
-               .catch((err) => {
-                  console.log(err);
-                  setMessage(err);
-                  setShowMessage(true);
-                  setMessageSeverity("error");
+                        setImageName("");
+                        setImagePreview(null);
+                        setSaveIsPending(false);
+                     })
+                     .catch((err) => {
+                        console.log(err);
+                        setMessage(err);
+                        setShowMessage(true);
+                        setMessageSeverity("error");
+                     });
                });
          })
          .catch((err) => {
@@ -120,6 +126,76 @@ const AddRoom = () => {
             setMessageSeverity("error");
          });
    };
+
+   //const handleRoomSave = async (e) => {
+   //e.preventDefault();
+   //setSaveIsPending(true);
+
+   //const formData = new FormData();
+   //formData.append("room-image", roomPicture);
+
+   //fetch(`${domain}/api/rooms/upload`, {
+   //method: "POST",
+   //body: formData,
+   //})
+   //.then((res) => {
+   //return res.json();
+   //})
+   //.then((image) => {
+   //setImageName("Select Image");
+   //fetch(`${domain}/api/rooms/add/${bhId}`, {
+   //method: "POST",
+   //body: JSON.stringify({
+   //roomName: roomName,
+   //roomPrice: roomPrice,
+   //roomDescription: roomDescription,
+   //roomType: roomType,
+   //roomPicture: image.imagepath,
+   //roomStatus: "Available",
+   //genderAllowed: genderAllowed,
+   //totalSlots: totalSlots,
+   //occupiedSlots: occupiedSlots,
+   //}),
+   //headers: {
+   //"Content-Type": "application/json",
+   //},
+   //})
+   //.then((res) => {
+   //return res.json();
+   //})
+   //.then((data) => {
+   //setMessage(data.message);
+   //setShowMessage(true);
+   //setMessageSeverity("success");
+
+   //setRoomName("");
+   //setRoomPrice(0);
+   //setRoomDescription("");
+   //setRoomPicture(null);
+   //setRoomType("");
+   //setGenderAllowed("Male/Female");
+   //setTotalSlots(0);
+   //setOccupiedSlots(0);
+   //setRoomPicture(null);
+
+   //setImageName("");
+   //setImagePreview(null);
+   //setSaveIsPending(false);
+   //})
+   //.catch((err) => {
+   //console.log(err);
+   //setMessage(err);
+   //setShowMessage(true);
+   //setMessageSeverity("error");
+   //});
+   //})
+   //.catch((err) => {
+   //console.log(err);
+   //setMessage(err);
+   //setShowMessage(true);
+   //setMessageSeverity("error");
+   //});
+   //};
 
    const incrementTotal = () => {
       setTotalSlots(totalSlots + 1);
@@ -192,6 +268,41 @@ const AddRoom = () => {
                                  sx={{ background: "#fff" }}
                                  onChange={(e) => setRoomName(e.target.value)}
                               />
+                              <Box
+                                 sx={{
+                                    position: "relative",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                 }}
+                              >
+                                 <span
+                                    style={{
+                                       fontSize: 22,
+                                       fontFamily: "Quicksand",
+                                       fontWeight: "bold",
+                                       paddingLeft: 2,
+                                    }}
+                                 >
+                                    ₱
+                                 </span>
+                                 <TextField
+                                    label="Price"
+                                    fullWidth
+                                    size="small"
+                                    type="number"
+                                    variant="standard"
+                                    color="primary"
+                                    value={roomPrice}
+                                    required
+                                    margin="dense"
+                                    sx={{ background: "#fff", width: "93%" }}
+                                    onChange={(e) =>
+                                       setRoomPrice(e.target.value)
+                                    }
+                                 />
+                              </Box>
+
                               <TextField
                                  label="Room Description"
                                  fullWidth

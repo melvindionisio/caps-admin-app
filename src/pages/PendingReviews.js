@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 import HomeNavigation from "../components/HomeNavigation";
 import PendingReviewCard from "../components/PendingReviewCard";
-// import useFetch from "../hooks/useFetch";
-// import { domain } from "../fetch-url/fetchUrl";
+import useFetch from "../hooks/useFetch";
+import { domain } from "../fetch-url/fetchUrl";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import { grey, blue } from "@mui/material/colors";
 
@@ -31,7 +31,6 @@ const ReviewList = ({
                <ListItem
                   button
                   disablePadding
-                  //error here!
                   sx={
                      review?.id === currentReview?.id
                         ? {
@@ -53,129 +52,131 @@ const ReviewList = ({
 };
 
 function PendingReviews({ handleDrawerToggle }) {
-   const [reviews, setReviews] = useState([
-      {
-         id: 0,
-         reviewerName: "Melvin Dionisio",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 1,
-         reviewerName: "Jhelan Anabo",
-         reviewText: "hello yawa",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 3,
-         reviewerName: " Ivan Arang",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 4,
-         reviewerName: "Melvin Dionisio",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 5,
-         reviewerName: "Jhelan Anabo",
-         reviewText: "hello yawa",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 6,
-         reviewerName: " Ivan Arang",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 7,
-         reviewerName: "Melvin Dionisio",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 8,
-         reviewerName: "Jhelan Anabo",
-         reviewText: "hello yawa",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 9,
-         reviewerName: " Ivan Arang",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
+   // const [reviews, setReviews] = useState([
+   //    {
+   //       id: 0,
+   //       reviewerName: "Melvin Dionisio",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 1,
+   //       reviewerName: "Jhelan Anabo",
+   //       reviewText: "hello yawa",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 3,
+   //       reviewerName: " Ivan Arang",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 4,
+   //       reviewerName: "Melvin Dionisio",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 5,
+   //       reviewerName: "Jhelan Anabo",
+   //       reviewText: "hello yawa",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 6,
+   //       reviewerName: " Ivan Arang",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 7,
+   //       reviewerName: "Melvin Dionisio",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 8,
+   //       reviewerName: "Jhelan Anabo",
+   //       reviewText: "hello yawa",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 9,
+   //       reviewerName: " Ivan Arang",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
 
-      {
-         id: 10,
-         reviewerName: " Ivan Arang",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 11,
-         reviewerName: "Melvin Dionisio",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 12,
-         reviewerName: "Jhelan Anabo",
-         reviewText: "hello yawa",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 13,
-         reviewerName: " Ivan Arang",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 14,
-         reviewerName: "Melvin Dionisio",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 15,
-         reviewerName: "Jhelan Anabo",
-         reviewText: "hello yawa",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-      {
-         id: 16,
-         reviewerName: " Ivan Arang",
-         reviewText: " Yawa man ine",
-         reviewDate: "10-10-10",
-         status: "pending",
-      },
-   ]);
+   //    {
+   //       id: 10,
+   //       reviewerName: " Ivan Arang",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 11,
+   //       reviewerName: "Melvin Dionisio",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 12,
+   //       reviewerName: "Jhelan Anabo",
+   //       reviewText: "hello yawa",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 13,
+   //       reviewerName: " Ivan Arang",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 14,
+   //       reviewerName: "Melvin Dionisio",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 15,
+   //       reviewerName: "Jhelan Anabo",
+   //       reviewText: "hello yawa",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   //    {
+   //       id: 16,
+   //       reviewerName: " Ivan Arang",
+   //       reviewText: " Yawa man ine",
+   //       reviewDate: "10-10-10",
+   //       status: "pending",
+   //    },
+   // ]);
+
+   const [reviews, setReviews] = useState([]);
    const [isPendingReviewsEmpty, setIsPendingReviewsEmpty] = useState(false);
    const [currentReview, setCurrentReview] = useState(null);
 
-   //const {
-   //data: pendingReviews,
-   //error,
-   //isPending,
-   //} = useFetch(`${domain}/pending-reviews`);
+   const {
+      data: pendingReviews,
+      error,
+      isPending,
+   } = useFetch(`${domain}/api/reviews/pending-reviews`);
 
    const approveReview = (reviewId) => {
       console.log(`Review with review ID of ${reviewId} has been approved!`);
@@ -197,19 +198,19 @@ function PendingReviews({ handleDrawerToggle }) {
       }
    }, [reviews]);
 
-   // useEffect(() => {
-   //    let cancelled = false;
-   //    if (pendingReviews) {
-   //       if (pendingReviews.length <= 0) {
-   //          setIsPendingReviewsEmpty(true);
-   //       } else {
-   //          setReviews(pendingReviews);
-   //       }
-   //    }
-   //    return () => {
-   //       cancelled = true;
-   //    };
-   // }, [pendingReviews]);
+   useEffect(() => {
+      let cancelled = false;
+      if (pendingReviews) {
+         if (pendingReviews.length <= 0) {
+            setIsPendingReviewsEmpty(true);
+         } else {
+            setReviews(pendingReviews);
+         }
+      }
+      return () => {
+         cancelled = true;
+      };
+   }, [pendingReviews]);
 
    useEffect(() => {
       setCurrentReview(reviews[0]);

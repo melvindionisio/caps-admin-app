@@ -24,22 +24,36 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                },
             }}
          >
-            <Card sx={{ borderRadius: 2 }} variant="outlined">
+            <Card
+               sx={{ borderRadius: 2 }}
+               //variant="outlined"
+            >
                <CardActionArea>
                   <CardHeader
                      avatar={<HouseIcon />}
                      title={
-                        <Typography
-                           variant="body1"
-                           color="initial"
-                           sx={{
-                              "&:hover": {
-                                 textDecoration: "underline",
-                              },
+                        <div
+                           style={{
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              maxWidth: "11rem",
+                              minWidth: "7rem",
                            }}
                         >
-                           {boardinghouse.name.toUpperCase()}
-                        </Typography>
+                           <Typography
+                              variant="body1"
+                              noWrap
+                              color="initial"
+                              sx={{
+                                 "&:hover": {
+                                    textDecoration: "underline",
+                                 },
+                                 fontWeight: "bold",
+                              }}
+                           >
+                              {boardinghouse.name.toUpperCase()}
+                           </Typography>
+                        </div>
                      }
                      subheader={
                         <>
