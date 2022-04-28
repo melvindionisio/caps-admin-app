@@ -1,10 +1,17 @@
 import { Paper, Avatar, Typography, Box } from "@mui/material";
-import { red, lightBlue, deepPurple } from "@mui/material/colors";
+import { red, green, lightBlue, deepPurple } from "@mui/material/colors";
 import React from "react";
-import { Delete } from "@mui/icons-material";
+import { Delete, CheckOutlined } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-const ReviewCard = ({ review, handleDeleteReview, isDeleteReview }) => {
+const ReviewCard = ({
+   review,
+   handleApproveReview,
+   handleDeleteReview,
+   isDeleteReview,
+   isApproveReview,
+   status,
+}) => {
    return (
       <Box>
          <Paper
@@ -50,28 +57,86 @@ const ReviewCard = ({ review, handleDeleteReview, isDeleteReview }) => {
                      {review.date}
                   </Typography>
                </Box>
-               <LoadingButton
-                  size="small"
-                  onClick={() => handleDeleteReview(review.id)}
-                  variant="contained"
-                  disableElevation
-                  loading={isDeleteReview}
+               <Box
                   sx={{
                      position: "absolute",
                      top: 1,
                      right: 1,
-                     background: red[50],
-                     color: red[500],
-                     "&:hover": {
-                        background: red[100],
-                     },
+                     display: "flex",
+                     justifyContent: "space-between",
+                     gap: 1,
                   }}
-                  startIcon={
-                     <Delete fontSize="small" sx={{ color: red[400] }} />
-                  }
                >
-                  delete
-               </LoadingButton>
+                  {status === "approved" ? (
+                     <LoadingButton
+                        size="small"
+                        onClick={() => handleDeleteReview(review.id)}
+                        variant="contained"
+                        disableElevation
+                        loading={isDeleteReview}
+                        sx={{
+                           background: red[50],
+                           color: red[500],
+                           "&:hover": {
+                              background: red[100],
+                           },
+                        }}
+                        startIcon={
+                           <Delete fontSize="small" sx={{ color: red[400] }} />
+                        }
+                     >
+                        delete
+                     </LoadingButton>
+                  ) : (
+                     <>
+                        <LoadingButton
+                           size="small"
+                           onClick={() => handleApproveReview(review.id)}
+                           variant="contained"
+                           disableElevation
+                           loading={isApproveReview}
+                           sx={{
+                              background: green[50],
+                              color: green[500],
+                              "&:hover": {
+                                 background: green[100],
+                              },
+                           }}
+                           startIcon={
+                              <CheckOutlined
+                                 fontSize="small"
+                                 sx={{ color: green[400] }}
+                              />
+                           }
+                        >
+                           approve
+                        </LoadingButton>
+
+                        <LoadingButton
+                           size="small"
+                           onClick={() => handleDeleteReview(review.id)}
+                           variant="contained"
+                           disableElevation
+                           loading={isDeleteReview}
+                           sx={{
+                              background: red[50],
+                              color: red[500],
+                              "&:hover": {
+                                 background: red[100],
+                              },
+                           }}
+                           startIcon={
+                              <Delete
+                                 fontSize="small"
+                                 sx={{ color: red[400] }}
+                              />
+                           }
+                        >
+                           reject
+                        </LoadingButton>
+                     </>
+                  )}
+               </Box>
             </Box>
             <Typography variant="body1" color="initial" sx={{ px: 5 }}>
                {review.text}

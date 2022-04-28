@@ -7,6 +7,7 @@ import ReviewCard from "../cards/ReviewCard";
 import { useParams } from "react-router-dom";
 import { domain } from "../../fetch-url/fetchUrl";
 import LoadingState from "../LoadingState";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 const Reviews = () => {
    let scroller = useRef(null);
@@ -16,43 +17,79 @@ const Reviews = () => {
    const [isEmpty, setIsEmpty] = useState(false);
    const [isPending, setIsPending] = useState(true);
    const [isDeleteReview, setIsDeleteReview] = useState(false);
+   const [isApproveReview, setIsApproveReview] = useState(false);
+
+   const [activeReview, setActiveReview] = useState("approved");
+   const handleChangeActiveReview = (event, newActiveReview) => {
+      setActiveReview(newActiveReview);
+   };
 
    useEffect(() => {
       const abortCont = new AbortController();
+      setIsPending(true);
 
       setTimeout(() => {
-         fetch(`${domain}/api/reviews/bh/${bhId}`, {
-            signal: abortCont.signal,
-         })
-            .then((res) => {
-               if (!res.ok) {
-                  throw Error("Something went wrong!");
-               }
-               return res.json();
+         if (activeReview === "approved") {
+            fetch(`${domain}/api/reviews/bh/${bhId}`, {
+               signal: abortCont.signal,
             })
-            .then((data) => {
-               if (data) {
-                  setReviews(data);
-                  setIsPending(false);
-                  //scroller.current.scrollIntoView();
-               }
-               if (data.length <= 0) {
-                  setIsEmpty(true);
-               }
+               .then((res) => {
+                  if (!res.ok) {
+                     throw Error("Something went wrong!");
+                  }
+                  return res.json();
+               })
+               .then((data) => {
+                  if (data) {
+                     setReviews(data);
+                     setIsPending(false);
+                     //scroller.current.scrollIntoView();
+                  }
+                  if (data.length <= 0) {
+                     setIsEmpty(true);
+                  }
+               })
+               .catch((err) => {
+                  if (err.name === "AbortError") {
+                     console.log("fetch aborted");
+                  } else {
+                     console.log(err);
+                  }
+               });
+         } else {
+            fetch(`${domain}/api/reviews/bh/pending/${bhId}`, {
+               signal: abortCont.signal,
             })
-            .catch((err) => {
-               if (err.name === "AbortError") {
-                  console.log("fetch aborted");
-               } else {
-                  console.log(err);
-               }
-            });
+               .then((res) => {
+                  if (!res.ok) {
+                     throw Error("Something went wrong!");
+                  }
+                  return res.json();
+               })
+               .then((data) => {
+                  if (data) {
+                     setReviews(data);
+                     setIsPending(false);
+                     //scroller.current.scrollIntoView();
+                  }
+                  if (data.length <= 0) {
+                     setIsEmpty(true);
+                  }
+               })
+               .catch((err) => {
+                  if (err.name === "AbortError") {
+                     console.log("fetch aborted");
+                  } else {
+                     console.log(err);
+                  }
+               });
+         }
       }, 0);
 
       return () => {
          abortCont.abort();
       };
-   }, [bhId]);
+   }, [bhId, activeReview]);
 
    const handleDeleteReview = async (reviewId) => {
       setIsDeleteReview(true);
@@ -68,6 +105,31 @@ const Reviews = () => {
             );
             console.log(data.message);
             setIsDeleteReview(false);
+         })
+         .catch((err) => console.log(err));
+   };
+
+   const handleApproveReview = async (reviewId) => {
+      setIsApproveReview(true);
+      //approve request
+      fetch(`${domain}/api/reviews/${reviewId}`, {
+         method: "PUT",
+         body: JSON.stringify({
+            status: "approved",
+         }),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            setIsApproveReview(false);
+            setReviews(() =>
+               reviews.filter((review) => review.id !== reviewId)
+            );
+            console.log(data.message);
          })
          .catch((err) => console.log(err));
    };
@@ -96,6 +158,19 @@ const Reviews = () => {
                position: "relative",
             }}
          >
+            <Box sx={{ justifyContent: "center", display: "flex" }}>
+               <ToggleButtonGroup
+                  color="primary"
+                  value={activeReview}
+                  exclusive
+                  size="small"
+                  variant="contained"
+                  onChange={handleChangeActiveReview}
+               >
+                  <ToggleButton value="pending">Pending</ToggleButton>
+                  <ToggleButton value="approved">Approved</ToggleButton>
+               </ToggleButtonGroup>
+            </Box>
             {isPending && <LoadingState loadWhat="Reviews" />}
 
             {reviews &&
@@ -104,7 +179,10 @@ const Reviews = () => {
                      key={review.id}
                      review={review}
                      handleDeleteReview={handleDeleteReview}
+                     handleApproveReview={handleApproveReview}
                      isDeleteReview={isDeleteReview}
+                     isApproveReview={isApproveReview}
+                     status={review.status}
                   />
                ))}
 

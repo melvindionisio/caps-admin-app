@@ -55,7 +55,7 @@ function About({
          setOwner(boardinghouse.owner);
          setCompleteAddress(boardinghouse.completeAddress);
          setContact(boardinghouse.contacts);
-         setEmail(boardinghouse.email);
+         setEmail(boardinghouse.email ?? "");
          setZoneAddress(boardinghouse.zoneAddress);
          setStreetAddress(boardinghouse.streetAddress);
          setLongitude(boardinghouse.longitude);

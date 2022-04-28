@@ -172,22 +172,62 @@ function PendingReviews({ handleDrawerToggle }) {
    const [isPendingReviewsEmpty, setIsPendingReviewsEmpty] = useState(false);
    const [currentReview, setCurrentReview] = useState(null);
 
+   const [isApprovePending, setIsApprovePending] = useState(false);
+   const [iseRejectPending, setIsRejectPending] = useState(false);
+
    const {
       data: pendingReviews,
       error,
       isPending,
    } = useFetch(`${domain}/api/reviews/pending-reviews`);
 
-   const approveReview = (reviewId) => {
-      console.log(`Review with review ID of ${reviewId} has been approved!`);
+   const handleApproveReview = async (reviewId) => {
+      // console.log(`Review with review ID of ${reviewId} has been approved!`);
+      setIsApprovePending(true);
       //let the review display in seeker app
       //move the currentReview to the next if approve
+      fetch(`${domain}/api/reviews/${reviewId}`, {
+         method: "PUT",
+         body: JSON.stringify({
+            status: "approved",
+         }),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            setIsApprovePending(false);
+            setReviews(() =>
+               reviews.filter((review) => review.id !== reviewId)
+            );
+            console.log(data.message);
+         })
+         .catch((err) => console.log(err));
    };
-   const rejectReview = (reviewId) => {
-      console.log(`Review with review ID of ${reviewId} has been rejected!`);
+
+   const handleRejectReview = async (reviewId) => {
+      setIsRejectPending(true);
+      // console.log(`Review with review ID of ${reviewId} has been rejected!`);
       //delete in pending reviews
       //filter reviewList
       //move the currentReview to the next if reject
+      fetch(`${domain}/api/reviews/${reviewId}`, {
+         method: "DELETE",
+      })
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            setIsRejectPending(false);
+            setReviews(() =>
+               reviews.filter((review) => review.id !== reviewId)
+            );
+            console.log(data.message);
+         })
+         .catch((err) => console.log(err));
    };
 
    useEffect(() => {
@@ -239,8 +279,10 @@ function PendingReviews({ handleDrawerToggle }) {
 
                   <PendingReviewCard
                      review={currentReview}
-                     approveReview={approveReview}
-                     rejectReview={rejectReview}
+                     handleApproveReview={handleApproveReview}
+                     handleRejectReview={handleRejectReview}
+                     isApprovePending={isApprovePending}
+                     iseRejectPending={iseRejectPending}
                   />
                </Grid>
                <Grid item xs={12} md={4}>
@@ -261,9 +303,11 @@ function PendingReviews({ handleDrawerToggle }) {
                   >
                      {isPendingReviewsEmpty ? (
                         <Typography
-                           aling="center"
+                           align="center"
                            variant="caption"
                            component="p"
+                           color="error"
+                           sx={{ mt: 5 }}
                         >
                            Pending Reviews is empty!
                         </Typography>

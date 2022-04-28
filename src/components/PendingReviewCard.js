@@ -8,8 +8,15 @@ import {
    Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { CheckOutlined } from "@mui/icons-material";
 
-function PendingReviewCard({ review, approveReview, rejectReview }) {
+function PendingReviewCard({
+   review,
+   handleApproveReview,
+   handleRejectReview,
+   isApprovePending,
+   isRejectPending,
+}) {
    return (
       <Card
          sx={{
@@ -27,28 +34,32 @@ function PendingReviewCard({ review, approveReview, rejectReview }) {
                   : "Empty"
             }
             action={
-               <Box sx={{ display: "flex", gap: 1 }}>
-                  <Button
-                     startIcon={<DeleteIcon />}
-                     variant="contained"
-                     size="small"
-                     color="success"
-                     disableElevation
-                     onClick={approveReview}
-                  >
-                     Approve
-                  </Button>
-                  <Button
-                     startIcon={<DeleteIcon />}
-                     variant="contained"
-                     size="small"
-                     color="error"
-                     disableElevation
-                     onClick={rejectReview}
-                  >
-                     Reject
-                  </Button>
-               </Box>
+               review && (
+                  <Box sx={{ display: "flex", gap: 1 }}>
+                     <Button
+                        startIcon={<CheckOutlined />}
+                        variant="contained"
+                        size="small"
+                        color="success"
+                        disableElevation
+                        onClick={() => handleApproveReview(review.id)}
+                        disabled={isApprovePending}
+                     >
+                        Approve
+                     </Button>
+                     <Button
+                        startIcon={<DeleteIcon />}
+                        variant="contained"
+                        size="small"
+                        color="error"
+                        disableElevation
+                        disabled={isRejectPending}
+                        onClick={() => handleRejectReview(review.id)}
+                     >
+                        Reject
+                     </Button>
+                  </Box>
+               )
             }
          />
          <CardContent>
