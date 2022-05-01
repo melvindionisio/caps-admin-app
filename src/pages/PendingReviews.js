@@ -16,6 +16,7 @@ import useFetch from "../hooks/useFetch";
 import { domain } from "../fetch-url/fetchUrl";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import { grey, blue } from "@mui/material/colors";
+import LoadingState from "../components/LoadingState";
 
 const ReviewList = ({
    reviews,
@@ -239,7 +240,6 @@ function PendingReviews({ handleDrawerToggle }) {
    }, [reviews]);
 
    useEffect(() => {
-      let cancelled = false;
       if (pendingReviews) {
          if (pendingReviews.length <= 0) {
             setIsPendingReviewsEmpty(true);
@@ -247,9 +247,6 @@ function PendingReviews({ handleDrawerToggle }) {
             setReviews(pendingReviews);
          }
       }
-      return () => {
-         cancelled = true;
-      };
    }, [pendingReviews]);
 
    useEffect(() => {
@@ -312,13 +309,27 @@ function PendingReviews({ handleDrawerToggle }) {
                            Pending Reviews is empty!
                         </Typography>
                      ) : (
-                        <ReviewList
-                           reviews={reviews}
-                           setCurrentReview={setCurrentReview}
-                           currentReview={currentReview}
-                           //isPending={isPending}
-                           //error={error}
-                        />
+                        <>
+                           {error && (
+                              <Typography
+                                 align="center"
+                                 variant="caption"
+                                 component="p"
+                                 color="error"
+                                 sx={{ mt: 5 }}
+                              >
+                                 Pending Reviews is empty!
+                              </Typography>
+                           )}
+                           {isPending && <LoadingState />}
+                           <ReviewList
+                              reviews={reviews}
+                              setCurrentReview={setCurrentReview}
+                              currentReview={currentReview}
+                              //isPending={isPending}
+                              //error={error}
+                           />
+                        </>
                      )}
                   </Box>
                </Grid>

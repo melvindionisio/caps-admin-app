@@ -13,6 +13,7 @@ import Room from "./pages/Room";
 import Owners from "./pages/Owners";
 import AddRoom from "./pages/AddRoom";
 import PendingReviews from "./pages/PendingReviews";
+import Map from "./pages/Map";
 
 import { useContext } from "react";
 import { LoginContext } from "./contexts/LoginContext";
@@ -100,6 +101,14 @@ const Routes = ({ handleDrawerToggle }) => {
                   <Redirect to="/login" />
                ) : (
                   <PendingReviews handleDrawerToggle={handleDrawerToggle} />
+               )}
+            </Route>
+
+            <Route path="/admin/map">
+               {!isAdminLoggedIn ? (
+                  <Redirect to="/login" />
+               ) : (
+                  <Map handleDrawerToggle={handleDrawerToggle} />
                )}
             </Route>
             <Route path="*">

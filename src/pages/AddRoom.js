@@ -78,7 +78,7 @@ const AddRoom = () => {
                   roomPrice: roomPrice,
                   roomDescription: roomDescription,
                   roomType: roomType,
-                  roomPicture: image.imagepath,
+                  roomPicture: image.data.secure_url,
                   roomStatus: "Available",
                   genderAllowed: genderAllowed,
                   totalSlots: totalSlots,

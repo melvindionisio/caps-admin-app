@@ -18,6 +18,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import {
    List,
@@ -107,6 +108,11 @@ export default function Menu({
          text: "Add Boarding House",
          path: "/admin/boarding-houses/add",
          icon: <AddCircleIcon />,
+      },
+      {
+         text: "Map",
+         path: "/admin/map",
+         icon: <LocationOnIcon />,
       },
       {
          text: "Export",

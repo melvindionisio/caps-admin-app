@@ -19,6 +19,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import logo from "../sns-logo.png";
 import { Avatar } from "@material-ui/core";
 import { useLocation, useHistory } from "react-router-dom";
@@ -64,6 +65,11 @@ const Sidebar = () => {
          text: "Add Boarding House",
          path: "/admin/boarding-houses/add",
          icon: <AddCircleIcon />,
+      },
+      {
+         text: "Map",
+         path: "/admin/map",
+         icon: <LocationOnIcon />,
       },
       {
          text: "Export",

@@ -38,6 +38,7 @@ import Notification from "../components/Notification";
 import CloseOutlined from "@mui/icons-material/CloseOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import Axios from "axios";
 
 const Room = () => {
    const { roomId } = useParams();
@@ -143,31 +144,41 @@ const Room = () => {
 
       if (roomPicture) {
          setSavePictureIsPending(true);
+         // const formData = new FormData();
+         // formData.append("room-image", roomPicture);
+
          const formData = new FormData();
-         formData.append("room-image", roomPicture);
+         formData.append("file", roomPicture);
+         formData.append("upload_preset", "bwqfoub6");
 
          fetch(`${domain}/api/rooms/delete-picture/${roomId}`)
             .then((res) => res.json())
             .then((data) => {
                console.log(data.message);
 
-               fetch(`${domain}/api/rooms/upload`, {
-                  method: "POST",
-                  body: formData,
-               })
-                  .then((res) => {
-                     return res.json();
-                  })
-                  .then((newImage) => {
-                     console.log(newImage);
-                     //setRoomPicture(newImage.imagepath);
+               // fetch(`${domain}/api/rooms/upload`, {
+               //    method: "POST",
+               //    body: formData,
+               // })
+               //    .then((res) => {
+               //       return res.json();
+               //    })
+               //    .then((newImage) => {
+
+               Axios.post(
+                  "https://api.cloudinary.com/v1_1/searchnstay/image/upload",
+                  formData
+               )
+                  .then((image) => {
+                     console.log(image.data.secure_url);
+                     setRoomPicture(image.data.secure_url);
 
                      fetch(
                         `${domain}/api/rooms/update-room-picture/${roomId}`,
                         {
                            method: "PUT",
                            body: JSON.stringify({
-                              newImageLink: newImage.imagepath,
+                              newImageLink: image.data.secure_url,
                            }),
                            headers: {
                               "Content-Type": "application/json",
@@ -191,7 +202,7 @@ const Room = () => {
 
                            setTimeout(() => {
                               window.location.reload(false);
-                           }, 1000);
+                           }, 500);
                         })
                         .catch((err) => console.log(err));
                   })
