@@ -15,7 +15,8 @@ const Reviews = () => {
    // ! to-do
    // is empty should be different in ampty pending and empty approved
    const [reviews, setReviews] = useState([]);
-   const [isEmpty, setIsEmpty] = useState(false);
+   const [isApprovedEmpty, setIsApprovedEmpty] = useState(false);
+   const [isPendingEmpty, setIsPendingEmpty] = useState(false);
    const [isPending, setIsPending] = useState(true);
    const [isDeleteReview, setIsDeleteReview] = useState(false);
    const [isApproveReview, setIsApproveReview] = useState(false);
@@ -28,9 +29,11 @@ const Reviews = () => {
    useEffect(() => {
       const abortCont = new AbortController();
       setIsPending(true);
+      setReviews(null);
 
       setTimeout(() => {
          if (activeReview === "approved") {
+            setIsPendingEmpty(false);
             fetch(`${domain}/api/reviews/bh/${bhId}`, {
                signal: abortCont.signal,
             })
@@ -47,7 +50,7 @@ const Reviews = () => {
                      //scroller.current.scrollIntoView();
                   }
                   if (data.length <= 0) {
-                     setIsEmpty(true);
+                     setIsApprovedEmpty(true);
                   }
                })
                .catch((err) => {
@@ -58,6 +61,7 @@ const Reviews = () => {
                   }
                });
          } else {
+            setIsApprovedEmpty(false);
             fetch(`${domain}/api/reviews/bh/pending/${bhId}`, {
                signal: abortCont.signal,
             })
@@ -74,7 +78,7 @@ const Reviews = () => {
                      //scroller.current.scrollIntoView();
                   }
                   if (data.length <= 0) {
-                     setIsEmpty(true);
+                     setIsPendingEmpty(true);
                   }
                })
                .catch((err) => {
@@ -187,7 +191,7 @@ const Reviews = () => {
                   />
                ))}
 
-            {isEmpty && (
+            {isApprovedEmpty && (
                <Typography
                   variant="body2"
                   color="text.secondary"
@@ -195,6 +199,16 @@ const Reviews = () => {
                   sx={{ mt: 4 }}
                >
                   Reviews is empty!
+               </Typography>
+            )}
+            {isPendingEmpty && (
+               <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  align="center"
+                  sx={{ mt: 4 }}
+               >
+                  Pending reviews is empty!
                </Typography>
             )}
             <Typography
