@@ -12,7 +12,8 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 const Reviews = () => {
    let scroller = useRef(null);
    const { bhId } = useParams();
-
+   // ! to-do
+   // is empty should be different in ampty pending and empty approved
    const [reviews, setReviews] = useState([]);
    const [isEmpty, setIsEmpty] = useState(false);
    const [isPending, setIsPending] = useState(true);

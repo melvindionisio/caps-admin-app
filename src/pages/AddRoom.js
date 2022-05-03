@@ -112,14 +112,16 @@ const AddRoom = () => {
                })
                .catch((err) => {
                   console.log(err);
-                  setMessage(err);
+                  setSaveIsPending(false);
+                  setMessage("An error occured, room image should not be null");
                   setShowMessage(true);
                   setMessageSeverity("error");
                });
          })
          .catch((err) => {
             console.log(err);
-            setMessage(err);
+            setSaveIsPending(false);
+            setMessage("An error occured, room image should not be null");
             setShowMessage(true);
             setMessageSeverity("error");
          });
