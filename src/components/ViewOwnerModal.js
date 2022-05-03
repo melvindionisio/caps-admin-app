@@ -52,10 +52,11 @@ export default function ViewOwnerModal({
    showMessage,
    severity,
    message,
+   ownedBoardinghouse,
+   setOwnerBoardinghouse,
 }) {
    const [ownerName, setOwnerName] = useState("");
    const [ownerUsername, setOwnerUsername] = useState("");
-   const [ownedBoardinghouse, setOwnerBoardinghouse] = useState("");
 
    const [resetReady, setResetReady] = useState(false);
 
@@ -220,6 +221,7 @@ export default function ViewOwnerModal({
                   }}
                >
                   <Box sx={style}>
+                     {!owner && <LoadingState />}
                      {ownerIsPending && <LoadingState />}
                      {owner && (
                         <>
@@ -263,7 +265,7 @@ export default function ViewOwnerModal({
                                           variant=" caption"
                                           sx={{ color: red[500] }}
                                        >
-                                          {ownerName}
+                                          {ownerName || "..."}
                                        </Typography>{" "}
                                        ?
                                     </Typography>
@@ -398,6 +400,7 @@ export default function ViewOwnerModal({
                                        Owner Name
                                     </Typography>
                                     <Box sx={{ mt: 2 }}>
+                                       {!ownedBoardinghouse && <LoadingState />}
                                        {ownedBoardinghouse && (
                                           <>
                                              <Link
@@ -406,7 +409,8 @@ export default function ViewOwnerModal({
                                                 <Typography
                                                    sx={{ fontSize: 18 }}
                                                 >
-                                                   {ownedBoardinghouse.name}
+                                                   {ownedBoardinghouse.name ||
+                                                      "..."}
                                                 </Typography>
                                              </Link>
                                              <Typography
@@ -420,9 +424,8 @@ export default function ViewOwnerModal({
                                                 Owned Boarding house
                                              </Typography>
                                              <Typography sx={{ fontSize: 18 }}>
-                                                {
-                                                   ownedBoardinghouse.completeAddress
-                                                }
+                                                {ownedBoardinghouse.completeAddress ||
+                                                   "..."}
                                              </Typography>
 
                                              <Typography
@@ -436,7 +439,8 @@ export default function ViewOwnerModal({
                                                 Address
                                              </Typography>
                                              <Typography sx={{ fontSize: 18 }}>
-                                                {ownedBoardinghouse.contacts}
+                                                {ownedBoardinghouse.contacts ||
+                                                   "..."}
                                              </Typography>
                                              <Typography
                                                 variant="subtitle1"

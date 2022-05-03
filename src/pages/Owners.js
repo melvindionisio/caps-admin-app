@@ -17,6 +17,8 @@ function Owners({ handleDrawerToggle }) {
 
    const [open, setOpen] = useState(false);
    const [owner, setOwner] = useState();
+   const [ownedBoardinghouse, setOwnerBoardinghouse] = useState("");
+
    const [isEdit, setIsEdit] = useState(false);
    const [isDelete, setIsDelete] = useState(false);
    const [isEmpty, setIsEmpty] = useState(false);
@@ -46,6 +48,8 @@ function Owners({ handleDrawerToggle }) {
 
    const handleClose = () => {
       setOpen(false);
+      setOwner(null);
+      setOwnerBoardinghouse(null);
       setIsEdit(false);
       setIsDelete(false);
       setDeleteOwnerConfirm("");
@@ -98,6 +102,8 @@ function Owners({ handleDrawerToggle }) {
             showMessage={showMessage}
             severity={severity}
             message={message}
+            ownedBoardinghouse={ownedBoardinghouse}
+            setOwnerBoardinghouse={setOwnerBoardinghouse}
          />
          <HomeNavigation
             title="Owners"
