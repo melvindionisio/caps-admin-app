@@ -178,7 +178,7 @@ export default function ViewOwnerModal({
             })
             .catch((err) => console.log(err));
       }
-   }, [owner]);
+   }, [owner, setOwnerBoardinghouse]);
 
    useEffect(() => {
       if (newPassword && repeatNewPassword) {
