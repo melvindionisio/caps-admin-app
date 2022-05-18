@@ -28,14 +28,11 @@ const Routes = ({ handleDrawerToggle }) => {
                <Redirect to="/login" />
             </Route>
             <Route path="/login">
-               {/*
                {isAdminLoggedIn ? (
                   <Redirect to="/admin/dashboard" />
                ) : (
                   <Login />
                )}
-               */}
-               <Login />
             </Route>
             <Route exact path="/admin/boarding-houses">
                {!isAdminLoggedIn ? (
