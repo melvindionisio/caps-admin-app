@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
    Card,
    CardHeader,
@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CheckOutlined } from "@mui/icons-material";
+import { domain } from "../fetch-url/fetchUrl";
 
 function PendingReviewCard({
    review,
@@ -17,6 +18,16 @@ function PendingReviewCard({
    isApprovePending,
    isRejectPending,
 }) {
+   const [bhname, setBhName] = useState("");
+
+   useEffect(() => {
+      fetch(`${domain}/api/boarding-houses/${review?.boardinghouseId}`)
+         .then((res) => res.json())
+         .then((boardinghouse) => {
+            setBhName(boardinghouse.name);
+         });
+   }, [review]);
+
    return (
       <Card
          sx={{
@@ -29,9 +40,7 @@ function PendingReviewCard({
          <CardHeader
             title={review ? review.reviewerName : "Empty"}
             subheader={
-               review
-                  ? `A review for ... boarding house | ${review.date}`
-                  : "Empty"
+               review ? `A review for ${bhname} | ${review.date}` : "Empty"
             }
             action={
                review && (
